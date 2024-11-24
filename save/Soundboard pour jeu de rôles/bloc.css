@@ -1,0 +1,41 @@
+#blocnote {
+position: absolute;
+top: 60%;
+left: 2.5%;
+width: 300px;
+height: 300px;
+}
+
+.textarea {
+width: calc(100%);
+padding: 8px;
+box-sizing: border-box;
+width: 315px;
+max-width: 315px;
+min-width: 315px;
+height: 200px;
+position: absolute;
+display: none;
+}
+.textarea.choisie {
+display: block;
+}
+
+.butbloc {
+width: 15%;
+height: 20px;
+padding: 0;
+margin-right: 5px;
+filter: brightness(50%);
+transition: filter 0.5s ease;
+}
+.butbloc.choisi {
+filter: brightness(100%);
+}
+
+#listdebloc {
+width: 100%;
+display: flex;  
+}
+
+

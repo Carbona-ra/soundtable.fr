@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Boite a son pour JDR</title>
+    <meta name="Soudboard et ambiance pour jeu de rôle" content="Soudboard et ambiance">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturCook&display=swap"> 
+    <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+    <h1>Soundboard</h1> 
+    <div class="arrière">
+    <img src="titre.png" class="titre">
+    <img src="blason.png" class="blason">
+    <img src="fonddécran.jpg" class="rempli">  
+    </div>
+    <div class="boutonnave">        
+        <a href="Page_forum/page2.html">
+        <button id="blink" class="align-top">Forum</button> 
+        </a> 
+    </div>
+    <button class="monBouton align-top" onclick="preloadAllMP3(); disparition();">Clique pour charger tous les sons</button>
+    <div class="bloc">
+        <div class="container center">
+            <button class="align-top button" id="invisible" alt="invisible" onclick="play_sound('invisible')">Invisible</button>
+            <button class="align-top button" id="bouledeFeu" alt="boulle de feu"onclick="play_sound('bouledefeu')">Boule de feu</button>
+            <button class="align-top button" id="LevelUP" alt="Montée de niveau" onclick="play_sound('LevelUP')">Level UP</button>
+            <button class="align-top button" id="hurlemenentderage" alt="hurlement de rage" onclick="play_sound('hurlemenentderage')">Hurlement de rage</button>
+            <button class="align-top button" id="coupdépée" alt="Coup d'épée"onclick="play_sound('coupdépée')">Coup d'épée métalique</button>
+            <button class="align-top button" id="coupdépéesanglant" alt="Coup d'épée sanglant" onclick="play_sound('coupdépéesanglant')">Coup d'épée sanglant</button>
+            <button class="align-top button" id="AnnonceHRP" alt="Annonce HRP" onclick="play_sound('AnnonceHRP')">Annonce HRP</button>
+            <button class="align-top button" id="criefemme" alt="Crie de femme" onclick="play_sound('criefemme')">Crie de femme</button>
+            <button class="align-top button" id="criedhomme" alt="Crie d'homme" onclick="play_sound('criedhomme')">Crie d'homme</button>
+            <button class="align-top button" id="Tonner" alt="Tonner"  onclick="play_sound('Tonner')">Tonner</button>
+            <button class="align-top button" id="Eboulement" alt="Eboulement" onclick="play_sound('Eboulement')">Eboulement</button>
+            <button class="align-top button" id="Reniflement" alt="Reniflement" onclick="play_sound('Reniflement')">Reniflement</button>
+            <button class="align-top button" id="Portailmagic" alt="Portail magic" onclick="play_sound('Portailmagic')">Portail magic</button>
+            <button class="align-top button" id="Auramagic" alt="Aura magic" onclick="play_sound('Auramagic')">Aura magic</button>
+            <button class="align-top button" id="Electriciter" alt="Electriciter" onclick="play_sound('Electriciter')">Electriciter</button>
+            <button class="align-top button" id="Portemétalique" alt="Porte métalique" onclick="play_sound('Portemétalique')">Porte métalique</button>
+            <button class="align-top button" id="Passagesecret" alt="Passage secret" onclick="play_sound('Passagesecret')">Passage secret</button>
+            <button class="align-top button" id="Rugissement" alt="Rugissement" onclick="play_sound('Rugissement')">Cri de bête</button>
+            <button class="align-top button" id="Explotion" alt="Eplotion" onclick="play_sound('Explotion')">Explotion</button>
+            <button class="align-top button" id="Verrecasser" alt="Verre casser" onclick="play_sound('Verrecasser')">Verre casser</button>
+            <button class="align-top button" id="Coupdefeu" alt="Coup de feu" onclick="play_sound('Coupdefeu')">Coup de feu</button>
+            <button class="align-top button" id="Corne" alt="Corne" onclick="play_sound('Corne')">Corne</button>  
+            <button class="align-top button" id="Bruitdevent" alt="Bruit de vent" onclick="play_sound('Bruitdevent')">Bruit de vent</button>
+            <button class="align-top button" id="Crachadeflamme" alt="Cracha de flamme" onclick="play_sound('Crachadeflamme')">Cracha de flamme</button> 
+            <button class="align-top button" id="Siflotement" alt="Siflotement" onclick="play_sound('Siflotement')">Siflotement</button>
+            <button class="align-top button" id="Chute" alt="Chute" onclick="play_sound('Chute')">Chute</button>   
+            <button class="align-top button" id="Bruitdenuit" alt="Bruit de nuit" onclick="play_sound('Bruitdenuit')">Bruit de la nuit</button> 
+            <button class="align-top button" id="Hurlementdeloups" alt="Hurlement de loups" onclick="play_sound('Hurlementdeloups')">Hurlement de loups</button>   
+            <button class="align-top button" id="Chauvesouris" alt="Chauve souris" onclick="play_sound('Chauvesouris')">Chauve souris</button>                             
+        </div>  
+    </div>
+    <div class="bargauche">        
+        <h2 class="titre2">Ambiance</h2>  
+         <div class="scrollable-section"> 
+            <iframe class="lecteurvideo" id="firstvod" src="https://www.youtube.com/embed/kmCAm4_hlyQ?si=EOpU7D3ToojPa3O3" title="YouTube video player" alt="Pluie tranquille"></iframe>
+            <iframe class="lecteurvideo" src="https://www.youtube.com/embed/pGw2ztHACxA?si=NW7znEi7gqkNIsmG" title="YouTube video player" alt="Musique de combat"></iframe>
+            <iframe class="lecteurvideo" src="https://www.youtube.com/embed/vyg5jJrZ42s?si=FJn-m0n9B7Pbdu8F" title="YouTube video player" alt="Ambiance de taverne"></iframe>
+            <iframe class="lecteurvideo" src="https://www.youtube.com/embed/aQqRSBMzDrU?si=kGM9uk6nCySWCG5E" title="YouTube video player" alt="Bruit de forêt vivante"></iframe>
+            <iframe class="lecteurvideo" src="https://www.youtube.com/embed/bxoRRobHtGM?si=rJIdGYMJDH__guPg" title="YouTube video player" alt="Ambiance exploration de dongon"></iframe>
+            <iframe class="lecteurvideo" src="https://www.youtube.com/embed/017yCQMfbzE?si=lNjMIU21rr020aVT" title="YouTube video player" alt="Ambiance inquitante"></iframe>
+        </div> 
+    </div>
+    <script src="java.js"></script>
+    <script src="lecteur.js"></script>
+</body>
+</html>
+
+
+

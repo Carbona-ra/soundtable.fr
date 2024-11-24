@@ -1,0 +1,97 @@
+.typo20px {
+    font-size: 20px;
+    font-family: "UnifrakturCook";
+    text-shadow: 
+    -1px -1px 0 rgba(255, 255, 255),
+    1px -1px 0 rgba(255, 255, 255),
+    -1px 1px 0 rgba(255, 255, 255),
+    1px 1px 0 rgba(255, 255, 255),
+    0 -1px 0 rgba(255, 255, 255),
+    0 -1px 0 rgba(255, 255, 255),
+    0 1px 0 rgba(255, 255, 255),
+    0 1px 0 rgba(255, 255, 255),
+    -1px 0 0 rgba(255, 255, 255),
+    1px 0 0 rgba(255, 255, 255),
+    -1px 0 0 rgba(255, 255, 255),
+    1px 0 0 rgba(255, 255, 255);
+}
+  
+.animbutton {
+  z-index: 2;
+  position: relative;
+  margin: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+  color: rgb(5, 19, 31);
+  background: linear-gradient(to right, #ce1a1a7c 0%, #ce1a1a7c 50%, #ffffff00 50%, #ffffff00 100%);
+  background-size: 220% 100%;
+  background-position: right bottom;
+  border: 2px solid #0d092b; 
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 5px;
+}
+
+.buttoncontainer.clicked {
+  animation: clickAnimation 0.5s;
+}
+.animbutton.clicked {
+    animation: clickAnimationB 0.5s;
+}
+@keyframes clickAnimationB {
+  0% {
+    background-position: right bottom;
+  }
+  100% {
+    background-position: left bottom;
+  }
+}
+
+@keyframes clickAnimation {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.buttoncontainer {  
+  flex-wrap: wrap;
+  position: relative;
+  display: flex;
+  cursor: pointer;
+  background: linear-gradient(to right, #ce1a1a7c 0%, #ce1a1a7c 50%, #ffffff00 50%, #ffffff00 100%);
+  background-size: 220% 100%;
+  background-position: right bottom;
+  cursor: pointer;
+}
+
+.imagebutton {
+  position: absolute;
+  z-index: 1;
+  margin: 10px;
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+}
+
+#blocsound {
+  left: 20%;
+  width: 60%;
+  flex-wrap: wrap;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  margin: 0;
+}

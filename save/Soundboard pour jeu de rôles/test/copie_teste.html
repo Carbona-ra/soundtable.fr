@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Boite a son pour JDR</title>
+    <meta name="Soudboard et ambiance pour jeu de rôle" content="Soudboard et ambiance">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="copie_test.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturCook&display=swap"> 
+    <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+
+<!--
+<div class="blocsound">
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="invisible" alt="invisible" onclick="play_sound('invisible')">Invisible</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="bouledeFeu" alt="boulle de feu"onclick="play_sound('bouledefeu')">Boule de feu</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="LevelUP" alt="Montée de niveau" onclick="play_sound('LevelUP')">Level UP</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="hurlemenentderage" alt="hurlement de rage" onclick="play_sound('hurlemenentderage')">Hurlement de rage</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="coupdépée" alt="Coup d'épée"onclick="play_sound('coupdépée')">Coup d'épée métalique</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="coupdépéesanglant" alt="Coup d'épée sanglant" onclick="play_sound('coupdépéesanglant')">Coup d'épée sanglant</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="AnnonceHRP" alt="Annonce HRP" onclick="play_sound('AnnonceHRP')">Annonce HRP</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="criefemme" alt="Crie de femme" onclick="play_sound('criefemme')">Crie de femme</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="criedhomme" alt="Crie d'homme" onclick="play_sound('criedhomme')">Crie d'homme</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Tonner" alt="Tonner"  onclick="play_sound('Tonner')">Tonner</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Eboulement" alt="Eboulement" onclick="play_sound('Eboulement')">Eboulement</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Reniflement" alt="Reniflement" onclick="play_sound('Reniflement')">Reniflement</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Portailmagic" alt="Portail magic" onclick="play_sound('Portailmagic')">Portail magic</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Auramagic" alt="Aura magic" onclick="play_sound('Auramagic')">Aura magic</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Electriciter" alt="Electriciter" onclick="play_sound('Electriciter')">Electriciter</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Portemétalique" alt="Porte métalique" onclick="play_sound('Portemétalique')">Porte métalique</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Passagesecret" alt="Passage secret" onclick="play_sound('Passagesecret')">Passage secret</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Rugissement" alt="Rugissement" onclick="play_sound('Rugissement')">Cri de bête</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Explotion" alt="Eplotion" onclick="play_sound('Explotion')">Explotion</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Verrecasser" alt="Verre casser" onclick="play_sound('Verrecasser')">Verre casser</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Coupdefeu" alt="Coup de feu" onclick="play_sound('Coupdefeu')">Coup de feu</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Corne" alt="Corne" onclick="play_sound('Corne')">Corne</button>  
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Bruitdevent" alt="Bruit de vent" onclick="play_sound('Bruitdevent')">Bruit de vent</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Crachadeflamme" alt="Cracha de flamme" onclick="play_sound('Crachadeflamme')">Cracha de flamme</button> 
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Siflotement" alt="Siflotement" onclick="play_sound('Siflotement')">Siflotement</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Chute" alt="Chute" onclick="play_sound('Chute')">Chute</button>   
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Bruitdenuit" alt="Bruit de nuit" onclick="play_sound('Bruitdenuit')">Bruit de la nuit</button> 
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Hurlementdeloups" alt="Hurlement de loups" onclick="play_sound('Hurlementdeloups')">Hurlement de loups</button>   
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+        <button class="animbutton typo20px" id="Chauvesouris" alt="Chauve souris" onclick="play_sound('Chauvesouris')">Chauve souris</button>                             
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+    </div>
+</div>
+ --> 
+
+<div id="blocsound">
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="invisible" alt="invisible" onclick="play_sound('invisible')">Invisible</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/invisible.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="bouledefeu" alt="boule de feu" onclick="play_sound('bouledefeu')">Boule de feu</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/bouldefeu.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="LevelUP" alt="Level UP" onclick="play_sound('LevelUP')">Level UP</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/LevelUP.jpg">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="hurlemenentderage" alt="hurlemenent de rage" onclick="play_sound('hurlemenentderage')">Hurlemenent de rage</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/hurlemenentderage.jpg">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="coupdépée" alt="coup d'épée" onclick="play_sound('coupdépée')">Coup d'épée métalique</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/coupdépée.jpg">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="coupdépéesanglant" alt="coup d'épée sanglant" onclick="play_sound('coupdépéesanglant')">Coup d'épée sanglant</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/coupdépéesanglant.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="AnnonceHRP" alt="Annonce HRP" onclick="play_sound('AnnonceHRP')">Annonce HRP</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/AnnonceHRP.jpg">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="criefemme" alt="crie femme" onclick="play_sound('criefemme')">Crie de femme</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/criefemme.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="criedhomme" alt="crie d'homme" onclick="play_sound('criedhomme')">Crie d'homme</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/criedhomme.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Tonner" alt="Tonner" onclick="play_sound('Tonner')">Tonner</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Tonner.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Eboulement" alt="Eboulement" onclick="play_sound('Eboulement')">Eboulement</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Eboulement.jpg">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Reniflement" alt="Reniflement" onclick="play_sound('Reniflement')">Reniflement</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Reniflement.webp">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Portailmagic" alt="Portailmagic" onclick="play_sound('Portailmagic')">Portailmagic</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Portailmagic.webp">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Auramagic" alt="Auramagic" onclick="play_sound('Auramagic')">Auramagic</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Auramagic.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Electriciter" alt="Electriciter" onclick="play_sound('Electriciter')">Electriciter</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Electriciter.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Portemétalique" alt="Portemétalique" onclick="play_sound('Portemétalique')">Porte métalique</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Portemétalique.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Passagesecret" alt="Passagesecret" onclick="play_sound('Passagesecret')">Passage secret</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Passagesecret.png">
+    </div> 
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Rugissement" alt="Rugissement" onclick="play_sound('Rugissement')">Rugissement</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Rugissementannimal.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Explotion" alt="Explotion" onclick="play_sound('Explotion')">Explotion</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Explotion.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Verrecasser" alt="Verrecasser" onclick="play_sound('Verrecasser')">Verre casser</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Verrecasser.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Passagesecret" alt="Coupdefeu" onclick="play_sound('Coupdefeu')">Coup de feu</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/coupdefeu.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Corne" alt="Corne" onclick="play_sound('Corne')">Corne</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Corne.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Bruitdevent" alt="Bruit de vent" onclick="play_sound('Bruitdevent')">Bruit de vent</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Bruitdevent.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Crachadeflamme" alt="Cracha de flamme" onclick="play_sound('Crachadeflamme')">Cracha de flamme</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Crachadeflamme.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Siflotement" alt="Siflotement" onclick="play_sound('Siflotement')">Siflotement</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Siflotement.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Chute" alt="Chute" onclick="play_sound('Chute')">Chute</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Chute.png">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Bruitdenuit" alt="Bruit de nuit" onclick="play_sound('Bruitdenuit')">Bruit de nuit</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Bruitdenuit.png">
+    </div>   
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Hurlementdeloups" alt="Hurlement de loups" onclick="play_sound('Hurlementdeloups')">Hurlement de loups</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Hurlementdeloups.jpg">
+    </div>
+    <div class="buttoncontainer">
+        <button class="animbutton typo20px" id="Chauvesouris" alt="Chauve souris" onclick="play_sound('Chauvesouris')">Chauve souris</button>
+        <img class="imagebutton" src="Audio_avec_leur_image/Chauvesouris.png">
+    </div>
+</div>
+
+
+<script src="java.js"></script>
+<script src="lecteur.js"></script>
+
+</body>
+</html>

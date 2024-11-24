@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Salon de discution</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=UnifrakturCook&display=swap"> 
+</head>
+<body>
+    <div class="arrière">
+    <img src="../fonddécran.jpg" class="rempli">   
+    </div>    
+    <div class="container">
+        <a href="../index.html">
+            <button id="flop" class="align-top">Retourner sur la Soundboard</button> 
+        </a>
+    </div>
+    <form id="messageForm">
+        <label for="username">Nom d'utilisateur:</label>
+        <input type="text" id="username" required>
+        <label for="message">Message:</label>
+        <textarea id="message" required></textarea>
+        <button type="button" onclick="sendMessage()">Envoyer</button>
+        
+        <div class="message-sender" id="messages"></div>
+        
+    </form>
+
+    <audio id="notificationSound" preload="auto">
+        <source src="../Audio_avec_leur_image/annonceHRP.mp3" type="audio/mp3">
+    </audio>
+    <script src="blog.js"></script>
+</body>
+</html>

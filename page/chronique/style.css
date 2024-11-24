@@ -1,0 +1,315 @@
+.arrière {
+  margin-top: -60px;
+  height: 100%;
+  position: absolute;
+}
+ 
+.blason {
+  position: absolute;
+  transform: scale(0.5);
+  margin-left: -25px;
+  margin-top: -420px;
+  z-index: 1;
+ }
+
+.titre {
+  position: absolute;
+  margin-left: -210px;
+  margin-top: 0;
+  z-index: 2;
+  transform: scale(0.40);
+}
+ 
+.rempli {
+  position: fixed;
+  background-position: center;
+  top: -10px;
+  left: -10px;
+  height: 105%; 
+  filter: blur(2px); 
+}
+
+.z-10000{
+  z-index: 1000000;
+}
+
+.disparut {
+  transition: opacity 0.5s ease-in-out, display 0s 0.5s;
+  opacity: 0;
+  display: none;
+}
+
+.monBouton {
+  position: absolute;
+  z-index: 2000;
+  top: 43.5%;
+  left: 44.3%;
+  height: 200px;
+  width: 200px;
+  border: 2px solid rgb(82, 62, 35);
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: opacity 0.5s ease-in-out, display 0s 0.5s;
+ 
+}
+
+.boutonnave {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+}
+
+.blink {
+  z-index: 1;
+  width: fit-content;
+  width: 75px; 
+  height: 50px;
+  border-radius: 4px;
+  border: 2px solid rgb(82, 62, 35);
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.align-top {
+  font-size: 20px;
+    font-family: "UnifrakturCook";
+    text-shadow: 
+    -1px -1px 0 rgba(255, 255, 255),
+    1px -1px 0 rgba(255, 255, 255),
+    -1px 1px 0 rgba(255, 255, 255),
+    1px 1px 0 rgba(255, 255, 255),
+    0 -1px 0 rgba(255, 255, 255),
+    0 -1px 0 rgba(255, 255, 255),
+    0 1px 0 rgba(255, 255, 255),
+    0 1px 0 rgba(255, 255, 255),
+    -1px 0 0 rgba(255, 255, 255),
+    1px 0 0 rgba(255, 255, 255),
+    -1px 0 0 rgba(255, 255, 255),
+    1px 0 0 rgba(255, 255, 255);
+}
+
+.titre3 {
+  line-height: 45px; 
+  text-align: center;
+  margin: auto;
+  color: black;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  font-family: "UnifrakturCook";
+  text-shadow: 
+  -1px -1px 0 rgba(255, 255, 255),
+  1px -1px 0 rgba(255, 255, 255),
+  -1px 1px 0 rgba(255, 255, 255),
+  1px 1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255);
+}
+
+h1 {
+  position: absolute;
+  font-size: 40px;
+  font-family: "UnifrakturCook";
+  z-index: 11;
+  top: 0;
+  margin-top: 20px;
+  margin-left: 28%;
+  text-shadow: 
+  -1px -1px 0 rgba(255, 255, 255),
+  1px -1px 0 rgba(255, 255, 255),
+  -1px 1px 0 rgba(255, 255, 255),
+  1px 1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255);
+}
+
+.titre2 {
+  position: fixed;
+  font-size: 50px;
+  text-align: center, top;
+  font-family: "UnifrakturCook";
+  text-shadow: 
+  -1px -1px 0 rgba(255, 255, 255),
+  1px -1px 0 rgba(255, 255, 255),
+  -1px 1px 0 rgba(255, 255, 255),
+  1px 1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255);
+  margin-top: 0; 
+  top: 20px; 
+} 
+
+.lecteurvideo {
+  width: 250px;
+  height: 50px;
+  z-index: 1;
+  position: relative;
+  border: 2px solid rgb(82, 62, 35);
+  border-radius: 30px;
+  transition: opacity 0.5s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+#firstvod {
+  margin-top: 360px;
+  z-index: 1;
+}
+
+.agrandi {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+.bargauche {
+  width: 22%;
+  height: 100%;
+  margin-top: -2px;
+  position: fixed; 
+  top: 0; 
+  right: 0; 
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;  
+  background-color: rgba(0, 0, 0, 0.493);
+  border: 2px solid rgb(82, 62, 35);
+  align-items: center; 
+  justify-content: center; 
+}
+
+.scrollable-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  box-sizing: border-box;
+  max-height: 800px;
+  width: 300px;
+  scroll-behavior: smooth;
+  margin-top: -100%;
+  margin-left: 18px;
+  position: relative
+}
+
+.typo20px {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 20px;
+  font-family: "UnifrakturCook";
+  text-shadow: 
+  -1px -1px 0 rgba(255, 255, 255),
+  1px -1px 0 rgba(255, 255, 255),
+  -1px 1px 0 rgba(255, 255, 255),
+  1px 1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255);
+}
+
+.animbutton {
+z-index: 2;
+position: relative;
+margin: 10px;
+overflow: hidden;
+cursor: pointer;
+width: 100px;
+height: 100px;
+color: rgb(5, 19, 31);
+background: linear-gradient(to right, #ce1a1a7c 0%, #ce1a1a7c 50%, #ffffff00 50%, #ffffff00 100%);
+background-size: 220% 100%;
+background-position: right bottom;
+border: 2px solid rgb(82, 62, 35); 
+display: flex;
+align-items: flex-end;
+justify-content: center;
+padding: 5px;
+}
+
+.buttoncontainer.clicked {
+animation: clickAnimation 0.5s;
+}
+.animbutton.clicked {
+  animation: clickAnimationB 0.5s;
+}
+@keyframes clickAnimationB {
+0% {
+  background-position: right bottom;
+}
+100% {
+  background-position: left bottom;
+}
+}
+
+@keyframes clickAnimation {
+0% {
+  transform: scale(1);
+}
+10% {
+  transform: scale(1.1);
+}
+100% {
+  transform: scale(1);
+}
+}
+
+.buttoncontainer {  
+flex-wrap: wrap;
+position: relative;
+display: flex;
+cursor: pointer;
+background: linear-gradient(to right, #ce1a1a7c 0%, #ce1a1a7c 50%, #ffffff00 50%, #ffffff00 100%);
+background-size: 220% 100%;
+background-position: right bottom;
+cursor: pointer;
+}
+
+.imagebutton {
+position: absolute;
+z-index: 1;
+margin: 10px;
+cursor: pointer;
+width: 100px;
+height: 100px;
+}
+
+#blocsound {
+margin-top: 5%;
+left: 26.8%;
+width: 50%;
+flex-wrap: wrap;
+position: relative;
+display: flex;
+justify-content: center;
+}
