@@ -1,0 +1,451 @@
+/* Reset de base pour une mise en page propre */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3, h4 {
+    text-align: center;
+    color: #222;
+}
+
+select, button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#addToListBtn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#addToListBtn:hover {
+    background-color: #45a049;
+}
+
+/* Style pour #unitDetails */
+#unitDetails {
+    margin: 20px 0;
+}
+
+#unitDetails img {
+    display: block;
+    margin: 10px auto;
+    max-width: 150px;
+    border-radius: 5px;
+}
+
+#unitDetails .stats-table {
+    width: 100%;
+    margin: 10px 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#unitDetails .stats-table th {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #222;
+}
+
+#unitDetails .stats-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+#unitDetails .stats-table tr:last-child td {
+    border-bottom: none;
+}
+
+#unitDetails .stats-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Style pour les unités sélectionnées */
+#selectedUnitsList {
+    width: 100%;
+}
+
+.selected-unit {
+    padding: 0px 15px;
+    width: 100%;
+    height: 110px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: 2px solid #333;
+    border-radius: 8px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: height 0.3s ease, box-shadow 0.3s ease;
+}
+
+.selected-unit span {
+    color: black;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
+}
+
+.selected-unit.expanded {
+    height: auto;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.selected-unit-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.selected-unit-header-solo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.unit-details {
+    color: black;
+    padding: 15px;
+    border-radius: 0 0 8px 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.unit-details h3, .unit-details h4 {
+    color: black;
+    margin: 10px 0;
+}
+
+.unit-details .stats-table {
+    width: 100%;
+    margin: 10px 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.unit-details .stats-table th {
+    background-color: #444;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #333;
+}
+
+.unit-details .stats-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+    color: black;
+}
+
+.unit-details .stats-table tr:last-child td {
+    border-bottom: none;
+}
+
+.unit-details .stats-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+    .selected-unit {
+        height: 120px;
+    }
+    .unit-details {
+        padding: 10px;
+    }
+    .stats-table th, .stats-table td {
+        padding: 6px;
+        font-size: 12px;
+    }
+}
+
+/* Style pour #armyControls */
+#armyControls {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style de base pour les boutons */
+button {
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50; /* Vert par défaut, ajustez selon votre thème */
+    color: white;
+    transition: transform 0.2s ease, background-color 0.2s ease; /* Transition fluide */
+}
+
+#currentUserDisplay {
+    text-align: center;
+}
+
+h1 {
+    font-size: 26px;
+}
+h2 {
+    font-size: 22px;
+}
+h3 {
+    font-size: 20px;
+}
+/* Animation au clic */
+button:active {
+    animation: buttonPulse 0.3s ease; /* Déclenche l'animation au clic */
+}
+
+/* Animation au survol (optionnel) */
+button:hover {
+    background-color: #45a049; /* Légère variation de couleur */
+    transform: scale(1.05); /* Agrandissement léger */
+}
+
+/* Définition de l'animation "pulse" */
+@keyframes buttonPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95); /* Rétrécit légèrement */
+    }
+    100% {
+        transform: scale(1); /* Revient à la taille normale */
+    }
+}
+
+/* Style spécifique pour les boutons de suppression (optionnel) */
+.deleteArmyBtn {
+    background-color: #f44336; /* Rouge pour suppression */
+    margin-left: 5px;
+}
+
+#loginForm div, .headerArmy div {
+    display: flex;
+    justify-content: center;
+}
+#loginForm div button, #loginForm div input ,.headerArmy div input, .headerArmy div p, .headerArmy div button {
+    margin: 15px 15px;
+}
+.headerArmy p {
+    align-self: center;
+}
+
+#selectorUnit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.deleteArmyBtn:hover {
+    background-color: #da190b;
+}
+
+#armyControls div {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne sur petits écrans */
+    gap: 15px; /* Espacement entre les éléments internes */
+    justify-content: center;
+    align-items: center;
+}
+
+#armyControls label {
+    display: none;
+    font-weight: bold;
+    color: #333;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+#armyControls input[type="text"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 200px; /* Largeur fixe pour cohérence */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#armyControls input[type="text"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
+}
+
+#armyControls input[type="text"]::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+#armyControls button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#armyControls #saveArmyBtn {
+    color: white;
+}
+
+#armyControls #saveArmyBtn:hover {
+    transform: translateY(-2px); /* Légère élévation au survol */
+}
+
+#armyControls #loadArmyBtn {
+    color: white;
+}
+
+#armyControls #loadArmyBtn:hover {
+    transform: translateY(-2px);
+}
+
+#armyControls select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 250px; /* Plus large pour les noms d’armée */
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+#armyControls select:focus {
+    border-color: #2196F3;
+    outline: none;
+}
+
+#armyControls select:hover {
+    border-color: #bbb;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .login-section, .main-interface {
+        padding: 10px;
+    }
+
+    .selected-unit {
+        max-width: 100%;
+    }
+
+    .army-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    input[type="text"], input[type="password"], select {
+        max-width: 100%;
+    }
+}
+
+.remove-unit-btn {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.remove-unit-btn:hover {
+    background-color: #cc0000;
+}
+
+.skibidibapbap {
+    display: flex;
+    gap: 10px;
+}
+
+.login-section {
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+}
+.main-interface {
+    padding: 20px;
+}
+.army-controls {
+    margin: 10px 0;
+}
+
+.selected-unit {
+    cursor: move; /* Change le curseur pour indiquer que c'est déplaçable */
+    user-select: none; /* Empêche la sélection de texte pendant le déplacement */
+    margin: 5px; /* Ajoute un peu d'espace entre les unités */
+}
+
+.selected-unit:hover {
+    opacity: 0.9; /* Légère transparence au survol pour feedback visuel */
+}
+
+.langBtn {
+    position: absolute;
+    top : 10px;
+    right: 10px;
+}
+
+.langBtn a, .langBtn span{
+    color: black;
+    font-size: 20px;
+}

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/webp" href="/asset/favicon.webp">
-    <title>Soundtable - Soundboard JDR et Outils de Jeux de Société</title>
-    <meta name="description" content="Soundtable propose des soundboards gratuits pour vos jeux de rôle (JDR) et des outils pour améliorer vos parties de jeux de société. Plongez dans des ambiances immersives avec nos bruitages et effets sonores adaptés à chaque univers !">
-    <meta name="keywords" content="JDR, soundboard gratuit, ambiance jeux de rôle, outils jeux de société, bruitage, RPG, sons immersifs, effets sonores, Chroniques Oubliées, Star Wars, Warhammer">
+    <title>Soundtable - Soundboard RPG and Board Game Tools</title>
+    <meta name="description" content="Soundtable offers free soundboards for your role-playing games (RPG) and tools to enhance your board game sessions. Dive into immersive atmospheres with sound effects tailored to each universe!">
+    <meta name="keywords" content="RPG, free soundboard, role-playing game ambiance, board game tools, sound effects, immersive sounds, RPG tools, Chroniques Oubliées, Star Wars, Warhammer">
     <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
     <style>
         body {
@@ -120,38 +120,38 @@
     </style>
 </head>
 <body>
-    <h1>Soundtable - Soundboard et Outils pour Jeux de Rôle</h1>
-    <p class="blackP">Découvrez nos soundboards gratuits pour vos parties de JDR et jeux de société. Plongez dans des ambiances sonores immersives et améliorez vos expériences de jeu avec nos outils spécialisés.</p>
+    <h1>Soundtable - Soundboards and Tools for Role-Playing Games</h1>
+    <p class="blackP">Discover our free soundboards for your RPG and board game sessions. Immerse yourself in sound atmospheres and enhance your gaming experience with our specialized tools.</p>
 
     <div class="langBtn">
-        <a aria-label="aller à la version" href="https://soundtable.fr"><bold>FR</bold></a>
+        <a aria-label="Go to FR version" href="https://soundtable.fr">FR</a>
         <span>/</span>
-        <a aria-label="aller à la version anglaise" href="https://soundtable.fr/en"><bold>EN</bold></a>
+        <a aria-label="Go to EN version" href="https://soundtable.fr/en"><bold>EN</bold></a>
     </div>
 
     <div class="container">
         <div class="cards-row">
             <div class="card">
-                <img src="/asset/soundtable.png" alt="Soundboard Chroniques Oubliées">
+                <img src="/asset/soundtable.png" alt="Chroniques Oubliées Soundboard">
                 <h2 class="card-title">Chroniques Oubliées</h2>
-                <p class="card-description">Plongez dans l’univers des Chroniques Oubliées avec notre soundboard JDR et ambiance immersive.</p>
-                <a href="/chroniques-oubliees">Explorer</a>
+                <p class="card-description">Immerse yourself in the world of Chroniques Oubliées with our RPG soundboard and immersive ambiance.</p>
+                <a href="/chroniques-oubliees">Explore</a>
             </div>
 
             <div class="card">
-                <img src="/asset/starwars-preview.png" alt="Soundboard Star Wars">
+                <img src="/asset/starwars-preview.png" alt="Star Wars Soundboard">
                 <h2 class="card-title">Star Wars</h2>
-                <p class="card-description">Vivez des aventures galactiques avec des effets sonores immersifs pour l’univers Star Wars.</p>
-                <a href="/starwars">Explorer</a>
+                <p class="card-description">Embark on galactic adventures with immersive sound effects for the Star Wars universe.</p>
+                <a href="/starwars">Explore</a>
             </div>
         </div>
 
         <div class="cards-row">
             <div class="card">
-                <img src="/asset/image-warhammer.png" alt="Outils Warhammer">
-                <h2 class="card-title">Outils Warhammer</h2>
-                <p class="card-description">Préparez vos batailles avec nos outils pour Warhammer et jeux de figurines.</p>
-                <a href="/warhammeurArmise">Explorer</a>
+                <img src="/asset/image-warhammer.png" alt="Warhammer Tools">
+                <h2 class="card-title">Warhammer Tools</h2>
+                <p class="card-description">Prepare for your battles with our tools for Warhammer and tabletop games.</p>
+                <a href="/warhammer">Explore</a>
             </div>
         </div>
     </div>

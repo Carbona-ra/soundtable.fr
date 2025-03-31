@@ -11,18 +11,34 @@
     }
 
     $mp3Files = [
-        "annonce-HRP.mp3", "Aura-magic.mp3", "boule-de-feu.mp3", "Bruit-de-vent.mp3",
-        "Chauvesouris.mp3", "Corne.mp3", "coup-de-feu.mp3", "coup-dépée.mp3",
-        "coup-dépée-sanglant.mp3", "Cracha-de-flamme.mp3", "crie-dhomme.mp3",
-        "crie-femme.mp3", "Eboulement.mp3", "Electriciter.mp3",
-        "levelUP.mp3", "Passage-secret.mp3", "Portail-magic.mp3", "Porte-métalique.mp3",
-        "Reniflement.mp3", "Rugissement.mp3", "Siflotement.mp3", "Tonner.mp3",
-        "Verre-casser.mp3", "Bruit-de-nuit.mp3", "hurlemenent-de-rage.mp3",
-        "hurlement-de-loups.mp3", "invisible.mp3",
-        "Machine-Mecanique.mp3", "aplaudissement.mp3", "Porte-qui-grince.mp3",
-        "Grincement-bois.mp3", "artefact.mp3", "Crie-de-groupe.mp3", "flèche.mp3",
-        "Volée-de-flèche.mp3", "Onde-De-Choc.mp3", "soupir-mortelle.mp3", "coeur-battant.mp3",
-        "attack-mental.mp3"
+        "Wookie.mp3",
+        "Whosh-sabre-laser.mp3",
+        "TIE.mp3",
+        "Tir-TIE.mp3",
+        "Speeder.mp3",
+        "Speeders-survol.mp3",
+        "Vaisseaux-survol.mp3",
+        "Rire-narquois.mp3",
+        "Ouverture-sabre-laser.mp3",
+        "Impacte-de-blaster.mp3",
+        "Homme-des-sables.mp3",
+        "Grosse-explosion.mp3",
+        "Fermeture-sabre-laser.mp3",
+        "Explosion.mp3",
+        "Electriciter-static.mp3",
+        "Droide-qui-hurle.mp3",
+        "Droide-pas-content.mp3",
+        "Droide-intriger.mp3",
+        "Creature-mourante.mp3",
+        "Coup-de-sabre-laser.mp3",
+        "Bombe-vibrante.mp3",
+        "Blaster.mp3",
+        "Bip-boup-bip.mp3",
+        "Autruche-spacial.mp3",
+        "Atterrissage.mp3",
+        "Arc-electrique.mp3",
+        "Appel-radio.mp3",
+        "Alerte-imperiale.mp3"
     ];
     
     $basePath = "/page/starwars/sound-and-picture/";
@@ -32,8 +48,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Soundboard pour JDR fantasy</title>
-    <meta name="Soundboard pour JDR fantasy avec ambiance pour jeux de rôle" content="Soudboard et ambiance">
+    <title>Soundboard pour JDR futuriste</title>
+    <meta name="Soundboard pour JDR futuriste avec ambiance pour jeux de rôle" content="Soudboard et ambiance">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="icon" type="image/webp" href="/asset/favicon.webp">
@@ -46,13 +62,13 @@
 <body>
 
     <div class="arrière">
-        <img src="/page/chronique/fonddécran.jpg" class="rempli"> 
+        <img src="/asset/bgstarwars.jpg" class="remplistarwars"> 
     </div>
 
     <div class="bargauche">             
         <div class="logo">
-            <img src="/page/chronique/titre.png" class="titre">
-            <img src="/page/chronique/blason.png" class="blason">
+            <img src="/asset/textstarwars.webp" class="titrest">
+            <img src="/asset/blasonStarwars.png" class="blasonst">
             <div class="boutonnave">        
                 <!-- <a href="/page/chronique/Page_forum/SoundtableForum.php" aria-label="Aller au forum">
                 <button class="align-top blink">Forum</button> 
@@ -119,11 +135,12 @@
             </div>
         </div>
         <div id="blocsound">
+
             <?php 
                 foreach ($mp3Files as $file) {
                     $fileName = pathinfo($file, PATHINFO_FILENAME);
                     $filePath = $basePath . $file; 
-                    $imagePath = "/page/chronique/sound-and-picture/" . $fileName . ".webp"; 
+                    $imagePath = "/page/starwars/sound-and-picture/" . $fileName . ".webp"; 
                     ?>
                     <div class="buttoncontainer">
                         <button class="animbutton typo20px sound-button" data-sound="<?php echo htmlspecialchars($filePath); ?>" onclick="play_sound('<?php echo htmlspecialchars($filePath); ?>')">
@@ -136,22 +153,56 @@
             ?>
         </div>
     </div>
-
-
+    
     <button id="btn-ambiance">> fermer menu</button> 
     <div class="bardroite">
         <h2 class="titre2">Ambiance</h2>  
          <div class="scrollable-section"> 
-            <iframe class="lecteurvideo" id="firstvod" src="https://www.youtube.com/embed/kmCAm4_hlyQ?si=EOpU7D3ToojPa3O3" title="YouTube video player" alt="Pluie tranquille"></iframe>
-            <iframe class="lecteurvideo" src="https://www.youtube.com/embed/pGw2ztHACxA?si=NW7znEi7gqkNIsmG" title="YouTube video player" alt="Musique de combat"></iframe>
-            <iframe class="lecteurvideo" src="https://www.youtube.com/embed/vyg5jJrZ42s?si=FJn-m0n9B7Pbdu8F" title="YouTube video player" alt="Ambiance de taverne"></iframe>
-            <iframe class="lecteurvideo" src="https://www.youtube.com/embed/aQqRSBMzDrU?si=kGM9uk6nCySWCG5E" title="YouTube video player" alt="Bruit de forêt vivante"></iframe>
-            <iframe class="lecteurvideo" src="https://www.youtube.com/embed/bxoRRobHtGM?si=rJIdGYMJDH__guPg" title="YouTube video player" alt="Ambiance exploration de dongon"></iframe>
-            <iframe class="lecteurvideo" src="https://www.youtube.com/embed/017yCQMfbzE?si=lNjMIU21rr020aVT" title="YouTube video player" alt="Ambiance inquitante"></iframe>
-            <iframe class="lecteurvideo" src="https://www.youtube.com/embed/sHA_4wfQhE8" title="YouTube video player" alt="Debut de jdr"></iframe>
+            <iframe class="lecteurvideo firstvod" id="player1" src="https://www.youtube.com/embed/7H8kDHEiuKU" title="YouTube video player" alt="Pluie tranquille"></iframe>
+            <iframe  id="player2" class="lecteurvideo" src="https://www.youtube.com/embed/Ye1doOBI5KU" title="YouTube video player" alt="Musique de combat"></iframe>
+            <iframe id="player3" class="lecteurvideo" src="https://www.youtube.com/embed/M9awpsfvDxY" title="YouTube video player" alt="Ambiance de taverne"></iframe>
+            <iframe id="player4" class="lecteurvideo" src="https://www.youtube.com/embed/7IrLnBh2p4o" title="YouTube video player" alt="Bruit de forêt vivante"></iframe>
+            <iframe id="player5" class="lecteurvideo" src="https://www.youtube.com/embed/_X1IsGW9ApU" title="YouTube video player" alt="Ambiance exploration de dongon"></iframe>
+            <iframe id="player6" class="lecteurvideo" src="https://www.youtube.com/embed/Y069SX7CdiI" title="YouTube video player" alt="Ambiance inquitante"></iframe>
+            <iframe id="player7" class="lecteurvideo" src="https://www.youtube.com/embed/41ak2jr55fE" title="YouTube video player" alt="Debut de jdr"></iframe>
         </div> 
     </div>
-    
+    <!-- <script>
+        const videos = [
+            { id: "7H8kDHEiuKU", title: "Pluie tranquille" },
+            { id: "Ye1doOBI5KU", title: "Musique de combat" },
+            { id: "M9awpsfvDxY", title: "Ambiance de taverne" },
+            { id: "7IrLnBh2p4o", title: "Bruit de forêt vivante" },
+            { id: "_X1IsGW9ApU", title: "Ambiance exploration de donjon" },
+            { id: "Y069SX7CdiI", title: "Ambiance inquiétante" },
+            { id: "41ak2jr55fE", title: "Début de JDR" }
+        ];
+
+        let players = [];
+
+        function onYouTubeIframeAPIReady() {
+            videos.forEach((video, index) => {
+                players[index] = new YT.Player(`player${index + 1}`, {
+                    height: '0', 
+                    width: '100%',
+                    videoId: video.id,
+                    playerVars: {
+                        'controls': 0,
+                        'rel': 0,
+                        'showinfo': 0
+                    },
+                    events: {
+                        'onReady': onPlayerReady
+                    }
+                });
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.setVolume(20); // Volume à 20%
+            event.target.playVideo();   // Lance la lecture automatiquement (optionnel)
+        }
+    </script> -->
     <script src="/asset/scripts/script-front.js"></script>
 
 </body>

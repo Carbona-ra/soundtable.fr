@@ -29,16 +29,12 @@
     </form>
 
     <?php
-    // Include the PHP script for database interaction
-    require 'forum.php'; // Make sure the path is correct
+    require 'forum.php'; 
 
-    // Check if form is submitted
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Retrieve user input
         $username = $_POST['username'];
         $message = $_POST['message'];
     
-        // Insert the new message into the database
         insertDiscussion($conn, $username, $message);
     }
     ?>

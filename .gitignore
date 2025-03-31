@@ -1,0 +1,6 @@
+/asset
+.env
+/api/config.php
+.vscode/
+.idea/
+/testlocal
