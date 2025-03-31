@@ -4,3 +4,5 @@
 .vscode/
 .idea/
 /testlocal
+/page/starwars/sound-and-picture/*
+/page/chronique/Audio_avec_leur_image/*
