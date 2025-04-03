@@ -141,10 +141,11 @@
                     $fileName = pathinfo($file, PATHINFO_FILENAME);
                     $filePath = $basePath . $file; 
                     $imagePath = "/page/starwars/sound-and-picture/" . $fileName . ".webp"; 
+                    $displayName = str_replace("-", " ", $fileName); // Remplace les "-" par des espaces
                     ?>
                     <div class="buttoncontainer">
                         <button class="animbutton typo20px sound-button" data-sound="<?php echo htmlspecialchars($filePath); ?>" onclick="play_sound('<?php echo htmlspecialchars($filePath); ?>')">
-                            <?php echo htmlspecialchars($fileName); ?>
+                            <?php echo htmlspecialchars($displayName); ?>
                         </button>
                         <img class="imagebutton" src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($fileName); ?>">
                     </div>
