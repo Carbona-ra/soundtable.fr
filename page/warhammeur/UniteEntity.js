@@ -1190,6 +1190,33 @@ function initWarhammerModels() {
 }
 
 
+// Fonction pour suivre une page
+function trackPageView(pageName) {
+    $.ajax({
+        url: 'https://soundtable.fr/api/armies.php', // Remplacez par l'URL de votre API
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            action: 'track-page-view',
+            pageName: pageName
+        }),
+        success: function(response) {
+            console.log('Réponse du serveur :', response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Erreur AJAX :', status, error);
+        }
+    });
+}
+// Récupérer le chemin de l'URL actuelle
+var currentPage = window.location.pathname || 'unknown';
+// Nettoyer le chemin (supprimer le "/" initial et l'extension .html ou .php si présente)
+currentPage = currentPage.replace(/^\/|(\.html|\.php)$/g, '') || 'index'; // Si vide, utiliser "index"
+
+
+
+
 $(document).ready(function () {
     initWarhammerModels();
+    trackPageView(currentPage);
 });

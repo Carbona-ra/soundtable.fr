@@ -1,0 +1,555 @@
+.arrière {
+  margin-top: -60px;
+  height: 100%;
+  position: absolute;
+}
+
+/* body {
+  cursor: url('../../asset/normal-cursor.cur'), auto;
+}
+a, button, div, iframe, textarea, input {
+  cursor: url('../../asset/normal-cursor.cur'), pointer !important;
+} */
+ 
+.blason {
+  position: absolute;
+  transform: scale(0.5);
+  margin-left: -185px;
+  margin-top: -420px;
+  z-index: 1;
+ }
+
+ .blasonst {
+  position: absolute;
+    transform: scale(0.3);
+    margin-left: -273px;
+    margin-top: -406px;
+    z-index: 1;
+ }
+
+ .titrest {
+  position: absolute;
+    margin-left: -417px;
+    margin-top: -79px;
+    z-index: 2;
+    transform: scale(0.3);
+}
+
+.titre {
+  position: absolute;
+  margin-left: -360px;
+  margin-top: 0;
+  z-index: 2;
+  transform: scale(0.40);
+}
+ 
+.rempli {
+  position: fixed;
+  background-position: center;
+  top: -10px;
+  left: -10px;
+  height: 105%; 
+  filter: blur(2px); 
+}
+
+.remplistarwars {
+  position: fixed;
+  top: -10px;
+  left: -10px;
+  width: 105%;
+  height: 105%;
+  object-fit: cover;       
+  object-position: center; 
+  filter: blur(2px);
+}
+
+.z-10000{
+  z-index: 1000000;
+}
+
+.disparut {
+  transition: opacity 0.5s ease-in-out, display 0s 0.5s;
+  opacity: 0;
+  display: none;
+}
+
+.monBouton {
+  position: absolute;
+  z-index: 2000;
+  top: 43.5%;
+  left: 44.3%;
+  height: 200px;
+  width: 200px;
+  border: 2px solid rgb(82, 62, 35);
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: opacity 0.5s ease-in-out, display 0s 0.5s;
+ 
+}
+
+.boutonnave {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+}
+
+.nav-btn {
+  z-index: 1;
+  width: 90px; 
+  height: 40px;
+  border: 2px solid rgb(82, 62, 35);
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  font-size: 20px;
+  font-family: "UnifrakturCook";
+  text-shadow: 
+  -1px -1px 0 rgba(255, 255, 255),
+  1px -1px 0 rgba(255, 255, 255),
+  -1px 1px 0 rgba(255, 255, 255),
+  1px 1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255);
+}
+
+.blink {
+  z-index: 1;
+  width: fit-content;
+  width: 75px; 
+  height: 50px;
+  border-radius: 4px;
+  border: 2px solid rgb(82, 62, 35);
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.align-top {
+  font-size: 20px;
+    font-family: "UnifrakturCook";
+    text-shadow: 
+    -1px -1px 0 rgba(255, 255, 255),
+    1px -1px 0 rgba(255, 255, 255),
+    -1px 1px 0 rgba(255, 255, 255),
+    1px 1px 0 rgba(255, 255, 255),
+    0 -1px 0 rgba(255, 255, 255),
+    0 -1px 0 rgba(255, 255, 255),
+    0 1px 0 rgba(255, 255, 255),
+    0 1px 0 rgba(255, 255, 255),
+    -1px 0 0 rgba(255, 255, 255),
+    1px 0 0 rgba(255, 255, 255),
+    -1px 0 0 rgba(255, 255, 255),
+    1px 0 0 rgba(255, 255, 255);
+}
+
+.titre3 {
+  line-height: 45px; 
+  text-align: center;
+  margin: auto;
+  color: black;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  font-family: "UnifrakturCook";
+  text-shadow: 
+  -1px -1px 0 rgba(255, 255, 255),
+  1px -1px 0 rgba(255, 255, 255),
+  -1px 1px 0 rgba(255, 255, 255),
+  1px 1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255);
+}
+
+h1 {
+  z-index: 1000;
+  font-size: 40px;
+  font-family: "UnifrakturCook";
+  text-shadow: 
+  -1px -1px 0 rgba(255, 255, 255),
+  1px -1px 0 rgba(255, 255, 255),
+  -1px 1px 0 rgba(255, 255, 255),
+  1px 1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255);
+}
+
+.titre2 {
+  position: fixed;
+  font-size: 50px;
+  text-align: center, top;
+  font-family: "UnifrakturCook";
+  text-shadow: 
+  -1px -1px 0 rgba(255, 255, 255),
+  1px -1px 0 rgba(255, 255, 255),
+  -1px 1px 0 rgba(255, 255, 255),
+  1px 1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255);
+  margin-top: 0; 
+  top: 20px; 
+} 
+
+
+
+.agrandi {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+.bloc-central{
+  position: absolute;
+  top: 0;
+  width: calc(100vw - 700px); 
+  left: 340px; 
+  right: 340px; 
+  display: flex;
+  flex-direction: column;
+}
+
+.header-central-bloc {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center
+}
+
+.bargauche {
+  width: 350px;
+  height: 100vh;
+  top: 0; 
+  left: 0;  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.bardroite {
+  z-index: 100;
+  width: 350px;
+  height: 100%;
+  position: fixed; 
+  top: 0; 
+  right: 0;  
+  background-color: rgba(0, 0, 0, 0.493);
+  border: 2px solid rgb(82, 62, 35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.bardroite.closed {
+  transform: translateX(100%);
+}
+#btn-ambiance{
+  width: 150px; 
+  height: 35px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+  
+  font-size: 20px;
+  font-family: "UnifrakturCook";
+  text-shadow: 
+  -1px -1px 0 rgba(255, 255, 255),
+  1px -1px 0 rgba(255, 255, 255),
+  -1px 1px 0 rgba(255, 255, 255),
+  1px 1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255);
+}
+
+.scrollable-section {
+  display: flex;
+  flex-direction: column;
+}
+.lecteurvideo {
+  width: 275px;
+  height: 50px;
+  z-index: 1;
+  position: relative;
+  border: 2px solid rgb(82, 62, 35);
+  border-radius: 30px;
+  transition: opacity 0.5s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+
+.typo20px {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 20px;
+  font-family: "UnifrakturCook";
+  text-shadow: 
+  -1px -1px 0 rgba(255, 255, 255),
+  1px -1px 0 rgba(255, 255, 255),
+  -1px 1px 0 rgba(255, 255, 255),
+  1px 1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 -1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  0 1px 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255),
+  -1px 0 0 rgba(255, 255, 255),
+  1px 0 0 rgba(255, 255, 255);
+}
+
+.animbutton {
+z-index: 2;
+position: relative;
+margin: 10px;
+overflow: hidden;
+cursor: pointer;
+width: 100px;
+height: 100px;
+color: rgb(5, 19, 31);
+background: linear-gradient(to right, #ce1a1a7c 0%, #ce1a1a7c 50%, #ffffff00 50%, #ffffff00 100%);
+background-size: 220% 100%;
+background-position: right bottom;
+border: 2px solid rgb(82, 62, 35); 
+display: flex;
+align-items: flex-end;
+justify-content: center;
+padding: 5px;
+}
+
+.buttoncontainer.clicked {
+animation: clickAnimation 0.5s;
+}
+.animbutton.clicked {
+  animation: clickAnimationB 0.5s;
+}
+@keyframes clickAnimationB {
+0% {
+  background-position: right bottom;
+}
+100% {
+  background-position: left bottom;
+}
+}
+
+@keyframes clickAnimation {
+0% {
+  transform: scale(1);
+}
+10% {
+  transform: scale(1.1);
+}
+100% {
+  transform: scale(1);
+}
+}
+
+.bloc-central.expanded {
+  right: 0 !important;
+  width: calc(100vw - 360px) !important;
+  transition: all 0.3s ease-in-out; 
+}
+
+
+.buttoncontainer {  
+  flex-wrap: wrap;
+  position: relative;
+  display: flex;
+  cursor: pointer;
+  background: linear-gradient(to right, #ce1a1a7c 0%, #ce1a1a7c 50%, #ffffff00 50%, #ffffff00 100%);
+  background-size: 220% 100%;
+  background-position: right bottom;
+  cursor: pointer;
+}
+
+.imagebutton {
+  position: absolute;
+  z-index: 1;
+  margin: 10px;
+  cursor: pointer;
+  object-fit: cover; 
+  width: 100px;
+  height: 100px;
+}
+
+#blocsound {
+  padding: 0px 10px;
+  z-index: 10;
+  flex-wrap: wrap;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+#LancerDeDée {
+  background-color: rgb(190, 108, 0);
+  border: 1px solid rgba(65, 42, 0, 0.664);
+  border-radius: 5px;
+  z-index: 20;
+  position: relative;
+  padding: 10px;
+  width: 200px;
+  display: none;
+}
+
+#LancerDéeBoutton {
+    margin-top: 8px;
+}
+
+#Nbdée, #TypeDeDée{
+    align-items: center;
+    display: flex;
+}
+
+#MoinsDeDée, #PlusDeDée, #Typechoisie {
+    margin: 0 5px 0 5px;
+}
+
+#MenuDée {
+    position: absolute;
+    z-index: 40px;
+    width: 230px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    left: 59%;
+    top: 7%;
+}
+
+#openmenuD {
+  width: 100px;
+  height: 50px;
+  z-index: 12;
+  width: fit-content;
+}
+
+#blocnote {
+position: absolute;
+top: 60%;
+left: 2.5%;
+width: 300px;
+height: 300px;
+}
+
+.audessumonpote {
+  position: absolute;
+  top: 0; 
+  right: 0; 
+  z-index: 222; 
+  cursor: pointer;
+}
+
+.textarea {
+width: calc(100%);
+padding: 8px;
+box-sizing: border-box;
+width: 315px;
+max-width: 315px;
+min-width: 315px;
+height: 200px;
+position: absolute;
+display: none;
+}
+.textarea.choisie {
+display: block;
+}
+
+.butbloc {
+width: 10%;
+height: 20px;
+padding: 0;
+margin-right: 5px;
+filter: brightness(50%);
+transition: filter 0.5s ease;
+}
+.butbloc.choisi {
+filter: brightness(100%);
+}
+
+#listdebloc {
+width: 100%;
+display: flex;  
+}
+
+#bloc-note-btn {
+  display: none;
+  z-index: 10001;
+}
+
+/* MEDIAQUERIE */
+@media (max-width: 1199px) {
+
+  #bloc-note-btn {
+    position: relative; 
+    display: inline;
+    z-index: 10001;
+  }
+  .titre, .blason ,.titrest, .blasonst {
+    display: none;
+  }
+  .boutonnave{
+    display: block;
+  }
+  #blocnote {
+    display: none;
+  }
+
+  .bloc-central {
+    margin-top: 25px;
+    position: absolute;
+    top: 0;
+    width: calc(100vw - 340px); 
+    left: 0px; 
+    right: 340px; 
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bloc-central.expanded {
+    right: 0 !important;
+    width: calc(100vw - 0px) !important;
+    transition: all 0.3s ease-in-out; 
+  }
+  
+}
