@@ -93,5 +93,6 @@
     </div>
 
     <script src="/page/warhammeur/en/UniteEntityEn.js"></script>
+    
 </body>
 </html>

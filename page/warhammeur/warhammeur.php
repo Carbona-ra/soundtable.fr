@@ -93,5 +93,6 @@
     </div>
 
     <script src="/page/warhammeur/UniteEntity.js"></script>
+    <script src="/asset/scripts/glossaire40k.js"></script>
 </body>
 </html>
