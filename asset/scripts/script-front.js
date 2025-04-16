@@ -61,35 +61,6 @@ $(document).ready(function () {
 
 
 
-
-    // Préchargement des fichiers MP3
-    let basePath = "Audio_avec_leur_image/";
-    let mp3Files = [
-        "annonceHRP.mp3", "Auramagic.mp3", "bouledefeu.mp3", "Bruitdevent.mp3",
-        "Chauvesouris.mp3", "Corne.mp3", "Coupdefeu.mp3", "coupdépée.mp3",
-        "coupdépéesanglant.mp3", "Crachadeflamme.mp3", "criedhomme.mp3",
-        "criefemme.mp3", "Eboulement.mp3", "Electriciter.mp3", "hurlemementderage.mp3",
-        "levelUp.mp3", "Passagesecret.mp3", "Portailmagic.mp3", "Portemétalique.mp3",
-        "Reniflement.mp3", "Rugissement.mp3", "Siflotement.mp3", "Tonner.mp3",
-        "Verrecasser.mp3", "Bruitdenuit.mp3", "hurlemenentderage.mp3",
-        "hurlementdeloups.mp3", "invisible.mp3", "hurlementdeloups.mp3",
-        "MachineMecanique.mp3", "aplaudissement.mp3", "portequigrince.mp3",
-        "Grincementbois.mp3", "Artefact.mp3", "Criedegroupe.mp3", "Flèche.mp3",
-        "VoléeFlèche.mp3", "OndeDeChoc.mp3", "soupirmortelle.mp3", "coeurbattant.mp3",
-        "Attackmental.mp3"
-    ];
-
-    mp3Files.forEach(file => {
-        $("<audio>").attr("src", basePath + file).prop("preload", "auto").appendTo("body");
-    });
-
-    $(".sound-button").click(function () {
-        let soundUrl = $(this).data("sound");
-        let audio = new Audio(soundUrl);
-        audio.play();
-    });
-
-
     // Disparition d'un élément avec un effet de fondu
     $(".monBouton").click(function () {
         $(this).fadeOut(500, function () {
@@ -148,17 +119,7 @@ $(document).ready(function () {
     });
 
 
-    // Effet de clic sur les boutons
-    $(".buttoncontainer").mousedown(function () {
-        let $this = $(this);
-        $this.addClass("clicked");
-        $this.find(".animbutton").addClass("clicked");
-
-        setTimeout(function () {
-            $this.removeClass("clicked");
-            $this.find(".animbutton").removeClass("clicked");
-        }, 500);
-    });
+    
 
 
     // Fonction pour définir un cookie
@@ -314,6 +275,150 @@ $(document).ready(function () {
             }
         });
     }
+
+    //partie recherche
+    const $bookmarkBtn = $('#bookmark-btn');
+    const $glossaryBook = $('#glossary-book');
+    const $closeBtn = $('.close-btn');
+    const $searchInput = $('#search-term');
+    const $categoryFilter = $('#category-filter');
+    const $favoritesFilter = $('#favorites-filter'); // Nouvelle constante pour la case à cocher
+    const $soundButtons = $('.sound-button');
+    const $resetBtn = $('#reset-search');
+    const $blocsound = $('#blocsound');
+    // Fonction pour obtenir les favoris depuis le cookie
+    function getFavorites() {
+        const favorites = $.cookie('favorites');
+        return favorites ? JSON.parse(favorites) : [];
+    }
+    // Fonction pour sauvegarder les favoris dans le cookie
+    function setFavorites(favorites) {
+        $.cookie('favorites', JSON.stringify(favorites), { expires: 30, path: '/' });
+    }
+    // Charger les favoris au démarrage
+    let favorites = getFavorites();
+    $soundButtons.each(function() {
+        const $button = $(this);
+        const id = $button.data('id');
+        if (favorites.includes(id)) {
+            $button.find('.fav-marker').addClass('active');
+            $button.siblings('.fav-btn').addClass('favorited').text('Retirer des favoris').attr('title', 'Retirer des favoris');
+        }
+    });
+    // Réorganiser les sons pour afficher les favoris en haut
+    function reorderSounds() {
+        const $allContainers = $soundButtons.parent('.buttoncontainer').detach();
+        const $favContainers = $allContainers.filter(function() {
+            return favorites.includes($(this).find('.sound-button').data('id'));
+        });
+        const $nonFavContainers = $allContainers.filter(function() {
+            return !favorites.includes($(this).find('.sound-button').data('id'));
+        });
+        $blocsound.append($favContainers).append($nonFavContainers);
+    }
+    // Réorganiser les sons au démarrage
+    reorderSounds();
+    // Gestion des favoris
+    $('.fav-btn').on('click', function(event) {
+        event.stopPropagation();
+        const $btn = $(this);
+        const id = $btn.data('id');
+        const isFavorited = favorites.includes(id);
+        if (isFavorited) {
+            favorites = favorites.filter(favId => favId !== id);
+            $btn.removeClass('favorited').text('Ajouter aux favoris').attr('title', 'Ajouter aux favoris');
+            $btn.siblings('.sound-button').find('.fav-marker').removeClass('active');
+        } else {
+            favorites.push(id);
+            $btn.addClass('favorited').text('Retirer des favoris').attr('title', 'Retirer des favoris');
+            $btn.siblings('.sound-button').find('.fav-marker').addClass('active');
+        }
+        setFavorites(favorites);
+        reorderSounds();
+        filterSounds();
+    });
+    // Gestion de l'ouverture/fermeture du livre
+    $bookmarkBtn.on('click', function() {
+        if ($glossaryBook.is(':visible')) {
+            $glossaryBook.animate({ left: '-100%' }, 500, function() {
+                $glossaryBook.hide();
+            });
+            $bookmarkBtn.removeClass('pulled');
+        } else {
+            $glossaryBook.show().css({ left: '-100%' }).animate({ left: '0' }, 500);
+            $bookmarkBtn.addClass('pulled');
+        }
+    });
+    $closeBtn.on('click', function() {
+        $glossaryBook.animate({ left: '-100%' }, 500, function() {
+            $glossaryBook.hide();
+        });
+        $bookmarkBtn.removeClass('pulled');
+    });
+    // Gestion de la recherche et du filtrage
+    function filterSounds() {
+        const searchText = $searchInput.val().toLowerCase().trim();
+        const selectedCategory = $categoryFilter.val().toLowerCase().trim();
+        const showOnlyFavorites = $favoritesFilter.is(':checked'); // Vérifie si la case est cochée
+        $soundButtons.each(function() {
+            const $button = $(this);
+            const buttonName = $button.data('name');
+            const buttonCategories = $button.data('categories').toLowerCase().split(',');
+            const isFavorited = favorites.includes($button.data('id')); // Vérifie si le son est un favori
+            // Vérifier si le nom correspond à la recherche textuelle
+            const matchesName = buttonName.includes(searchText);
+            // Vérifier si une catégorie est sélectionnée et si le bouton appartient à cette catégorie
+            const matchesCategory = selectedCategory === '' || buttonCategories.includes(selectedCategory);
+            // Vérifier si on doit afficher uniquement les favoris
+            const matchesFavorites = !showOnlyFavorites || isFavorited;
+            // Afficher ou masquer le bouton en fonction des critères
+            if (matchesName && matchesCategory && matchesFavorites) {
+                $button.parent().show();
+            } else {
+                $button.parent().hide();
+            }
+        });
+        // Réorganiser les sons après le filtrage pour garder les favoris en haut
+        reorderSounds();
+    }
+    // Écouter les changements dans la barre de recherche
+    $searchInput.on('input', filterSounds);
+    // Écouter les changements dans le menu déroulant des catégories
+    $categoryFilter.on('change', filterSounds);
+    // Écouter les changements sur la case à cocher des favoris
+    $favoritesFilter.on('change', filterSounds);
+    // Gestion de la réinitialisation de la recherche
+    $resetBtn.on('click', function() {
+        $searchInput.val('');
+        $categoryFilter.val('');
+        $favoritesFilter.prop('checked', false); // Réinitialiser la case à cocher
+        $soundButtons.parent().show();
+        reorderSounds();
+    });
+
+    // Effet de clic sur les boutons (modifié pour ignorer les clics sur .fav-btn)
+    $(".buttoncontainer").mousedown(function(event) {
+       // Ignorer si l'élément cliqué est un .fav-btn ou un de ses descendants
+       if ($(event.target).closest('.fav-btn').length) {
+           return; // Ne rien faire si le clic provient de .fav-btn
+       }
+
+       let $this = $(this);
+       $this.addClass("clicked");
+       $this.find(".animbutton").addClass("clicked");
+
+       setTimeout(function() {
+           $this.removeClass("clicked");
+           $this.find(".animbutton").removeClass("clicked");
+       }, 500);
+    });
+
+    
+    $(".sound-button").click(function () {
+        let soundUrl = $(this).data("sound");
+        let audio = new Audio(soundUrl);
+        audio.play();
+    });
 
     // Récupérer le chemin de l'URL actuelle
     var currentPage = window.location.pathname || 'unknown';

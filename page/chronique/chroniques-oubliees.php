@@ -11,19 +11,212 @@
     }
 
     $mp3Files = [
-        "annonce-HRP.mp3", "Aura-magic.mp3", "boule-de-feu.mp3", "Bruit-de-vent.mp3",
-        "Chauvesouris.mp3", "Corne.mp3", "coup-de-feu.mp3", "coup-dépée.mp3",
-        "coup-dépée-sanglant.mp3", "Cracha-de-flamme.mp3", "crie-dhomme.mp3",
-        "crie-femme.mp3", "Eboulement.mp3", "Electriciter.mp3",
-        "levelUP.mp3", "Passage-secret.mp3", "Portail-magic.mp3", "Porte-métalique.mp3",
-        "Reniflement.mp3", "Rugissement.mp3", "Siflotement.mp3", "Tonner.mp3",
-        "Verre-casser.mp3", "Bruit-de-nuit.mp3", "hurlemenent-de-rage.mp3",
-        "hurlement-de-loups.mp3", "invisible.mp3",
-        "Machine-Mecanique.mp3", "aplaudissement.mp3", "Porte-qui-grince.mp3",
-        "Grincement-bois.mp3", "artefact.mp3", "Crie-de-groupe.mp3", "flèche.mp3",
-        "Volée-de-flèche.mp3", "Onde-De-Choc.mp3", "soupir-mortelle.mp3", "coeur-battant.mp3",
-        "attack-mental.mp3"
+        "Annonce HRP" => [
+            "file" => "annonce-HRP.mp3",
+            "image" => "annonce-HRP.webp",
+            "categories" => ["annonce"]
+        ],
+        "Aura magique" => [
+            "file" => "Aura-magic.mp3",
+            "image" => "Aura-magic.webp",
+            "categories" => ["magie", "ambiance"]
+        ],
+        "Boule de feu" => [
+            "file" => "boule-de-feu.mp3",
+            "image" => "boule-de-feu.webp",
+            "categories" => ["magie", "combat"]
+        ],
+        "Bruit de vent" => [
+            "file" => "Bruit-de-vent.mp3",
+            "image" => "Bruit-de-vent.webp",
+            "categories" => ["nature", "ambiance"]
+        ],
+        "Chauve-souris" => [
+            "file" => "Chauvesouris.mp3",
+            "image" => "Chauvesouris.webp",
+            "categories" => ["nature", "inquiétant", "animal"]
+        ],
+        "Corne" => [
+            "file" => "Corne.mp3",
+            "image" => "Corne.webp",
+            "categories" => ["annonce", "combat"]
+        ],
+        "Coup de feu" => [
+            "file" => "coup-de-feu.mp3",
+            "image" => "coup-de-feu.webp",
+            "categories" => ["combat", "arme"]
+        ],
+        "Coup d'épée" => [
+            "file" => "coup-dépée.mp3",
+            "image" => "coup-dépée.webp",
+            "categories" => ["combat", "arme"]
+        ],
+        "Coup d'épée sanglant" => [
+            "file" => "coup-dépée-sanglant.mp3",
+            "image" => "coup-dépée-sanglant.webp",
+            "categories" => ["combat", "arme"]
+        ],
+        "Crachat de flamme" => [
+            "file" => "Cracha-de-flamme.mp3",
+            "image" => "Cracha-de-flamme.webp",
+            "categories" => ["magie", "combat"]
+        ],
+        "Cri d'homme" => [
+            "file" => "crie-dhomme.mp3",
+            "image" => "crie-dhomme.webp",
+            "categories" => ["humain", "inquiétant"]
+        ],
+        "Cri de femme" => [
+            "file" => "crie-femme.mp3",
+            "image" => "crie-femme.webp",
+            "categories" => ["humain", "inquiétant"]
+        ],
+        "Éboulement" => [
+            "file" => "Eboulement.mp3",
+            "image" => "Eboulement.webp",
+            "categories" => ["nature", "danger", "ambiance"]
+        ],
+        "Électricité" => [
+            "file" => "Electriciter.mp3",
+            "image" => "Electriciter.webp",
+            "categories" => ["magie", "combat", "ambiance"]
+        ],
+        "Level up" => [
+            "file" => "levelUP.mp3",
+            "image" => "levelUP.webp",
+            "categories" => ["jeu", "progression", "magie"]
+        ],
+        "Passage secret" => [
+            "file" => "Passage-secret.mp3",
+            "image" => "Passage-secret.webp",
+            "categories" => ["exploration", "mystère", "ambiance"]
+        ],
+        "Portail magique" => [
+            "file" => "Portail-magic.mp3",
+            "image" => "Portail-magic.webp",
+            "categories" => ["magie", "mystère", "ambiance"]
+        ],
+        "Porte métallique" => [
+            "file" => "Porte-métalique.mp3",
+            "image" => "Porte-métalique.webp",
+            "categories" => ["exploration", "ambiance"]
+        ],
+        "Reniflement" => [
+            "file" => "Reniflement.mp3",
+            "image" => "Reniflement.webp",
+            "categories" => ["humain", "inquiétant", "animal"]
+        ],
+        "Rugissement" => [
+            "file" => "Rugissement.mp3",
+            "image" => "Rugissement.webp",
+            "categories" => ["combat", "animal"]
+        ],
+        "Sifflement" => [
+            "file" => "Siflotement.mp3",
+            "image" => "Siflotement.webp",
+            "categories" => ["humain", "ambiance"]
+        ],
+        "Tonnerre" => [
+            "file" => "Tonner.mp3",
+            "image" => "Tonner.webp",
+            "categories" => ["nature", "inquiétant", "ambiance"]
+        ],
+        "Verre cassé" => [
+            "file" => "Verre-casser.mp3",
+            "image" => "Verre-casser.webp",
+            "categories" => ["destruction", "ambiance", "mystère"]
+        ],
+        "Bruit de nuit" => [
+            "file" => "Bruit-de-nuit.mp3",
+            "image" => "Bruit-de-nuit.webp",
+            "categories" => ["nature", "inquiétant", "ambiance"]
+        ],
+        "Hurlement de rage" => [
+            "file" => "hurlemenent-de-rage.mp3",
+            "image" => "hurlemenent-de-rage.webp",
+            "categories" => ["humain", "combat"]
+        ],
+        "Hurlement de loups" => [
+            "file" => "hurlement-de-loups.mp3",
+            "image" => "hurlement-de-loups.webp",
+            "categories" => ["nature", "inquiétant", "animal"]
+        ],
+        "Invisibilité" => [
+            "file" => "invisible.mp3",
+            "image" => "invisible.webp",
+            "categories" => ["magie", "mystère", "exploration"]
+        ],
+        "Machine mécanique" => [
+            "file" => "Machine-Mecanique.mp3",
+            "image" => "Machine-Mecanique.webp",
+            "categories" => ["technologie", "ambiance","mystère", "destruction"]
+        ],
+        "Applaudissements" => [
+            "file" => "aplaudissement.mp3",
+            "image" => "aplaudissement.webp",
+            "categories" => ["humain", "ambiance", "annonce"]
+        ],
+        "Porte qui grince" => [
+            "file" => "Porte-qui-grince.mp3",
+            "image" => "Porte-qui-grince.webp",
+            "categories" => ["exploration", "inquiétant", "ambiance"]
+        ],
+        "Grincement de bois" => [
+            "file" => "Grincement-bois.mp3",
+            "image" => "Grincement-bois.webp",
+            "categories" => ["ambiance", "inquiétant", "exploration"]
+        ],
+        "Artefact" => [
+            "file" => "artefact.mp3",
+            "image" => "artefact.webp",
+            "categories" => ["magie", "mystère", "exploration"]
+        ],
+        "Cri de groupe" => [
+            "file" => "Crie-de-groupe.mp3",
+            "image" => "Crie-de-groupe.webp",
+            "categories" => ["humain", "combat"]
+        ],
+        "Flèche" => [
+            "file" => "flèche.mp3",
+            "image" => "flèche.webp",
+            "categories" => ["combat", "arme"]
+        ],
+        "Volée de flèches" => [
+            "file" => "Volée-de-flèche.mp3",
+            "image" => "Volée-de-flèche.webp",
+            "categories" => ["combat", "arme", "ambiance"]
+        ],
+        "Onde de choc" => [
+            "file" => "Onde-De-Choc.mp3",
+            "image" => "Onde-De-Choc.webp",
+            "categories" => ["magie", "combat", "destruction",  "danger"]
+        ],
+        "Soupir mortel" => [
+            "file" => "soupir-mortelle.mp3",
+            "image" => "soupir-mortelle.webp",
+            "categories" => ["inquiétant", "mystère",  "danger",  "ambiance"]
+        ],
+        "Cœur battant" => [
+            "file" => "coeur-battant.mp3",
+            "image" => "coeur-battant.webp",
+            "categories" => ["humain", "inquiétant", "danger", "ambiance"]
+        ],
+        "Attaque mentale" => [
+            "file" => "attack-mental.mp3",
+            "image" => "attack-mental.webp",
+            "categories" => ["magie", "combat"]
+        ]
     ];
+
+    // Récupérer toutes les catégories uniques
+    $allCategories = [];
+    foreach ($mp3Files as $details) {
+        if (isset($details['categories'])) {
+            $allCategories = array_merge($allCategories, $details['categories']);
+        }
+    }
+    $allCategories = array_unique($allCategories);
+    sort($allCategories);
     
     $basePath = "/page/chronique/sound-and-picture/";
 ?>
@@ -42,6 +235,7 @@
     <link rel="stylesheet" href="/asset/style/style.css">
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 </head>
 <body>
 
@@ -120,24 +314,52 @@
         </div>
         <div id="blocsound">
             <?php 
-                foreach ($mp3Files as $file) {
-                    $fileName = pathinfo($file, PATHINFO_FILENAME);
-                    $filePath = $basePath . $file; 
-                    $imagePath = "/page/chronique/sound-and-picture/" . $fileName . ".webp"; 
-                    $displayName = str_replace("-", " ", $fileName);
-                    ?>
-                    <div class="buttoncontainer">
-                        <button class="animbutton typo20px sound-button" data-sound="<?php echo htmlspecialchars($filePath); ?>" onclick="play_sound('<?php echo htmlspecialchars($filePath); ?>')">
-                            <?php echo htmlspecialchars($displayName); ?>
-                        </button>
-                        <img class="imagebutton" src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($fileName); ?>">
-                    </div>
-                    <?php
-                }
+            foreach ($mp3Files as $displayName => $details) {
+                $filePath = $basePath . $details['file'];
+                $imagePath = $basePath . $details['image'];
+                $categories = implode(',', $details['categories']);
+                ?>
+                <div class="buttoncontainer">
+                    <button class="animbutton typo20px sound-button" 
+                            data-sound="<?php echo htmlspecialchars($filePath); ?>" 
+                            data-categories="<?php echo htmlspecialchars($categories); ?>" 
+                            data-name="<?php echo htmlspecialchars(strtolower($displayName)); ?>"
+                            data-id="<?php echo htmlspecialchars($displayName); ?>"
+                            onclick="play_sound('<?php echo htmlspecialchars($filePath); ?>')">
+                        <?php echo htmlspecialchars($displayName); ?>
+                    </button>
+                    <img class="imagebutton" src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($displayName); ?>">
+                    <button class="fav-btn" data-id="<?php echo htmlspecialchars($displayName); ?>" title="Ajouter aux favoris">Ajouter aux favoris</button>
+                </div>
+                <?php
+            }
             ?>
         </div>
     </div>
 
+    <!-- Ajout du marque-page et du livre de recherche -->
+    <div id="bookmark-btn" class="bookmark">
+        <span>Rechercher un son</span>
+    </div>
+    <div id="glossary-book" class="book">
+        <div class="book-content">
+            <h2>Rechercher un bruitage</h2>
+            <button class="close-btn" aria-label="Fermez la recherche">X</button>
+            <div class="search-container">
+                <input type="text" id="search-term" placeholder="Rechercher un mot-clé...">
+                <select id="category-filter">
+                    <option value="">Toutes les catégories</option>
+                    <?php foreach ($allCategories as $category): ?>
+                        <option value="<?php echo htmlspecialchars($category); ?>"><?php echo htmlspecialchars($category); ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <label class="fav-filter-label">
+                    <input type="checkbox" id="favorites-filter"> Afficher uniquement les favoris
+                </label>
+                <button id="reset-search" class="reset-btn">Réinitialiser</button>
+            </div>
+        </div>
+    </div>
 
     <button id="btn-ambiance">> fermer menu</button> 
     <div class="bardroite">

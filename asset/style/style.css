@@ -11,6 +11,208 @@ a, button, div, iframe, textarea, input {
   cursor: url('../../asset/normal-cursor.cur'), pointer !important;
 } */
  
+
+.bookmark {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  width: 146px;
+  height: 81px;
+  margin-left: -20px;
+  background: url('../../asset/bookmark.webp') no-repeat center;
+  background-size: cover;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  animation: slideBookmark 3s infinite ease-in-out;
+  transition: width 0.3s, margin-left 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bookmark span {
+  color: #f5f5dc;
+  font-size: 16px;
+  text-align: center;
+  text-shadow: 1px 1px 2px #000;
+  font-family: 'MedievalSharp', cursive;
+  position: absolute;
+  width: 100px;
+  right: 28px;
+  bottom: 26px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: url('../../asset/seal.webp') no-repeat center;
+  background-size: cover;
+  border: none;
+  cursor: pointer;
+  color: transparent; /* Cache le texte "X" */
+}
+
+.bookmark.pulled {
+  width: 135px;
+  height: 74.89px;
+  margin-left: -20px;
+  animation: none;
+}
+  
+.bookmark.pulled span {
+  font-size: 15px;
+}
+
+@keyframes slideBookmark {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+  100% { transform: translateX(0); }
+}
+
+.book {
+  position: fixed;
+  top: 10%;
+  left: -100%;
+  width: 468px;
+  max-width: 600px;
+  height: 600px;
+  background: url('../../asset/book.webp') no-repeat center;
+  background-size: cover;
+  border: none;
+  z-index: 10999;
+  overflow: hidden;
+  display: none; /* Ajouté pour s'assurer que le livre est caché au départ */
+}
+
+.book-content {
+  padding: 40px 60px;
+  height: 459px;
+  margin-top: 29px;
+  overflow-y: auto;
+  background: transparent;
+  color: #2c1e1e;
+  font-family: 'MedievalSharp', cursive;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.book-content::-webkit-scrollbar {
+  display: none;
+}
+
+.book-content h2 {
+  text-align: center;
+  font-size: 2em;
+  color: #3c2f2f;
+  text-shadow: 1px 1px 2px #d4a017;
+  margin-bottom: 20px;
+}
+
+#favorites-filter {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #2c1e1e;
+  background: rgba(245, 245, 220, 0.9);
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+#favorites-filter:checked {
+  background: rgba(245, 245, 220, 0.9) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%232c1e1e' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") no-repeat center;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+}
+
+#search-term {
+  width: 93%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 2px solid #3c2f2f;
+  border-radius: 5px;
+  background: rgba(245, 245, 220, 0.9); /* Parchemin clair */
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1em;
+}
+
+.reset-btn {
+  padding: 10px 15px;
+  background: #3c2f2f;
+  color: #f5f5dc;
+  border: none;
+  border-radius: 5px;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.reset-btn:hover {
+  background: #d4a017;
+  color: #2c1e1e;
+}
+
+@media (max-width: 600px) {
+  .reset-btn {
+      width: 100%;
+      padding: 8px;
+      font-size: 0.9em;
+  }
+}
+
+.entry {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-bottom: 1px solid #d4a017;
+}
+
+.entry h3 {
+  margin: 0;
+  font-size: 1.4em;
+  color: #3c2f2f;
+}
+
+.entry p {
+  margin: 5px 0 0;
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .book {
+      top: 40%;
+      height: 383px;
+      width: 300px;
+  }
+  .book-content {
+      padding: 20px 30px;
+      height: 307px;
+      margin-top: 14px;
+  }
+  #search-term {
+      width: 215px;
+  }
+
+  .close-btn {
+      width: 30px;
+      height: 30px;
+      top: 15px;
+      right: 15px;
+  }
+
+  .book-content h2 {
+    font-size: 14px;
+  }
+}
+
+
 .blason {
   position: absolute;
   transform: scale(0.5);
@@ -64,7 +266,7 @@ a, button, div, iframe, textarea, input {
 }
 
 .z-10000{
-  z-index: 1000000;
+  z-index: 100;
 }
 
 .disparut {
@@ -88,6 +290,57 @@ a, button, div, iframe, textarea, input {
   background-repeat: no-repeat;
   transition: opacity 0.5s ease-in-out, display 0s 0.5s;
  
+}
+
+.sound-button {
+  position: relative; /* Nécessaire pour que le .fav-btn soit positionné par rapport à ce bouton */
+}
+
+.fav-btn {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #3c2f2f url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23f5f5dc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15 8 21 9 16 14 17 20 12 17 7 20 8 14 3 9 9 8'/%3E%3C/svg%3E") no-repeat center;
+  background-size: 14px;
+  border-radius: 0 0 20% 20%;
+  cursor: pointer;
+  text-indent: -9999px;
+  overflow: hidden;
+  z-index: 100;
+  top: 12px;
+  left: 16px;
+}
+
+.fav-btn.favorited {
+  background: #d4a017 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='%23d4a017' stroke='%232c1e1e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15 8 21 9 16 14 17 20 12 17 7 20 8 14 3 9 9 8'/%3E%3C/svg%3E") no-repeat center;
+  background-size: 14px;
+}
+
+.fav-marker {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 20px;
+  height: 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='%23d4a017' stroke='%232c1e1e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15 8 21 9 16 14 17 20 12 17 7 20 8 14 3 9 9 8'/%3E%3C/svg%3E") no-repeat center;
+  background-size: contain;
+  display: none;
+}
+
+.fav-marker.active {
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .fav-btn {
+      width: 18px;
+      height: 18px;
+      background-size: 12px;
+  }
+  .fav-marker {
+      width: 15px;
+      height: 15px;
+  }
 }
 
 .boutonnave {
@@ -363,6 +616,7 @@ animation: clickAnimation 0.5s;
 .animbutton.clicked {
   animation: clickAnimationB 0.5s;
 }
+
 @keyframes clickAnimationB {
 0% {
   background-position: right bottom;
@@ -388,6 +642,11 @@ animation: clickAnimation 0.5s;
   right: 0 !important;
   width: calc(100vw - 360px) !important;
   transition: all 0.3s ease-in-out; 
+}
+
+.fav-btn:active {
+  transform: scale(0.9);
+  transition: transform 0.1s ease;
 }
 
 
