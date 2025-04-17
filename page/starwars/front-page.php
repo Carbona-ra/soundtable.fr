@@ -11,35 +11,167 @@
     }
 
     $mp3Files = [
-        "Wookie.mp3",
-        "Whosh-sabre-laser.mp3",
-        "TIE.mp3",
-        "Tir-TIE.mp3",
-        "Speeder.mp3",
-        "Speeders-survol.mp3",
-        "Vaisseaux-survol.mp3",
-        "Rire-narquois.mp3",
-        "Ouverture-sabre-laser.mp3",
-        "Impacte-de-blaster.mp3",
-        "Homme-des-sables.mp3",
-        "Grosse-explosion.mp3",
-        "Fermeture-sabre-laser.mp3",
-        "Explosion.mp3",
-        "Electriciter-static.mp3",
-        "Droide-qui-hurle.mp3",
-        "Droide-pas-content.mp3",
-        "Droide-intriger.mp3",
-        "Creature-mourante.mp3",
-        "Coup-de-sabre-laser.mp3",
-        "Bombe-vibrante.mp3",
-        "Blaster.mp3",
-        "Bip-boup-bip.mp3",
-        "Autruche-spacial.mp3",
-        "Atterrissage.mp3",
-        "Arc-electrique.mp3",
-        "Appel-radio.mp3",
-        "Alerte-imperiale.mp3"
+        
+        "TIE" => [
+            "file" => "TIE.mp3",
+            "image" => "TIE.webp",
+            "categories" => ["vaisseau", "empire"]
+        ],
+        "Tir TIE" => [
+            "file" => "Tir-TIE.mp3",
+            "image" => "Tir-TIE.webp",
+            "categories" => ["arme", "vaisseau", "empire"]
+        ],
+        "Speeder" => [
+            "file" => "Speeder.mp3",
+            "image" => "Speeder.webp",
+            "categories" => ["vaisseau", "transport"]
+        ],
+        "Speeders Survol" => [
+            "file" => "Speeders-survol.mp3",
+            "image" => "Speeders-survol.webp",
+            "categories" => ["vaisseau", "transport"]
+        ],
+        "Vaisseaux Survol" => [
+            "file" => "Vaisseaux-survol.mp3",
+            "image" => "Vaisseaux-survol.webp",
+            "categories" => ["vaisseau"]
+        ],
+        
+        "Atterrissage" => [
+            "file" => "Atterrissage.mp3",
+            "image" => "Atterrissage.webp",
+            "categories" => ["vaisseau"]
+        ],
+        "Rire Narquois" => [
+            "file" => "Rire-narquois.mp3",
+            "image" => "Rire-narquois.webp",
+            "categories" => ["humain", "émotion"]
+        ],
+        "Impacte de Blaster" => [
+            "file" => "Impacte-de-blaster.mp3",
+            "image" => "Impacte-de-blaster.webp",
+            "categories" => ["arme", "blaster", "combat"]
+        ],
+        
+        "Blaster" => [
+            "file" => "Blaster.mp3",
+            "image" => "Blaster.webp",
+            "categories" => ["arme", "blaster", "combat"]
+        ],
+        "Homme des Sables" => [
+            "file" => "Homme-des-sables.mp3",
+            "image" => "Homme-des-sables.webp",
+            "categories" => ["creature", "tatooine"]
+        ],
+        
+        "Explosion" => [
+            "file" => "Explosion.mp3",
+            "image" => "Explosion.webp",
+            "categories" => ["explosion", "combat"]
+        ],
+        "Grosse Explosion" => [
+            "file" => "Grosse-explosion.mp3",
+            "image" => "Grosse-explosion.webp",
+            "categories" => ["explosion", "combat"]
+        ],
+        
+        "Bombe Vibrante" => [
+            "file" => "Bombe-vibrante.mp3",
+            "image" => "Bombe-vibrante.webp",
+            "categories" => ["arme", "explosion"]
+        ],
+
+        
+        "Whosh Sabre Laser" => [
+            "file" => "Whosh-sabre-laser.mp3",
+            "image" => "Whosh-sabre-laser.webp",
+            "categories" => ["arme", "sabre-laser"]
+        ],
+        "Fermeture Sabre Laser" => [
+            "file" => "Fermeture-sabre-laser.mp3",
+            "image" => "Fermeture-sabre-laser.webp",
+            "categories" => ["arme", "sabre-laser"]
+        ],
+        "Ouverture Sabre Laser" => [
+            "file" => "Ouverture-sabre-laser.mp3",
+            "image" => "Ouverture-sabre-laser.webp",
+            "categories" => ["arme", "sabre-laser"]
+        ],
+        
+        "Coup de Sabre Laser" => [
+            "file" => "Coup-de-sabre-laser.mp3",
+            "image" => "Coup-de-sabre-laser.webp",
+            "categories" => ["arme", "sabre-laser", "combat"]
+        ],
+        "Electricité Static" => [
+            "file" => "Electriciter-static.mp3",
+            "image" => "Electriciter-static.webp",
+            "categories" => ["effet", "électricité"]
+        ],
+    
+        "Arc Électrique" => [
+            "file" => "Arc-electrique.mp3",
+            "image" => "Arc-electrique.webp",
+            "categories" => ["effet", "électricité"]
+        ],
+        "Droïde qui Hurle" => [
+            "file" => "Droide-qui-hurle.mp3",
+            "image" => "Droide-qui-hurle.webp",
+            "categories" => ["droïde", "émotion"]
+        ],
+        "Droïde Pas Content" => [
+            "file" => "Droide-pas-content.mp3",
+            "image" => "Droide-pas-content.webp",
+            "categories" => ["droïde", "émotion"]
+        ],
+        "Droïde Intrigué" => [
+            "file" => "Droide-intriger.mp3",
+            "image" => "Droide-intriger.webp",
+            "categories" => ["droïde", "émotion"]
+        ],
+        "Créature Mourante" => [
+            "file" => "Creature-mourante.mp3",
+            "image" => "Creature-mourante.webp",
+            "categories" => ["creature", "combat"]
+        ],
+        "Wookie" => [
+            "file" => "Wookie.mp3",
+            "image" => "Wookie.webp",
+            "categories" => ["creature", "wookie"]
+        ],
+        
+        "Autruche Spacial" => [
+            "file" => "Autruche-spacial.mp3",
+            "image" => "Autruche-spacial.webp",
+            "categories" => ["creature"]
+        ],
+        "Bip Boup Bip" => [
+            "file" => "Bip-boup-bip.mp3",
+            "image" => "Bip-boup-bip.webp",
+            "categories" => ["droïde", "communication"]
+        ],
+        "Appel Radio" => [
+            "file" => "Appel-radio.mp3",
+            "image" => "Appel-radio.webp",
+            "categories" => ["communication", "empire"]
+        ],
+        "Alerte Impériale" => [
+            "file" => "Alerte-imperiale.mp3",
+            "image" => "Alerte-imperiale.webp",
+            "categories" => ["communication", "empire"]
+        ]
     ];
+
+     // Récupérer toutes les catégories uniques
+     $allCategories = [];
+     foreach ($mp3Files as $details) {
+         if (isset($details['categories'])) {
+             $allCategories = array_merge($allCategories, $details['categories']);
+         }
+     }
+     $allCategories = array_unique($allCategories);
+     sort($allCategories);
     
     $basePath = "/page/starwars/sound-and-picture/";
 ?>
@@ -58,6 +190,8 @@
     <link rel="stylesheet" href="/asset/style/style.css">
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 </head>
 <body>
 
@@ -136,22 +270,51 @@
         </div>
         <div id="blocsound">
 
-            <?php 
-                foreach ($mp3Files as $file) {
-                    $fileName = pathinfo($file, PATHINFO_FILENAME);
-                    $filePath = $basePath . $file; 
-                    $imagePath = "/page/starwars/sound-and-picture/" . $fileName . ".webp"; 
-                    $displayName = str_replace("-", " ", $fileName); // Remplace les "-" par des espaces
-                    ?>
-                    <div class="buttoncontainer">
-                        <button class="animbutton typo20px sound-button" data-sound="<?php echo htmlspecialchars($filePath); ?>" onclick="play_sound('<?php echo htmlspecialchars($filePath); ?>')">
-                            <?php echo htmlspecialchars($displayName); ?>
-                        </button>
-                        <img class="imagebutton" src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($fileName); ?>">
-                    </div>
-                    <?php
-                }
+        <?php 
+            foreach ($mp3Files as $displayName => $details) {
+                $filePath = $basePath . $details['file'];
+                $imagePath = $basePath . $details['image'];
+                $categories = implode(',', $details['categories']);
+                ?>
+                <div class="buttoncontainer">
+                    <button class="animbutton typo20px sound-button" 
+                            data-sound="<?php echo htmlspecialchars($filePath); ?>" 
+                            data-categories="<?php echo htmlspecialchars($categories); ?>" 
+                            data-name="<?php echo htmlspecialchars(strtolower($displayName)); ?>"
+                            data-id="<?php echo htmlspecialchars($displayName); ?>"
+                            onclick="play_sound('<?php echo htmlspecialchars($filePath); ?>')">
+                        <?php echo htmlspecialchars($displayName); ?>
+                    </button>
+                    <img class="imagebutton" src="<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($displayName); ?>">
+                    <button class="fav-btn" data-id="<?php echo htmlspecialchars($displayName); ?>" title="Ajouter aux favoris">Ajouter aux favoris</button>
+                </div>
+                <?php
+            }
             ?>
+        </div>
+    </div>
+
+    <!-- Ajout du marque-page et du livre de recherche -->
+    <div id="bookmark-btn" class="bookmark">
+        <span>Rechercher un son</span>
+    </div>
+    <div id="glossary-book" class="book">
+        <div class="book-content">
+            <h2>Rechercher un bruitage</h2>
+            <button class="close-btn" aria-label="Fermez la recherche">X</button>
+            <div class="search-container">
+                <input type="text" id="search-term" placeholder="Rechercher un mot-clé...">
+                <select id="category-filter">
+                    <option value="">Toutes les catégories</option>
+                    <?php foreach ($allCategories as $category): ?>
+                        <option value="<?php echo htmlspecialchars($category); ?>"><?php echo htmlspecialchars($category); ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <label class="fav-filter-label">
+                    <input type="checkbox" id="favorites-filter"> Afficher uniquement les favoris
+                </label>
+                <button id="reset-search" class="reset-btn">Réinitialiser</button>
+            </div>
         </div>
     </div>
     
@@ -166,6 +329,7 @@
             <iframe id="player5" class="lecteurvideo" src="https://www.youtube.com/embed/_X1IsGW9ApU" title="YouTube video player" alt="Ambiance exploration de dongon"></iframe>
             <iframe id="player6" class="lecteurvideo" src="https://www.youtube.com/embed/Y069SX7CdiI" title="YouTube video player" alt="Ambiance inquitante"></iframe>
             <iframe id="player7" class="lecteurvideo" src="https://www.youtube.com/embed/41ak2jr55fE" title="YouTube video player" alt="Debut de jdr"></iframe>
+            <iframe id="player7" class="lecteurvideo" src="https://www.youtube.com/embed/RT-LLlJPg2M" title="YouTube video player" alt="Debut de jdr"></iframe>
         </div> 
     </div>
     <!-- <script>
