@@ -1,136 +1,136 @@
 // /asset/scripts/glossary.js
 
-// Données du glossaire
+// Glossary data
 const glossaryData = [
     {
         term: "Advance",
-        description: "Lors de la phase de mouvement, une unité peut avancer après son mouvement normal en lançant un D6. Ajoutez le résultat en pouces à son mouvement, mais l'unité ne peut pas charger ce tour."
+        description: "During the Movement phase, a unit can advance after its normal move by rolling a D6. Add the result in inches to its movement, but the unit cannot charge this turn."
     },
     {
         term: "Anti-X Y+",
-        description: "Les attaques avec cette règle blessent automatiquement les cibles avec le mot-clé X (par exemple, Anti-Infantry) sur un jet de Y+ ou mieux, sans lancer pour blesser."
+        description: "Attacks with this rule automatically wound targets with the X keyword (e.g., Anti-Infantry) on a roll of Y+ or better, without rolling to wound."
     },
     {
         term: "Assault",
-        description: "Les armes avec ce mot-clé permettent à l'unité de tirer même après avoir avancé, mais uniquement si la cible est à portée."
+        description: "Weapons with this keyword allow the unit to shoot even after advancing, but only if the target is within range."
     },
     {
         term: "Blast",
-        description: "Contre une unité de 6 modèles ou plus, ajoutez +1 touche par tranche de 5 modèles dans la cible (arrondi au supérieur). Ne fonctionne pas contre les Personnages ou unités attachées."
+        description: "Against a unit of 6 or more models, add +1 hit per 5 models in the target (rounded up). Does not work against Characters or attached units."
     },
     {
         term: "Deep Strike",
-        description: "L'unité peut être déployée en Réserve et arriver sur le champ de bataille à partir de la fin du deuxième round, à plus de 9\" des ennemis."
+        description: "The unit can be deployed in Reserve and arrive on the battlefield from the end of the second round, more than 9\" from enemies."
     },
     {
         term: "Devastating Wounds",
-        description: "Une touche critique (généralement un 6) inflige des blessures mortelles, ignorant les sauvegardes d'armure et invulnérables."
+        description: "A critical hit (usually a 6) inflicts mortal wounds, ignoring armor and invulnerable saves."
     },
     {
         term: "Fall Back",
-        description: "Une unité peut se retirer d’un combat au corps-à-corps lors de la phase de mouvement, mais elle ne peut pas tirer ni charger ce tour, sauf si elle a une règle spéciale."
+        description: "A unit can withdraw from melee combat during the Movement phase, but it cannot shoot or charge this turn unless it has a special rule."
     },
     {
         term: "Feel No Pain X+",
-        description: "Permet d’ignorer une blessure ou une blessure mortelle sur un jet de X ou plus (par exemple, 5+ pour ignorer sur un 5 ou 6)."
+        description: "Allows ignoring a wound or mortal wound on a roll of X or higher (e.g., 5+ to ignore on a 5 or 6)."
     },
     {
         term: "Fight First",
-        description: "L'unité peut combattre en premier dans la phase de combat, même si elle n’a pas chargé, à moins qu’une autre unité avec Fight First ne soit présente."
+        description: "The unit can fight first in the Fight phase, even if it didn’t charge, unless another unit with Fight First is present."
     },
     {
         term: "Heavy",
-        description: "Une arme Heavy gagne +1 pour toucher si l’unité portant l’arme est restée stationnaire ce tour."
+        description: "A Heavy weapon gains +1 to hit if the unit carrying it remained stationary this turn."
     },
     {
         term: "Ignores Cover",
-        description: "Les attaques de cette arme ignorent les bonus de sauvegarde conférés par le terrain léger ou dense."
+        description: "Attacks from this weapon ignore save bonuses granted by light or dense terrain."
     },
     {
         term: "Indirect Fire",
-        description: "Permet de tirer sur des cibles hors ligne de vue, mais elles gagnent un bonus de couverture (+1 à la sauvegarde) et l’attaquant subit -1 pour toucher."
+        description: "Allows shooting at targets out of line of sight, but they gain a cover bonus (+1 to save) and the attacker takes -1 to hit."
     },
     {
         term: "Infiltrators",
-        description: "L’unité peut être déployée n’importe où sur le champ de bataille, à plus de 9\" des zones de déploiement ennemies et des unités ennemies."
+        description: "The unit can be deployed anywhere on the battlefield, more than 9\" from enemy deployment zones and units."
     },
     {
         term: "Lethal Hits",
-        description: "Une touche critique (généralement un 6) devient automatiquement une blessure, sans besoin de lancer pour blesser."
+        description: "A critical hit (usually a 6) automatically becomes a wound, without needing to roll to wound."
     },
     {
         term: "Melta",
-        description: "À la moitié de la portée de l’arme ou moins, ajoutez +2 au jet de dégâts pour chaque blessure réussie."
+        description: "At half the weapon’s range or less, add +2 to the damage roll for each successful wound."
     },
     {
         term: "Objective Secured",
-        description: "Certaines unités (comme les Troupes) contrôlent les objectifs même si elles sont moins nombreuses que les unités ennemies non-Objective Secured."
+        description: "Some units (like Troops) control objectives even if outnumbered by non-Objective Secured enemy units."
     },
     {
         term: "Overwatch",
-        description: "Permet à une unité de tirer en dehors de son tour sur une unité ennemie qui bouge, charge ou effectue une action, sur un jet de 6 pour toucher (modifié par certaines règles)."
+        description: "Allows a unit to shoot outside its turn at an enemy unit that moves, charges, or performs an action, hitting on a 6 (modified by some rules)."
     },
     {
         term: "Pistol",
-        description: "Une arme Pistol peut être utilisée pour tirer au corps-à-corps ou après avoir avancé, mais uniquement sur une cible à portée."
+        description: "A Pistol weapon can be used to shoot in melee or after advancing, but only at a target within range."
     },
     {
         term: "Precision",
-        description: "Les attaques de cette arme peuvent cibler un Personnage attaché à une unité, même si l’unité est la cible principale."
+        description: "Attacks from this weapon can target a Character attached to a unit, even if the unit is the primary target."
     },
     {
         term: "Rapid Fire X",
-        description: "À la moitié de la portée maximale de l’arme, ajoutez X tirs supplémentaires par arme (par exemple, Rapid Fire 1 sur un Bolter donne 2 tirs à 12\" ou moins)."
+        description: "At half the weapon’s maximum range, add X extra shots per weapon (e.g., Rapid Fire 1 on a Bolter gives 2 shots at 12\" or less)."
     },
     {
         term: "Scouts X\"",
-        description: "Avant le premier tour, l’unité peut effectuer un mouvement normal jusqu’à X pouces, respectant les restrictions de déploiement."
+        description: "Before the first turn, the unit can make a normal move up to X inches, respecting deployment restrictions."
     },
     {
         term: "Stealth",
-        description: "L’unité gagne un bonus de couverture (+1 à la sauvegarde) contre les tirs à plus de 12\"."
+        description: "The unit gains a cover bonus (+1 to save) against shooting attacks from more than 12\" away."
     },
     {
         term: "Sustained Hits X",
-        description: "Une touche critique (généralement un 6) génère X touches supplémentaires."
+        description: "A critical hit (usually a 6) generates X additional hits."
     },
     {
         term: "Torrent",
-        description: "Les attaques de cette arme touchent automatiquement, sans besoin de lancer pour toucher."
+        description: "Attacks from this weapon automatically hit, without needing to roll to hit."
     },
     {
         term: "Twin-Linked",
-        description: "Permet de relancer les jets pour blesser ratés."
+        description: "Allows rerolling failed wound rolls."
     },
     {
         term: "Command Re-roll",
-        description: "Un Stratagème de base permettant de relancer un jet de dés (touche, blessure, sauvegarde, etc.) pour 1 Point de Commandement."
+        description: "A core Stratagem allowing rerolling a dice roll (hit, wound, save, etc.) for 1 Command Point."
     },
     {
         term: "Insane Bravery",
-        description: "Un Stratagème empêchant une unité de rater un test de Moral pour 1 Point de Commandement, mais elle subit des pertes automatiques si elle échoue ensuite."
+        description: "A Stratagem preventing a unit from failing a Morale test for 1 Command Point, but it suffers automatic losses if it fails afterward."
     },
     {
         term: "Wound Roll",
-        description: "Après une touche réussie, un jet pour blesser compare la Force de l’arme à la Résistance de la cible. Par exemple, Force 4 contre Résistance 4 blesse sur 4+."
+        description: "After a successful hit, a wound roll compares the weapon’s Strength to the target’s Toughness. For example, Strength 4 vs. Toughness 4 wounds on 4+."
     },
     {
         term: "Invulnerable Save",
-        description: "Une sauvegarde spéciale qui ne peut être modifiée par la Pénétration d’Armure. Par exemple, une sauvegarde invulnérable de 4+ réussit toujours sur 4 ou plus."
+        description: "A special save that cannot be modified by Armor Penetration. For example, a 4+ invulnerable save always succeeds on 4 or higher."
     },
     {
         term: "Moral Test",
-        description: "À la fin de la phase de Moral, une unité ayant subi des pertes teste son Commandement. Un échec entraîne des pertes supplémentaires via Combat Attrition."
+        description: "At the end of the Morale phase, a unit that suffered losses tests its Leadership. Failure results in additional losses via Combat Attrition."
     },
     {
         term: "Aura",
-        description: "Une capacité qui affecte les unités amies à une certaine distance (par exemple, 6\"), comme un bonus de Commandement ou une relance des jets."
+        description: "An ability that affects friendly units within a certain range (e.g., 6\"), such as a Leadership bonus or dice roll rerolls."
     }
 ];
 
-// Fonction principale pour initialiser le glossaire
+// Main function to initialize the glossary
 (function ($) {
-    // Injecter le CSS avec les ajustements
+    // Inject CSS with adjustments
     const glossaryStyles = `
         .bookmark {
             position: fixed;
@@ -159,7 +159,7 @@ const glossaryData = [
             font-family: 'MedievalSharp', cursive;
             position: absolute;
             width: 100px;
-            right: 15px;
+            right: 20px;
             bottom: 38px;
         }
 
@@ -173,7 +173,7 @@ const glossaryData = [
             background-size: cover;
             border: none;
             cursor: pointer;
-            color: transparent; /* Cache le texte "X" */
+            color: transparent; /* Hides the "X" text */
         }
 
         .bookmark.pulled {
@@ -206,7 +206,7 @@ const glossaryData = [
             border: none;
             z-index: 999;
             overflow: hidden;
-            display: none; /* Ajouté pour s'assurer que le livre est caché au départ */
+            display: none; /* Ensures the book is hidden initially */
         }
 
         .book-content {
@@ -286,26 +286,26 @@ const glossaryData = [
         }
     `;
 
-    // Injecter le CSS dans le <head>
+    // Inject CSS into the <head>
     $('<style>').text(glossaryStyles).appendTo('head');
 
-    // Injecter le HTML avec le texte "Index" dans le marque-page
+    // Inject HTML with "Glossary" text in the bookmark
     const glossaryHTML = `
         <div id="bookmark-btn" class="bookmark">
-            <span>Index</span>
+            <span>Glossary</span>
         </div>
         <div id="glossary-book" class="book">
             <div class="book-content">
-                <h2>Index de l'Imperium</h2>
-                <button class="close-btn" aria-label="fermez le l'index de l'impérieum">X</button>
-                <input type="text" id="search-term" placeholder="Rechercher un mot-clé...">
+                <h2>Imperium Glossary</h2>
+                <button class="close-btn" aria-label="Close the Imperium Glossary">X</button>
+                <input type="text" id="search-term" placeholder="Search for a keyword...">
                 <div id="glossary-entries"></div>
             </div>
         </div>
     `;
     $('body').append(glossaryHTML);
 
-    // Charger la police MedievalSharp si elle n'est pas déjà chargée
+    // Load the MedievalSharp font if not already loaded
     if (!$('link[href*="MedievalSharp"]').length) {
         $('<link>')
             .attr({
@@ -315,7 +315,7 @@ const glossaryData = [
             .appendTo('head');
     }
 
-    // Fonction pour charger les entrées du glossaire
+    // Function to load glossary entries
     function loadGlossary(searchTerm = '') {
         const $entries = $('#glossary-entries');
         $entries.empty();
@@ -330,37 +330,37 @@ const glossaryData = [
                 `);
             });
         if ($entries.children().length === 0) {
-            $entries.append('<p>Aucun résultat trouvé.</p>');
+            $entries.append('<p>No results found.</p>');
         }
     }
 
-    // Initialiser le glossaire
+    // Initialize the glossary
     loadGlossary();
 
-    // Recherche dynamique
+    // Dynamic search
     $('#search-term').on('input', function () {
         loadGlossary($(this).val());
     });
 
-    // Animation du marque-page et ouverture/fermeture du livre
+    // Bookmark animation and book open/close
     $('#bookmark-btn').on('click', function () {
         const $book = $('#glossary-book');
         const $bookmark = $(this);
         if ($book.is(':visible')) {
-            // Fermer le livre
+            // Close the book
             $book.animate({ left: '-100%' }, 500, function () {
                 $book.hide();
             });
             $bookmark.removeClass('pulled');
         } else {
-            // Ouvrir le livre
+            // Open the book
             $book.show().css({ left: '-100%' }).animate({ left: '0' }, 500);
             $bookmark.addClass('pulled');
             loadGlossary();
         }
     });
 
-    // Bouton de fermeture
+    // Close button
     $('.close-btn').on('click', function () {
         $('#glossary-book').animate({ left: '-100%' }, 500, function () {
             $(this).hide();

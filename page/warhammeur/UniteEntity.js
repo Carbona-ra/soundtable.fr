@@ -68,16 +68,23 @@ class WarhammerModels {
         
             const $unitDiv = $(`
                 <div class="selected-unit" data-index="${index}">
-                    <div class="selected-unit-header${hasModelVariation ? '' : '-solo'}">
+                    <div class="selected-unit-header">
                         <img class="unit-illustration" width="100px" height="100px" src="${unit.imageUrl}" alt="Unité Nécron ${unit.name} pour Warhammer">
                         <div class="skibidibapbap">
                             <button class="remove-unit-btn" data-index="${index}">Supprimer</button>
                             <h3>${unit.name} - ${totalCost} pts${hasModelVariation ? ` (${unit.modelCount} modèles)` : ''}</h3>
                         </div>
                         ${hasModelVariation ? `
-                            <button class="decrease-model-btn" data-index="${index}">-</button>
-                            <button class="increase-model-btn" data-index="${index}">+</button>
-                        ` : ''}
+                            <div class="button-container">
+                                <button class="increase-model-btn" data-index="${index}">+</button>
+                                <button class="decrease-model-btn" data-index="${index}">-</button>
+                            </div>
+                        ` : `
+                            <div class="button-container" style="opacity: 0;">
+                                <button class="increase-model-btn" disabled>+</button>
+                                <button class="decrease-model-btn" disabled>-</button>
+                            </div>
+                        `}
                     </div>
                 </div>
             `);
@@ -87,6 +94,17 @@ class WarhammerModels {
                 if (!$(e.target).is("button")) {
                     this.toggleUnitDetails(index);
                 }
+            });
+
+            $unitDiv.find(".sub-option-1").on("click", (e) => {
+                e.stopPropagation();
+                // Dupliquer l'unité
+                const unitToDuplicate = this.selectedUnits[index];
+                const duplicatedUnit = { ...unitToDuplicate };
+                this.selectedUnits.splice(index + 1, 0, duplicatedUnit); // Ajoute l'unité juste après l'originale
+                this.displaySelectedUnits();
+                this.saveToCookie();
+                console.log(`Unit ${unitToDuplicate.name} duplicated at index ${index + 1}`);
             });
     
             $unitDiv.find(".remove-unit-btn").on("click", (e) => {
@@ -143,8 +161,35 @@ class WarhammerModels {
     }
 
     initEventListeners() {
+        // Gérer l'ouverture du popup
+        $("#openUnitPopupBtn").on("click", () => {
+            $("#unitPopup").show();
+            this.populateUnitSelector(); // Remplir la liste à l'ouverture
+        });
+
+        // Gérer la fermeture du popup
+        $("#closeUnitPopupBtn").on("click", () => {
+            $("#unitPopup").hide();
+        });
+
+        // Gérer l'ajout d'une unité depuis le popup
+        $("#unitList").on("click", ".add-unit-btn", (e) => {
+            const unitId = $(e.target).data("unit-id");
+            const selectedUnit = this.units.find(unit => unit.id === unitId);
+            if (selectedUnit) {
+                const selectedWeapons = selectedUnit.weapons.filter(weapon =>
+                    $(`#weaponSelection .weapon-checkbox[value="${weapon.name}"]`).is(":checked")
+                );
+                const selectedAbilities = selectedUnit.abilities.filter(ability =>
+                    $(`#abilitySelection .ability-checkbox[value="${ability.name}"]`).is(":checked")
+                );
+                this.addToSelectedUnits(selectedUnit, selectedWeapons, selectedAbilities);
+            }
+        });
+
+        // Gérer l'ajout d'une unité depuis les détails (bouton "Ajouter à ma liste")
         $("#unitDetails").on("click", "#addToListBtn", () => {
-            const selectedUnit = this.units.find(unit => unit.id === $("#unitSelector").val());
+            const selectedUnit = this.units.find(unit => unit.id === $("#unitSelector").val() || $(`.unit-item[data-unit-id]`).data("unit-id"));
             if (selectedUnit) {
                 const selectedWeapons = selectedUnit.weapons.filter(weapon =>
                     $(`#weaponSelection .weapon-checkbox[value="${weapon.name}"]`).is(":checked")
@@ -156,6 +201,8 @@ class WarhammerModels {
             }
         });
     }
+
+
 
     toggleUnitDetails(index) {
         const $unitDiv = $(`#selectedUnitsList .selected-unit[data-index="${index}"]`);
@@ -319,7 +366,7 @@ class WarhammerModels {
             const $entry = $(this);
             const name = $entry.attr('name');
             
-            if (name === "Convergence of Dominion Starstele" || name === "Triarch Praetorian" || name === "Ophydian Destroyer" || name === "Tomb Blade" || name === "Skorpekh Destroyer" || name === "Canoptek Spyder" || name === "Canoptek Scarab Swarm" || name === "Immortal" || name === "Cryptothrall" || name === "Deathmark" || name === "Flayed One" || name === "Lokhust Destroyer" || name.includes("w/")) {
+            if (name === "Canoptek Acanthrite"  || name === "Convergence of Dominion Starstele" || name === "Triarch Praetorian" || name === "Ophydian Destroyer" || name === "Tomb Blade" || name === "Skorpekh Destroyer" || name === "Canoptek Spyder" || name === "Canoptek Scarab Swarm" || name === "Immortal" || name === "Cryptothrall" || name === "Deathmark" || name === "Flayed One" || name === "Lokhust Destroyer" || name.includes("w/")) {
                 console.log(`Unité exclue : ${name}`);
                 return;
             }
@@ -394,20 +441,34 @@ class WarhammerModels {
     }
 
     populateUnitSelector() {
-        const $unitSelector = $("#unitSelector");
-        $unitSelector.empty().append('<option value="">Choisissez une unité</option>');
+        const $unitList = $("#unitList").empty();
 
         this.units.forEach(unit => {
-            $unitSelector.append(`<option value="${unit.id}">${unit.name}</option>`);
+            const baseCost = parseInt(unit.cost || '0', 10);
+            const $unitItem = $(`
+                <div class="unit-item" data-unit-id="${unit.id}">
+                    <div class="unit-item-header">
+                        <img src="${unit.imageUrl}" alt="Unité ${unit.name}" width="100" height="100">
+                        <div class="unit-info">
+                            <h3>${unit.name} - ${baseCost} pts</h3>
+                        </div>
+                        <div class="button-container">
+                            <button class="add-unit-btn" data-unit-id="${unit.id}">+</button>
+                        </div>
+                    </div>
+                </div>
+            `);
+            $unitList.append($unitItem);
         });
 
-
-        $unitSelector.on("change", (event) => {
-            const selectedUnit = this.units.find(unit => unit.id === event.target.value);
-            if (selectedUnit) {
-                this.displayUnitDetails(selectedUnit);
-            } else {
-                $("#unitDetails").empty();
+        // Afficher les détails de l'unité au clic sur l'item (sauf sur le bouton +)
+        $unitList.on("click", ".unit-item", (e) => {
+            if (!$(e.target).hasClass("add-unit-btn")) {
+                const unitId = $(e.currentTarget).data("unit-id");
+                const selectedUnit = this.units.find(unit => unit.id === unitId);
+                if (selectedUnit) {
+                    this.displayUnitDetails(selectedUnit);
+                }
             }
         });
     }
@@ -691,11 +752,11 @@ class WarhammerModels {
             ["Anrakyr the Traveller [Legends]", "https://www.rart.fr/39422-large_default/anrakyr-the-traveller-1676987054.webp"],
             ["Varguard Obyron [Legends]", "https://www.rart.fr/39457-large_default/vargard-obyron-1676987066.webp"],
             ["Illuminor Szeras", "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110049_IlluminorSzerasLead.jpg?fm=webp&w=670&h=691"],
-            ["Nemesor Zahndrekh [Legends]", "https://clic29-hobby.fr/10377-large_default/nemesor-zahndrekh-necrons.jpg"],
+            ["Nemesor Zahndrekh [Legends]", "https://www.adeptusars.com/wp-content/uploads/2023/08/Nemesor-Zahndrekh.jpg"],
             ["Trazyn the Infinite", "https://www.warhammer.com/app/resources/catalog/product/920x950/99800110009_TrazynTheInfiniteNEW01.jpg"],
             ["Royal Warden", "https://www.warhammer.com/app/resources/catalog/product/920x950/99070110007_RoyalWarden1.jpg"],
             ["Lokhust Lord", "https://wh40k.lexicanum.com/mediawiki/images/thumb/c/c9/DestroyerLord5th.jpg/373px-DestroyerLord5th.jpg"],
-            ["Lord [Legends]", "https://via.placeholder.com/150"],
+            ["Lord [Legends]", "https://www.adeptusars.com/wp-content/uploads/2024/01/Necron-Lord-with-Resurrection-Orb-Model.jpg"],
             ["Catacomb Command Barge", "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110064_CatacombCommandBargeLead.jpg"],
             ["Overlord", "https://manatorsk.com/cdn/shop/files/99070110006_OverlordTachyonArrow1.jpg?v=1703681737"],
             ["Technomancer", "https://i.ebayimg.com/images/g/-5cAAOSwYrlkmmmf/s-l1200.jpg"],
@@ -722,7 +783,7 @@ class WarhammerModels {
             ["Ophydian Destroyers", "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110053_NECOphydianDestroyersLead.jpg"],
             ["Tomb Blades", "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110059_NECTombBladesLead.jpg"],
             ["Triarch Praetorians", "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110058_NecronsTriarchPraetoriansLead.jpg?fm=webp&w=670&h=691"],
-            ["Canoptek Wraiths", "https://th.bing.com/th?q=Warhammer%2040k%20Necron%20Canoptek%20Wraiths%20EXPERTLY%20PAINTED&w=400&h=400&c=7&pid=1.7&adlt=moderate&t=1"],
+            ["Canoptek Wraiths", "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110060_NECCanoptekWraithsLead.jpg"],
             ["Wraith w/ claws and beamer", "https://via.placeholder.com/150"],
             ["Wraith w/ claws and particle caster", "https://via.placeholder.com/150"],
             ["Wraith w/ claws", "https://via.placeholder.com/150"],
@@ -744,11 +805,11 @@ class WarhammerModels {
             ["Triarchal Menhir", "https://wh40k.lexicanum.com/mediawiki/images/thumb/2/2a/MenhirArt.jpg/140px-MenhirArt.jpg"],
             ["Convergence of Dominion", "https://www.adeptusars.com/wp-content/uploads/2023/08/Convergence-of-Dominion.jpg"],
             ["Canoptek Tomb Stalker [Legends]", "https://taleofpainters.com/wp-content/uploads/2013/08/NecronTombStalker.jpg"],
-            ["Canoptek Tomb Sentinel [Legends]", "https://static.wikia.nocookie.net/warhammer40k/images/f/f2/T-sentp3.jpg/revision/latest?cb=20130706071550"],
-            ["Canoptek Acanthrite", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgP_bFciLmW8N8cC1x28BGGV0WXiZz3N22sTU53IB2d_ksiAXGhuUOXJ0xrRkNmnhEIfO7zRAxqzMRaxEa8jpCqF5daALv4o8QfU8q-JBPAxSwHmG4x7mwL4CGc5ih2Rh_7JTx1romk20d96DGdcJSJlHaQz3M7w3mxdWtfSg1f56dqf4lI_axuuea3/s1830/Canoptek%20Acanthrites.jpg"],
-            ["Tesseract Ark [Legends]", "https://static.wikia.nocookie.net/warhammer40k/images/f/f6/Tesseract-ark9.jpg/revision/latest?cb=20130701051146"],
+            ["Canoptek Tomb Sentinel [Legends]", "https://i.redd.it/do-you-think-tomb-sentinel-tomb-stalker-and-other-forge-v0-2vnb3fjiu03b1.jpg?width=920&format=pjpg&auto=webp&s=e04b9f6190965d3b3523eea6dbf2f98201756942"],
+            ["Canoptek Acanthrite", "https://skaystore.ru/images/detailed/124/7EJ1XmHkSfs_swxj-tr.jpg"],
+            ["Tesseract Ark [Legends]", "https://miniset.net/files/set/gw-99860110011-0.jpg"],
             ["Seraptek Heavy Construct", "https://www.warhammer.com/app/resources/catalog/product/threeSixty/99860110022_NecronCeraptekConstructwithSynaptecs360/01.jpg"],
-            ["Gauss Pylon [Legends]", "https://artwork.40k.gallery/wp-content/uploads/2022/10/Gauss-Pylons.jpg"],
+            ["Gauss Pylon [Legends]", "https://darkminiatures.com/image/cache/catalog/tovary/g-w/wr./fw-263-500x500.png"],
             ["Sentry Pylon [Legends]", "https://skaystore.ru/images/detailed/72/sentrypylonge1.jpg"],
             ["Night Shroud [Legends]", "https://ssl.images-ssl-mars.com/65463/2020/12/11/3/5/3544b9a0cd58b462.jpg"],
             ["Overlord with Translocation Shroud", "https://www.ludifolie.com/48162-thickbox_default/warhammer-40k-necrons-overlord-with-translocation-shroud.jpg"]

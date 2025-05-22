@@ -273,14 +273,8 @@
                     <textarea class="textarea" name="Bnote3" placeholder="votre bloc note 3..."><?php echo isset($_COOKIE['blocknote3']) ? htmlentities($_COOKIE['blocknote3']) : ''; ?></textarea>
                     <textarea class="textarea" name="Bnote4" placeholder="votre bloc note 4..."><?php echo isset($_COOKIE['blocknote4']) ? htmlentities($_COOKIE['blocknote4']) : ''; ?></textarea>
                     <textarea class="textarea" name="Bnote5" placeholder="votre bloc note 5..."><?php echo isset($_COOKIE['blocknote5']) ? htmlentities($_COOKIE['blocknote5']) : ''; ?></textarea>
-                    <input type="submit" class="audessumonpote" name='coocky' value="Sauvegarder" Alt="(Dans les coocki)">
                 </form>
             </div>
-            <script>
-            document.getElementById("noteForm").addEventListener("submit", function(event) {
-                event.preventDefault();
-            });
-            </script>
         </div>
     </div>
 
@@ -376,7 +370,7 @@
     </div>
     
     <script src="/asset/scripts/script-front.js"></script>
-
+    <script src="/asset/scripts/ideaBox.js"></script>
 </body>
 </html>
 

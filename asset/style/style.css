@@ -11,6 +11,17 @@ a, button, div, iframe, textarea, input {
   cursor: url('../../asset/normal-cursor.cur'), pointer !important;
 } */
  
+#MenuDée {
+  position: absolute;
+  z-index: 40px;
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  left: 59%;
+  top: 7%;
+}
 
 .bookmark {
   position: fixed;
@@ -209,6 +220,11 @@ a, button, div, iframe, textarea, input {
 
   .book-content h2 {
     font-size: 14px;
+  }
+
+  #MenuDée {
+    left: 21%;
+    top: 5%;
   }
 }
 
@@ -534,7 +550,7 @@ h1 {
 #btn-ambiance{
   width: 150px; 
   height: 35px;
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 0;
   z-index: 1000;
@@ -559,7 +575,55 @@ h1 {
 .scrollable-section {
   display: flex;
   flex-direction: column;
+  max-height: 70%;
+  overflow-y: auto;
+  padding-right: 5px;
 }
+
+
+.scrollable-section::-webkit-scrollbar {
+  width: 8px; /* Largeur de la scrollbar */
+}
+
+.scrollable-section::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1); /* Fond de la piste */
+  border-radius: 10px;
+}
+
+.scrollable-section::-webkit-scrollbar-thumb {
+  background: #d4a017; /* Couleur de la poignée */
+  border-radius: 10px;
+}
+
+.scrollable-section::-webkit-scrollbar-thumb:hover {
+  background: #d4a017; /* Couleur au survol */
+}
+
+
+
+
+.scrollabel-section::-webkit-scrollbar {
+  width: 8px; /* Largeur de la scrollbar */
+}
+
+.scrollabel-section::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1); /* Fond de la piste */
+  border-radius: 10px;
+}
+
+.scrollabel-section::-webkit-scrollbar-thumb {
+  background: #d4a017; /* Couleur de la poignée */
+  border-radius: 10px;
+}
+
+.scrollabel-section::-webkit-scrollbar-thumb:hover {
+  background: #d4a017; /* Couleur au survol */
+}
+
+
+
+
+
 .lecteurvideo {
   width: 275px;
   height: 50px;
@@ -672,6 +736,7 @@ animation: clickAnimation 0.5s;
 }
 
 #blocsound {
+  margin-bottom: 200px;
   padding: 0px 10px;
   z-index: 10;
   flex-wrap: wrap;
@@ -704,17 +769,7 @@ animation: clickAnimation 0.5s;
     margin: 0 5px 0 5px;
 }
 
-#MenuDée {
-    position: absolute;
-    z-index: 40px;
-    width: 230px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    left: 59%;
-    top: 7%;
-}
+
 
 #openmenuD {
   width: 100px;
@@ -792,6 +847,10 @@ display: flex;
   }
   #blocnote {
     display: none;
+  }
+
+  .lecteurvideo {
+    height: 250px;
   }
 
   .bloc-central {

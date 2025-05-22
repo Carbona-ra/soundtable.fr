@@ -11,7 +11,67 @@
     }
 
     $mp3Files = [
-        
+        "Piston mécanique" => [
+            "file" => "piston-mécanique.mp3",
+            "image" => "piston-mécanique.webp",
+            "categories" => ["vaisseau", "transport", "droïde", "machine"]
+        ],
+        "Combat spatial" => [
+            "file" => "Combat-spacial.mp3",
+            "image" => "guerre-spatial.webp",
+            "categories" => ["vaisseau", "combat", "ambiance"]
+        ],
+        "Silence spatiale" => [
+            "file" => "Silence-spacial.mp3",
+            "image" => "silence-spatiale.webp",
+            "categories" => ["vaisseau", "ambiance"]
+        ],
+        "Mystère" => [
+            "file" => "Mystère.mp3",
+            "image" => "mystère.webp",
+            "categories" => ["ambiance"]
+        ],
+        "Vole en apesanteur" => [
+            "file" => "Vole-en-apesanteur.mp3",
+            "image" => "vole-stationaire.webp",
+            "categories" => ["vaisseau", "ambiance"]
+        ],
+        "Bruit mécanique" => [
+            "file" => "Bruits-mécaniques-2.mp3",
+            "image" => "usine.webp",
+            "categories" => ["ambiance", "machine"]
+        ],
+        "Clavier" => [
+            "file" => "Clavier.mp3",
+            "image" => "clavier-mécanique.webp",
+            "categories" => ["ambiance", "empire"]
+        ],
+        "Alerte dépressurisation" => [
+            "file" => "Alerte-dépréssion.mp3",
+            "image" => "alerte.webp",
+            "categories" => ["vaisseau", "empire","ambiance" ]
+        ],
+        "Radar" => [
+            "file" => "Radart.mp3",
+            "image" => "radar.webp",
+            "categories" => ["vaisseau"]
+        ],
+        "Démarrage moteur" => [
+            "file" => "Démarage-moteur.mp3",
+            "image" => "démarage-moteur.webp",
+            "categories" => ["vaisseau"]
+        ],
+        "Bruits-mécaniques" => [
+            "file" => "Bruits-mécaniques.mp3",
+            "image" => "atelier.webp",
+            "categories" => ["machine", "ambiance"]
+        ],
+        "Silence mécanique" => [
+            "file" => "Silence-mécanisé.mp3",
+            "image" => "salle-vide.webp",
+            "categories" => ["ambiance", "machine"]
+        ],
+
         "TIE" => [
             "file" => "TIE.mp3",
             "image" => "TIE.webp",
@@ -82,7 +142,6 @@
             "categories" => ["arme", "explosion"]
         ],
 
-        
         "Whosh Sabre Laser" => [
             "file" => "Whosh-sabre-laser.mp3",
             "image" => "Whosh-sabre-laser.webp",
@@ -229,14 +288,8 @@
                     <textarea class="textarea" name="Bnote3" placeholder="votre bloc note 3..."><?php echo isset($_COOKIE['blocknote3']) ? htmlentities($_COOKIE['blocknote3']) : ''; ?></textarea>
                     <textarea class="textarea" name="Bnote4" placeholder="votre bloc note 4..."><?php echo isset($_COOKIE['blocknote4']) ? htmlentities($_COOKIE['blocknote4']) : ''; ?></textarea>
                     <textarea class="textarea" name="Bnote5" placeholder="votre bloc note 5..."><?php echo isset($_COOKIE['blocknote5']) ? htmlentities($_COOKIE['blocknote5']) : ''; ?></textarea>
-                    <input type="submit" class="audessumonpote" name='coocky' value="Sauvegarder" Alt="(Dans les coocki)">
                 </form>
             </div>
-            <script>
-            document.getElementById("noteForm").addEventListener("submit", function(event) {
-                event.preventDefault();
-            });
-            </script>
         </div>
     </div>
 
@@ -369,7 +422,7 @@
         }
     </script> -->
     <script src="/asset/scripts/script-front.js"></script>
-
+    <script src="/asset/scripts/ideaBox.js"></script>
 </body>
 </html>
 

@@ -30,7 +30,7 @@
 <body>
 
 <div class="langBtn">
-    <a aria-label="aller à la version" href="https://soundtable.fr/warhammeurArmise"><bold>FR</bold></a>
+    <a aria-label="aller à la version" href="https://soundtable.fr/warhammeurArmise"><b>FR</b></a>
     <span>/</span>
     <a aria-label="aller à la version anglaise" href="https://soundtable.fr/en/warhammeurArmise">EN</a>
 </div>
@@ -40,7 +40,7 @@
         <div id="loginSection" class="login-section">
             <div id="loginForm">
                 <h2>Connexion</h1>
-                <div>
+                <div id="connectiondiv">
                     <input type="text" id="username" placeholder="Nom d'utilisateur" required>
                     <input type="password" id="password" placeholder="Mot de passe" required>
                 </div>
@@ -76,18 +76,23 @@
 
             <h1>Création d'une Armée Nécron avec Warharmies - Outil Gratuit pour Warhammer</h1>
 
-            <div id="selectorUnit">
-                <label for="unitSelector">Sélectionnez une unité :</label>
-                <select id="unitSelector">
-                    <option value="">Choisissez une unité</option>
-                </select>
+            <!-- Bouton pour ouvrir le popup -->
+            <button id="openUnitPopupBtn">Ajouter une unité</button>
+
+            <!-- Structure du popup -->
+            <div id="unitPopup" class="popup" style="display: none;">
+                <div class="popup-content">
+                    <button id="closeUnitPopupBtn" class="close-btn">×</button>
+                    <h2>Choisir une unité</h2>
+                    <div id="unitList" class="unit-list"></div>
+                </div>
             </div>
 
             <!-- Détails de l'unité sélectionnée -->
             <div id="unitDetails" class="unit-details"></div>
             
             <!-- Armée sélectionnée -->
-            <h2>Votre Armée Nécron - <span id="totalPoints">0</span> points</h2>
+            <h2>Votre Armée Nécron - <span id="totalPoints">0</span> pts</h2>
             <div id="selectedUnitsList" style="display: flex; flex-wrap: wrap;"></div>
         </div>
     </div>

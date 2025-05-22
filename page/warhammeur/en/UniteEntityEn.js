@@ -64,16 +64,24 @@ class WarhammerModels {
 
             const $unitDiv = $(`
                 <div class="selected-unit" data-index="${index}">
-                    <div class="selected-unit-header${hasModelVariation ? '' : '-solo'}">
+                    <div class="selected-unit-header">
                         <img class="unit-illustration" width="100px" height="100px" src="${unit.imageUrl}" alt="Necron Unit ${unit.name} for Warhammer">
                         <div class="skibidibapbap">
                             <button class="remove-unit-btn" data-index="${index}">Remove</button>
                             <h3>${unit.name} - ${totalCost} pts${hasModelVariation ? ` (${unit.modelCount} models)` : ''}</h3>
                         </div>
                         ${hasModelVariation ? `
-                            <button class="decrease-model-btn" data-index="${index}">-</button>
-                            <button class="increase-model-btn" data-index="${index}">+</button>
-                        ` : ''}
+                            <div class="button-container">
+                                <button class="increase-model-btn" data-index="${index}">+</button>
+                                <button class="decrease-model-btn" data-index="${index}">-</button>
+                                
+                            </div>
+                        ` : `
+                            <div class="button-container" style="opacity: 0;">
+                                <button class="increase-model-btn" disabled>+</button>
+                                <button class="decrease-model-btn" disabled>-</button>
+                            </div>
+                        `}
                     </div>
                 </div>
             `);
@@ -311,7 +319,7 @@ class WarhammerModels {
             const $entry = $(this);
             const name = $entry.attr('name');
             
-            if (name === "Convergence of Dominion Starstele" || name === "Triarch Praetorian" || name === "Ophydian Destroyer" || name === "Tomb Blade" || name === "Skorpekh Destroyer" || name === "Canoptek Spyder" || name === "Canoptek Scarab Swarm" || name === "Immortal" || name === "Cryptothrall" || name === "Deathmark" || name === "Flayed One" || name === "Lokhust Destroyer" || name.includes("w/")) {
+            if (name === "Canoptek Acanthrite"  || name === "Convergence of Dominion Starstele" || name === "Triarch Praetorian" || name === "Ophydian Destroyer" || name === "Tomb Blade" || name === "Skorpekh Destroyer" || name === "Canoptek Spyder" || name === "Canoptek Scarab Swarm" || name === "Immortal" || name === "Cryptothrall" || name === "Deathmark" || name === "Flayed One" || name === "Lokhust Destroyer" || name.includes("w/")) {
                 console.log(`Excluded unit: ${name}`);
                 return;
             }
@@ -663,8 +671,8 @@ class WarhammerModels {
 
     static getImageUrl(unitName) {
         const associationTable = [
-            ["The Silent King", "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110047_NECSzarekhSilentKingLead.jpg?fm=webp&w=920&h=948"],
             ["Lokhust Heavy Destroyers", "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110044_LokhustHeavyDestroyerLead.jpg?fm=webp&w=670&h=691"],
+            ["The Silent King", "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110047_NECSzarekhSilentKingLead.jpg?fm=webp&w=920&h=948"],
             ["Lokhust Destroyers", "https://www.rart.fr/39420-large_default/destroyer-lokhust.jpg"],
             ["Canoptek Doomstalker", "https://wh40k.lexicanum.com/mediawiki/images/thumb/f/f2/Canoptek_Doomstalker.jpg/600px-Canoptek_Doomstalker.jpg"],
             ["Skorpekh Lord", "https://wh40k.lexicanum.com/mediawiki/images/thumb/6/6c/Skorpekh_Lord_9th.jpg/120px-Skorpekh_Lord_9th.jpg"],
@@ -678,7 +686,7 @@ class WarhammerModels {
             ["Trazyn the Infinite", "https://www.warhammer.com/app/resources/catalog/product/920x950/99800110009_TrazynTheInfiniteNEW01.jpg"],
             ["Royal Warden", "https://www.warhammer.com/app/resources/catalog/product/920x950/99070110007_RoyalWarden1.jpg"],
             ["Lokhust Lord", "https://wh40k.lexicanum.com/mediawiki/images/thumb/c/c9/DestroyerLord5th.jpg/373px-DestroyerLord5th.jpg"],
-            ["Lord [Legends]", "https://via.placeholder.com/150"],
+            ["Lord [Legends]", "https://www.adeptusars.com/wp-content/uploads/2024/01/Necron-Lord-with-Resurrection-Orb-Model.jpg"],
             ["Catacomb Command Barge", "https://www.warhammer.com/app/resources/catalog/product/920x950/99120110064_CatacombCommandBargeLead.jpg"],
             ["Overlord", "https://manatorsk.com/cdn/shop/files/99070110006_OverlordTachyonArrow1.jpg?v=1703681737"],
             ["Technomancer", "https://i.ebayimg.com/images/g/-5cAAOSwYrlkmmmf/s-l1200.jpg"],
@@ -727,9 +735,9 @@ class WarhammerModels {
             ["Triarchal Menhir", "https://wh40k.lexicanum.com/mediawiki/images/thumb/2/2a/MenhirArt.jpg/140px-MenhirArt.jpg"],
             ["Convergence of Dominion", "https://www.adeptusars.com/wp-content/uploads/2023/08/Convergence-of-Dominion.jpg"],
             ["Canoptek Tomb Stalker [Legends]", "https://taleofpainters.com/wp-content/uploads/2013/08/NecronTombStalker.jpg"],
-            ["Canoptek Tomb Sentinel [Legends]", "https://static.wikia.nocookie.net/warhammer40k/images/f/f2/T-sentp3.jpg/revision/latest?cb=20130706071550"],
-            ["Canoptek Acanthrite", "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgP_bFciLmW8N8cC1x28BGGV0WXiZz3N22sTU53IB2d_ksiAXGhuUOXJ0xrRkNmnhEIfO7zRAxqzMRaxEa8jpCqF5daALv4o8QfU8q-JBPAxSwHmG4x7mwL4CGc5ih2Rh_7JTx1romk20d96DGdcJSJlHaQz3M7w3mxdWtfSg1f56dqf4lI_axuuea3/s1830/Canoptek%20Acanthrites.jpg"],
-            ["Tesseract Ark [Legends]", "https://static.wikia.nocookie.net/warhammer40k/images/f/f6/Tesseract-ark9.jpg/revision/latest?cb=20130701051146"],
+            ["Canoptek Tomb Sentinel [Legends]", "https://i.redd.it/do-you-think-tomb-sentinel-tomb-stalker-and-other-forge-v0-2vnb3fjiu03b1.jpg?width=920&format=pjpg&auto=webp&s=e04b9f6190965d3b3523eea6dbf2f98201756942"],
+            ["Canoptek Acanthrite", "https://miniset.net/files/set/gw-99860110004-0.jpg"],
+            ["Tesseract Ark [Legends]", "https://miniset.net/files/set/gw-99860110011-0.jpg"],
             ["Seraptek Heavy Construct", "https://www.warhammer.com/app/resources/catalog/product/threeSixty/99860110022_NecronCeraptekConstructwithSynaptecs360/01.jpg"],
             ["Gauss Pylon [Legends]", "https://artwork.40k.gallery/wp-content/uploads/2022/10/Gauss-Pylons.jpg"],
             ["Sentry Pylon [Legends]", "https://skaystore.ru/images/detailed/72/sentrypylonge1.jpg"],

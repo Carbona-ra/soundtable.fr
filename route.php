@@ -9,7 +9,10 @@ function route($uri) {
         '/starwars' => 'page/starwars/front-page.php',
         '/warhammeurArmise' => 'page/warhammeur/warhammeur.php',
         '/en/warhammeurArmise' => 'page/warhammeur/en/warhammeurEn.php',
-        '/api/armies'
+        '/en/MTG-life-counter' => 'page/mtg-life-counter/lifeCounter.php',
+        '/MTG-compteur-de-point-de-vie' => 'page/mtg-life-counter/lifeCounter.php',
+        '/api/armies',
+        '/api/ideabox',
     ];
 
     if (array_key_exists($uri, $routes)) {

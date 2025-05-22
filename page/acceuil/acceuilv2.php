@@ -180,7 +180,7 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start;
             flex-shrink: 0;
         }
 
@@ -490,7 +490,7 @@
                 <div class="langBtn">
                     <a aria-label="aller à la version" href="https://soundtable.fr"><b>FR</b></a>
                     <span>/</span>
-                    <a aria-label="aller à la version anglaise" href="https://soundtable.fr/en">EN</a>
+                    <a aria-label="aller à la version anglaise" href="https://soundtable.fr"><b>EN</b></a>
                 </div>
                 <div id="navbarreimg">
                     <img src="/asset/favicon.webp" alt="Favicon">

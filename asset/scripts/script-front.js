@@ -130,14 +130,11 @@ $(document).ready(function () {
         document.cookie = `${name}=${encodeURIComponent(value)}; ${expires}; path=/`;
     }
 
-    // Gestion de la soumission du formulaire
-    document.getElementById("noteForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-        const textareas = document.querySelectorAll('.textarea');
-        textareas.forEach((textarea, index) => {
-            const noteValue = textarea.value;
-            setCookie(`blocknote${index + 1}`, noteValue, 30); // Sauvegarde pendant 30 jours
-        });
+    // Gestion de la sauvegarde automatique des textareas
+    $('.textarea').on('input', function() {
+        const index = $(this).index(); // Index du textarea (0 à 4)
+        const noteValue = $(this).val(); // Contenu du textarea
+        setCookie(`blocknote${index + 1}`, noteValue, 30); // Sauvegarde dans un cookie pendant 30 jours
     });
 
 

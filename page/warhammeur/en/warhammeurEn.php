@@ -32,7 +32,7 @@
 <div class="langBtn">
     <a aria-label="go to the French version" href="https://soundtable.fr/warhammeurArmise">FR</a>
     <span>/</span>
-    <a aria-label="go to the English version" href="https://soundtable.fr/en/warhammeurArmise"><bold>EN</bold></a>
+    <a aria-label="go to the English version" href="https://soundtable.fr/en/warhammeurArmise"><b>EN</b></a>
 </div>
 
 <div class="container">
@@ -40,7 +40,7 @@
         <div id="loginSection" class="login-section">
             <div id="loginForm">
                 <h2>Login</h2>
-                <div>
+                <div id="connectiondiv">
                     <input type="text" id="username" placeholder="Username" required>
                     <input type="password" id="password" placeholder="Password" required>
                 </div>
@@ -87,12 +87,12 @@
             <div id="unitDetails" class="unit-details"></div>
             
             <!-- Selected army -->
-            <h2>Your Necron Army - <span id="totalPoints">0</span> points</h2>
+            <h2>Your Necron Army - <span id="totalPoints">0</span> pts</h2>
             <div id="selectedUnitsList" style="display: flex; flex-wrap: wrap;"></div>
         </div>
     </div>
 
     <script src="/page/warhammeur/en/UniteEntityEn.js"></script>
-    
+    <script src="/asset/scripts/glossaire40kEN.js"></script>
 </body>
 </html>

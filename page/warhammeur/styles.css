@@ -21,9 +21,177 @@ h1, h2, h3, h4 {
     color: #222;
 }
 
+/* Popup container */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background: #1a1a1a; /* Fond sombre, similaire à l'armée */
+    border: 1px solid #444;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 20px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4444;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.close-btn:hover {
+    background: #cc3333;
+}
+
+.unit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Style for unit cards in the popup, matching .selected-unit */
+.unit-item {
+    box-sizing: border-box;
+    padding: 0 15px;
+    width: 100%;
+    height: 110px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: 2px solid #333; /* Same border as .selected-unit */
+    border-radius: 8px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: opacity 0.3s ease, box-shadow 0.3s ease; /* Same transition as .selected-unit */
+}
+
+.unit-item:hover {
+    opacity: 0.9; /* Same hover effect as .selected-unit */
+}
+
+.unit-item-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between; /* Same layout as .selected-unit-header */
+}
+
+.unit-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px; /* Consistent with .selected-unit img */
+    margin-right: 15px;
+}
+
+.unit-item .unit-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.unit-item h3 {
+    margin: 0;
+    color: #fff; /* White text to match .selected-unit */
+    font-size: 20px; /* Same as h3 in .selected-unit */
+}
+
+.unit-item p {
+    margin: 5px 0;
+    color: #ccc; /* Light gray for secondary text */
+    font-size: 14px;
+}
+
+.unit-item .add-unit-btn {
+    background-color: #4CAF50; /* Green to match other buttons */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    transition: background-color 0.2s ease, transform 0.2s ease; /* Match button animations */
+}
+
+.unit-item .add-unit-btn:hover {
+    background-color: #45a049; /* Same hover effect as other buttons */
+    transform: scale(1.05);
+}
+
+.unit-item .add-unit-btn:active {
+    animation: buttonPulse 0.3s ease; /* Same click animation */
+}
+
+/* Ensure button container aligns with .selected-unit */
+.unit-item .button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+/* Responsive design for .unit-item, matching .selected-unit */
+@media (max-width: 800px) {
+    .unit-item {
+        max-width: 100%;
+        height: 120px; /* Slightly taller for small screens */
+    }
+
+    .unit-item img {
+        width: 75px;
+        height: 75px; /* Same as .unit-illustration */
+    }
+
+    .unit-item h3 {
+        font-size: 13px; /* Same as .selected-unit h3 */
+    }
+
+    .unit-item .add-unit-btn {
+        scale: 75%; /* Same scaling as other buttons */
+    }
+}
+
+@media (max-width: 450px) {
+    .unit-item .unit-info {
+        gap: 0;
+        flex-direction: column-reverse; /* Match .skibidibapbap */
+        width: 100%;
+    }
+
+    .unit-item .button-container {
+        flex-direction: column; /* Stack buttons vertically */
+    }
+}
 select, button {
     display: block;
     margin: 10px auto;
+    height: 40px;
+    align-self: center;
     padding: 10px;
     font-size: 14px;
     border-radius: 5px;
@@ -33,6 +201,7 @@ select, button {
 #addToListBtn {
     background-color: #4CAF50;
     color: white;
+    margin: 0 auto; 
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -94,6 +263,7 @@ select, button {
 }
 
 .selected-unit {
+    box-sizing: border-box;
     padding: 0px 15px;
     width: 100%;
     height: 110px;
@@ -155,8 +325,15 @@ select, button {
     margin: 10px 0;
 }
 
+.skibidibapbap {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
 .unit-details .stats-table {
-    width: 100%;
+    width: 100% !important;
+    table-layout: fixed; 
     margin: 10px 0;
     border-collapse: separate;
     border-spacing: 0;
@@ -190,22 +367,6 @@ select, button {
     background-color: #f1f1f1;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-    .selected-unit {
-        height: 120px;
-    }
-    .unit-details {
-        padding: 10px;
-    }
-    .stats-table th, .stats-table td {
-        padding: 6px;
-        font-size: 12px;
-    }
-}
 
 /* Style pour #armyControls */
 #armyControls {
@@ -220,7 +381,6 @@ select, button {
 
 /* Style de base pour les boutons */
 button {
-    padding: 10px 20px;
     font-size: 14px;
     cursor: pointer;
     border: none;
@@ -356,6 +516,7 @@ button:hover {
     transform: translateY(-2px);
 }
 
+
 #armyControls select {
     padding: 10px;
     font-size: 14px;
@@ -376,29 +537,6 @@ button:hover {
     border-color: #bbb;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-
-    .login-section, .main-interface {
-        padding: 10px;
-    }
-
-    .selected-unit {
-        max-width: 100%;
-    }
-
-    .army-controls {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    input[type="text"], input[type="password"], select {
-        max-width: 100%;
-    }
-}
 
 .remove-unit-btn {
     background-color: #ff4444;
@@ -413,10 +551,7 @@ button:hover {
     background-color: #cc0000;
 }
 
-.skibidibapbap {
-    display: flex;
-    gap: 10px;
-}
+
 
 .login-section {
     padding: 20px;
@@ -448,4 +583,103 @@ button:hover {
 .langBtn a, .langBtn span{
     color: black;
     font-size: 20px;
+}
+
+
+/* Responsive design */
+@media (max-width: 800px) {
+
+    tr, th {
+        font-size: 12px;
+    }
+
+    ul {
+        padding: 0px;
+    }
+
+    li {
+        list-style: none;
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .unit-illustration{
+        width: 75px;
+        height: 75px;
+    }
+
+    h3 {
+        font-size: 13px;
+    }
+
+    .increase-model-btn , .decrease-model-btn , .remove-unit-btn{
+        scale: 75%;
+    }
+    .increase-model-btn , .decrease-model-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .login-section, .main-interface {
+        padding: 10px;
+    }
+
+    .selected-unit {
+        max-width: 100%;
+    }
+
+    .army-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    input[type="text"], input[type="password"], select {
+        max-width: 100%;
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+    .selected-unit {
+        height: 120px;
+    }
+    .unit-details {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .unit-details .stats-table tr,.unit-details .stats-table body th {
+        font-size: 10px !important;
+    }
+
+    .skibidibapbap {
+        gap: 0px;
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+
+    #connectiondiv {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    #connectiondiv input{
+        margin: 10px 0px !important;
+    }
 }
