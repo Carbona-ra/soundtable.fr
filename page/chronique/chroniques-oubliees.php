@@ -229,7 +229,7 @@
     <meta name="Soundboard pour JDR fantasy avec ambiance pour jeux de rôle" content="Soudboard et ambiance">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="icon" type="image/webp" href="/asset/favicon.webp">
+    <link rel="icon" type="image/webp" href="/asset/favicon2.webp">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/asset/style/style.css">

@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/webp" href="/asset/favicon.webp">
+    <link rel="icon" type="image/webp" href="/asset/favicon2.webp">
+    <meta name="msapplication-TileImage" content="/asset/favicon2.webp">
+    <link rel="apple-touch-icon" href="/asset/favicon2.webp">
     <title>Soundtable - RPG Soundboard and Board Game Tools</title>
     <meta name="description" content="Soundtable offers free soundboards for your role-playing games (RPGs) and tools to enhance your board game sessions. Dive into immersive atmospheres with our sound effects and ambiance tailored to every universe!">
     <meta name="keywords" content="RPG, free soundboard, role-playing game ambiance, board game tools, sound effects, immersive sounds, Chronicles Forgotten, Star Wars, Warhammer">
@@ -26,7 +28,7 @@
             width: 100%;
         }
 
-        /* Sidebar Navbar */
+        /* Navbar latérale */
         #navbarre {
             width: 70px;
             background-color: #b77c17;
@@ -60,7 +62,7 @@
             width: 100%;
         }
 
-        /* Main Container */
+        /* Conteneur principal */
         #container {
             width: calc(100% - 70px);
             margin-left: 70px;
@@ -77,7 +79,7 @@
             margin: 0 auto;
         }
 
-        /* Intro Section */
+        /* Section Intro */
         .intro-section {
             text-align: center;
             margin-bottom: 60px;
@@ -122,7 +124,7 @@
             background-color: #a0724e;
         }
 
-        /* Articles and Tools Sections */
+        /* Section Articles et Outils */
         .articles-section, .tools-section {
             margin-bottom: 60px;
         }
@@ -146,13 +148,60 @@
             padding: 20px 0;
             scroll-snap-type: x mandatory;
             box-sizing: border-box;
-            padding-left: 40px;
+            /* Remove padding-left to avoid initial offset */
+            padding-left: 0;
+            /* Add padding-right to ensure space at the end of the scroll */
+            padding-right: 40px;
         }
 
-        /* Center if no scroll (total card width < container width) */
+        /* Centrage si pas de scroll (largeur totale des cartes < largeur du conteneur) */
         .scroll-container:not(:has(*:nth-child(5))) {
             justify-content: center;
-            padding-left: 0; /* Remove initial margin if centered */
+            padding-right: 0; /* Remove padding-right if centered */
+        }
+
+
+        .scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background-color: #555;
+            border-radius: 10px;
+        }
+
+        .scroll-container::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .scroll-container {
+                padding: 20px 0;
+                padding-right: 15px; /* Space at the end on mobile */
+            }
+
+            .scroll-container:not(:has(*:nth-child(5))) {
+                justify-content: center;
+                padding-right: 0; /* Centrage sur mobile si pas de scroll */
+            }
+
+            /* Adjust margin for the first card on mobile */
+            .scroll-container .tool-card:first-child {
+                margin-left: 350px; /* Reduced space before the first card on mobile */
+            }
+        }
+        @media (max-width: 500px) {
+            .scroll-container .tool-card:first-child {
+                margin-left: 500px; /* Reduced space before the first card on mobile */
+            }
+        }
+
+
+        /* Centrage si pas de scroll (largeur totale des cartes < largeur du conteneur) */
+        .scroll-container:not(:has(*:nth-child(5))) {
+            justify-content: center;
+            padding-left: 0; /* Supprime la marge initiale si centré */
         }
 
         .scroll-container::-webkit-scrollbar {
@@ -199,7 +248,7 @@
         }
 
         html {
-            scroll-behavior: smooth; /* Added for smooth scrolling */
+            scroll-behavior: smooth; /* Ajout pour un défilement fluide */
         }
 
         .card-description {
@@ -250,8 +299,9 @@
             color: #e0c9a6;
         }
 
-        /* Responsive */
+        /* Responsivité */
         @media (max-width: 900px) {
+
             #navbtn {
                 display: flex;
                 align-items: center;    
@@ -328,12 +378,12 @@
 
             .scroll-container {
                 padding: 20px 0;
-                padding-left: 15px; /* Initial margin on mobile */
+                padding-left: 15px; /* Marge initiale sur mobile */
             }
 
             .scroll-container:not(:has(*:nth-child(5))) {
                 justify-content: center;
-                padding-left: 0; /* Center on mobile if no scroll */
+                padding-left: 0; /* Centrage sur mobile si pas de scroll */
             }
         }
 

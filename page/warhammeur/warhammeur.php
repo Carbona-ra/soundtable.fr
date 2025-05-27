@@ -22,7 +22,7 @@
     <meta name="twitter:image" content="https://www.warhammer.com/app/resources/catalog/product/920x950/99120110044_LokhustHeavyDestroyerLead.jpg?fm=webp&w=670&h=691"> <!-- Remplacez par une image représentative -->
 
     <title>Warharmies - Outil Gratuit de Gestion d'Armée Warhammer Nécron</title>
-    <link rel="icon" type="image/webp" href="/asset/favicon.webp">
+    <link rel="icon" type="image/webp" href="/asset/favicon2.webp">
     <link rel="stylesheet" href="/page/warhammeur/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
@@ -74,6 +74,7 @@
                 </select>
             </div>
 
+            
             <h1>Création d'une Armée Nécron avec Warharmies - Outil Gratuit pour Warhammer</h1>
 
             <!-- Bouton pour ouvrir le popup -->
@@ -84,7 +85,9 @@
                 <div class="popup-content">
                     <button id="closeUnitPopupBtn" class="close-btn">×</button>
                     <h2>Choisir une unité</h2>
-                    <div id="unitList" class="unit-list"></div>
+                    <div class="scroll-section">
+                        <div id="unitList" class="unit-list"></div>
+                    </div>
                 </div>
             </div>
 
@@ -97,7 +100,8 @@
         </div>
     </div>
 
+
     <script src="/page/warhammeur/UniteEntity.js"></script>
-    <script src="/asset/scripts/glossaire40k.js"></script>
+    <script src="../../asset/scripts/glossaire40k.js"></script>
 </body>
 </html>

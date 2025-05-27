@@ -7,6 +7,340 @@ body {
     color: #333;
 }
 
+.flex {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.option-button {
+    position: absolute;
+    z-index: inherit;
+    width: 40px;
+    height: 40px;
+    left: -40px;
+    border-radius: 10px 0 0 10px;
+    border: 2px solid #333;
+    color: black;
+    background-color: white;
+    font-size: 22px;
+    display: flex; /* Utilise Flexbox pour centrer le contenu */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    line-height: normal; 
+}
+
+/* Conteneur des sous-options */
+.sub-options {
+    position: absolute;
+    left: -40px; /* Aligné avec le bouton d'options */
+    top: 26%;
+    transform: translateY(-50%);
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.expanded .sub-options {
+    left: -40px;
+    top: 45%;
+    
+}
+
+.expanded {
+    background-color: white !important;
+}
+
+/* Positionnement du sélecteur de couleur */
+.sub-options .color-picker {
+    position: absolute;
+    left: 120px; /* Position à droite des sous-boutons */
+    top: 50px; /* Aligné avec .sub-option-3 */
+    width: 35px;
+    height: 35px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    padding: 0; /* Supprime le padding par défaut */
+    cursor: pointer;
+    background-color: white; /* Fond blanc pour une meilleure visibilité */
+    z-index: 1001; /* S'assurer qu'il est au-dessus des autres éléments */
+}
+
+.sub-option-3 {
+    appearance: none; /* Supprime le style par défaut du navigateur */
+    -webkit-appearance: none; /* Pour les navigateurs WebKit */
+    width: 35px;
+    height: 35px;
+    border-radius: 50%; /* Même forme que les autres sous-boutons */
+    border: 2px solid #333; /* Même bordure */
+    padding: 0; /* Supprime le padding */
+    cursor: pointer;
+    background-color: white; /* Fond blanc pour cohérence */
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Personnaliser l'apparence du sélecteur de couleur */
+.sub-option-3::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.sub-option-3::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%; /* Garde la forme ronde */
+}
+
+/* Ajouter l'emoji 🎨 comme pseudo-élément */
+.sub-option-3::before {
+    content: "🎨";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    pointer-events: none; /* L'emoji ne doit pas interférer avec les clics */
+}
+
+/* Assurer que les animations s'appliquent toujours */
+.sub-options.is-visible .sub-option-3 {
+    transform: translate(60px, 50px) scale(1);
+    transition-delay: 0.3s;
+}
+
+.sub-options.is-visible .sub-option-3:hover {
+    transform: translate(60px, 50px) scale(1.1);
+}
+
+/* Responsive pour petits écrans */
+@media (max-width: 800px) {
+    .sub-option-3 {
+        width: 50px;
+        height: 50px;
+    }
+
+    .sub-options.is-visible .sub-option-3 {
+        transform: translate(50px, 40px) scale(1);
+        transition-delay: 0.3s;
+    }
+
+    .sub-options.is-visible .sub-option-3:hover {
+        transform: translate(50px, 40px) scale(1.1);
+    }
+}
+
+/* Ajuster la taille et l'apparence du sélecteur de couleur */
+.sub-options .color-picker::-webkit-color-swatch {
+    border: none;
+    border-radius: 3px;
+}
+
+.sub-options .color-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+/* Responsive pour petits écrans */
+@media (max-width: 800px) {
+    .sub-options .color-picker {
+        left: 110px; /* Ajustement pour les écrans plus petits */
+        top: 40px;
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Style de base pour les sous-boutons */
+.sub-option {
+    width: 35px;
+    height: 35px;
+    z-index: 1000;
+    border-radius: 50%;
+    border: 2px solid #333;
+    background-color: white;
+    color: black;
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 5px 0;
+    transition: transform 0.4s ease, opacity 0.4s ease, background-color 0.2s ease, color 0.2s ease; /* Animation fluide */
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* État initial des sous-boutons (superposés au centre du bouton d'options) */
+.sub-options .sub-option {
+    transform: translate(0, 0) scale(0.5); /* Position initiale : superposés et plus petits */
+    opacity: 0; /* Invisible au départ */
+}
+
+/* État visible des sous-options (déployées en arc de cercle) */
+.sub-options[style*="display: block"] .sub-option {
+    opacity: 1; /* Visible */
+    transform-origin: center; /* Point de référence pour les transformations */
+}
+
+/* Positions finales des sous-boutons avec animation de déplacement */
+.sub-options[style*="display: block"] .sub-option-1 {
+    transform: translate(60px, -50px) scale(1); /* Position finale : haut à droite */
+    transition-delay: 0.1s;
+}
+
+.sub-options[style*="display: block"] .sub-option-2 {
+    transform: translate(80px, 0) scale(1); /* Position finale : droite */
+    transition-delay: 0.2s;
+}
+
+.sub-options[style*="display: block"] .sub-option-3 {
+    transform: translate(60px, 50px) scale(1); /* Position finale : bas à droite */
+    transition-delay: 0.3s;
+}
+
+/* Lorsque les sous-options sont cachées, les sous-boutons reviennent à leur position initiale */
+.sub-options[style*="display: none"] .sub-option {
+    transform: translate(0, 0) scale(0.5); /* Retour à la position initiale */
+    opacity: 0;
+}
+
+/* Effet au survol des sous-boutons */
+.sub-options[style*="display: block"] .sub-option-1:hover {
+    background-color: #000;
+    color: white;
+    transform: translate(60px, -50px) scale(1.1); /* Conserver le translate et ajouter scale */
+}
+
+.sub-options[style*="display: block"] .sub-option-2:hover {
+    background-color: #000;
+    color: white;
+    transform: translate(80px, 0) scale(1.1); /* Conserver le translate et ajouter scale */
+}
+
+.sub-options[style*="display: block"] .sub-option-3:hover {
+    background-color: #000;
+    color: white;
+    transform: translate(60px, 50px) scale(1.1); /* Conserver le translate et ajouter scale */
+}
+
+/* Désactiver l'animation buttonPulse pour les sous-boutons au clic */
+.sub-option:active {
+    animation: none; /* Désactiver l'animation pulse */
+    transform: inherit; /* Conserver la transformation actuelle */
+}
+
+/* Responsive design pour petits écrans */
+@media (max-width: 800px) {
+    .sub-option {
+        width: 50px;
+        height: 50px;
+        font-size: 26px;
+    }
+
+    .sub-options[style*="display: block"] .sub-option-1 {
+        transform: translate(50px, -40px) scale(1);
+        transition-delay: 0.1s;
+    }
+
+    .sub-options[style*="display: block"] .sub-option-2 {
+        transform: translate(70px, 0) scale(1);
+        transition-delay: 0.2s;
+    }
+
+    .sub-options[style*="display: block"] .sub-option-3 {
+        transform: translate(50px, 40px) scale(1);
+        transition-delay: 0.3s;
+    }
+
+    .sub-options[style*="display: block"] .sub-option-1:hover {
+        transform: translate(50px, -40px) scale(1.1);
+    }
+
+    .sub-options[style*="display: block"] .sub-option-2:hover {
+        transform: translate(70px, 0) scale(1.1);
+    }
+
+    .sub-options[style*="display: block"] .sub-option-3:hover {
+        transform: translate(50px, 40px) scale(1.1);
+    }
+}
+
+.option-button:hover {
+    scale: 105%;
+    background-color: #000000;
+    color: white;
+    transition: background-color 0.2s ease, scale 0.2s ease, color 0.2s ease;
+}
+
+/* Weapon selection section */
+.weapon-selection {
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid #444;
+}
+
+.weapon-selection h4 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.weapon-selection-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.weapon-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.weapon-checkbox {
+    margin-right: 5px;
+}
+
+/* Style for the stats table */
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    color: white;
+}
+
+.stats-table th, .stats-table td {
+    border: 1px solid #444;
+    padding: 5px;
+    text-align: center;
+}
+
+.stats-table th {
+    background-color: #333;
+}
+
+.stats-table td {
+    background-color: #222;
+}
+
+/* Style for abilities list */
+.unit-details ul {
+    list-style-type: none;
+    margin: 5px 0 0 20px;
+    padding: 0;
+}
+
+.unit-details li {
+    margin-bottom: 5px;
+}
+
+/* Ensure consistency with other headings */
+.unit-details h4 {
+    color: white;
+    font-size: 18px;
+    margin: 15px 0 10px;
+}
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -35,14 +369,17 @@ h1, h2, h3, h4 {
     align-items: center;
 }
 
+.popup h2 {
+    color: white;
+}
+
 .popup-content {
     background: #1a1a1a; /* Fond sombre, similaire à l'armée */
     border: 1px solid #444;
     border-radius: 8px;
     width: 80%;
     max-width: 800px;
-    max-height: 80vh;
-    overflow-y: auto;
+    max-height: 90vh;
     position: relative;
     padding: 20px;
 }
@@ -67,7 +404,6 @@ h1, h2, h3, h4 {
 .unit-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 
 /* Style for unit cards in the popup, matching .selected-unit */
@@ -75,13 +411,14 @@ h1, h2, h3, h4 {
     box-sizing: border-box;
     padding: 0 15px;
     width: 100%;
-    height: 110px;
+    height: 100px;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
     border: 2px solid #333; /* Same border as .selected-unit */
     border-radius: 8px;
-    margin: 10px 0;
+    margin: 5px 0;
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,6 +431,26 @@ h1, h2, h3, h4 {
     opacity: 0.9; /* Same hover effect as .selected-unit */
 }
 
+
+.scroll-section::-webkit-scrollbar {
+  width: 8px; /* Largeur de la scrollbar */
+}
+
+.scroll-section::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1); /* Fond de la piste */
+  border-radius: 10px;
+}
+
+.scroll-section::-webkit-scrollbar-thumb {
+  background: #e1e1e1; /* Couleur de la poignée */
+  border-radius: 10px;
+}
+
+.scroll-section::-webkit-scrollbar-thumb:hover {
+  background: #e1e1e1; /* Couleur au survol */
+}
+
+
 .unit-item-header {
     width: 100%;
     display: flex;
@@ -103,8 +460,8 @@ h1, h2, h3, h4 {
 }
 
 .unit-item img {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     object-fit: cover;
     border-radius: 4px; /* Consistent with .selected-unit img */
     margin-right: 15px;
@@ -118,13 +475,13 @@ h1, h2, h3, h4 {
 
 .unit-item h3 {
     margin: 0;
-    color: #fff; /* White text to match .selected-unit */
+    color: black; /* White text to match .selected-unit */
     font-size: 20px; /* Same as h3 in .selected-unit */
 }
 
 .unit-item p {
     margin: 5px 0;
-    color: #ccc; /* Light gray for secondary text */
+    color: black; /* Light gray for secondary text */
     font-size: 14px;
 }
 
@@ -132,10 +489,10 @@ h1, h2, h3, h4 {
     background-color: #4CAF50; /* Green to match other buttons */
     color: white;
     border: none;
-    padding: 5px 10px;
+     padding: 0px 12px;
     cursor: pointer;
     border-radius: 3px;
-    font-size: 14px;
+    font-size: 24px;
     transition: background-color 0.2s ease, transform 0.2s ease; /* Match button animations */
 }
 
@@ -159,7 +516,7 @@ h1, h2, h3, h4 {
 @media (max-width: 800px) {
     .unit-item {
         max-width: 100%;
-        height: 120px; /* Slightly taller for small screens */
+        height: 100px; /* Slightly taller for small screens */
     }
 
     .unit-item img {
@@ -278,7 +635,8 @@ select, button {
     justify-content: center;
     position: relative;
     cursor: pointer;
-    transition: height 0.3s ease, box-shadow 0.3s ease;
+    transition: height 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    opacity: 1;
 }
 
 .selected-unit span {
@@ -356,7 +714,6 @@ select, button {
     padding: 10px;
     text-align: center;
     border-bottom: 1px solid #333;
-    color: black;
 }
 
 .unit-details .stats-table tr:last-child td {
@@ -388,6 +745,49 @@ button {
     background-color: #4CAF50; /* Vert par défaut, ajustez selon votre thème */
     color: white;
     transition: transform 0.2s ease, background-color 0.2s ease; /* Transition fluide */
+}
+
+.button-container .decrease-model-btn, .button-container .increase-model-btn {
+    width: 100% !important;
+}
+
+.button-container {
+    width: 35px;
+}
+
+/* Style for type headers */
+.popup .type-header {
+    color: white;
+    font-size: 22px;
+    margin: 20px 0 10px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
+    cursor: pointer; /* Indicate it's clickable */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.popup .type-header:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+}
+
+/* Toggle icon styling */
+.popup .type-header .toggle-icon {
+    font-size: 16px;
+    margin-left: 10px;
+    transition: transform 0.2s ease;
+}
+
+/* Content container for units under each type */
+.type-section-content {
+    display: none; /* Initially visible */
+}
+
+/* Optional: Add padding to the content container */
+.type-section-content .unit-item {
+    margin: 5px 0;
 }
 
 #currentUserDisplay {
@@ -500,6 +900,13 @@ button:hover {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.scroll-section{
+    overflow-y: auto;
+    height: auto;
+    max-height: 80vh;
+    overflow-x: hidden;
+}
+
 #armyControls #saveArmyBtn {
     color: white;
 }
@@ -571,13 +978,17 @@ button:hover {
 }
 
 .selected-unit:hover {
-    opacity: 0.9; /* Légère transparence au survol pour feedback visuel */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .langBtn {
     position: absolute;
     top : 10px;
     right: 10px;
+}
+
+.unit-illustration{
+    border: 2px solid;
 }
 
 .langBtn a, .langBtn span{

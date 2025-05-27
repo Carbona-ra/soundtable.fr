@@ -17,20 +17,20 @@ class WarhammerModels {
 
     addToSelectedUnits(unit, selectedWeapons, selectedAbilities) {
         const defaultCostSteps = unit.costSteps && unit.costSteps.length > 0 
-        ? unit.costSteps 
-        : [{ models: unit.minModels || 1, cost: parseInt(unit.cost || '0', 10) }];
+            ? unit.costSteps 
+            : [{ models: unit.minModels || 1, cost: parseInt(unit.cost || '0', 10) }];
 
         const newUnit = {
             ...unit,
             selectedWeapons: selectedWeapons || [],
-            selectedAbilities: selectedAbilities || [],
+            selectedAbilities: selectedAbilities || unit.abilities, // Default to all abilities if none are provided
             modelCount: unit.minModels || 1,
             costSteps: defaultCostSteps
         };
         this.selectedUnits.push(newUnit);
-        console.log("Unités après ajout :", this.selectedUnits); // Vérifiez ici
+        console.log("Unités après ajout :", this.selectedUnits);
         this.displaySelectedUnits();
-        this.saveToCookie(); 
+        this.saveToCookie();
     }
     
 
@@ -52,106 +52,6 @@ class WarhammerModels {
         }
     }
 
-    displaySelectedUnits() {
-        const $selectedUnitsList = $("#selectedUnitsList").empty();
-
-        this.selectedUnits.forEach((unit, index) => {
-
-            const costSteps = unit.costSteps && unit.costSteps.length > 0 
-                ? unit.costSteps 
-                : [{ models: unit.modelCount || 1, cost: parseInt(unit.cost || '0', 10) }];
-            
-            const currentStep = costSteps.find(step => step.models === unit.modelCount) || costSteps[0];
-            const totalCost = currentStep.cost;
-
-            const hasModelVariation = unit.minModels !== unit.maxModels && unit.costSteps.length > 1;
-        
-            const $unitDiv = $(`
-                <div class="selected-unit" data-index="${index}">
-                    <div class="selected-unit-header">
-                        <img class="unit-illustration" width="100px" height="100px" src="${unit.imageUrl}" alt="Unité Nécron ${unit.name} pour Warhammer">
-                        <div class="skibidibapbap">
-                            <button class="remove-unit-btn" data-index="${index}">Supprimer</button>
-                            <h3>${unit.name} - ${totalCost} pts${hasModelVariation ? ` (${unit.modelCount} modèles)` : ''}</h3>
-                        </div>
-                        ${hasModelVariation ? `
-                            <div class="button-container">
-                                <button class="increase-model-btn" data-index="${index}">+</button>
-                                <button class="decrease-model-btn" data-index="${index}">-</button>
-                            </div>
-                        ` : `
-                            <div class="button-container" style="opacity: 0;">
-                                <button class="increase-model-btn" disabled>+</button>
-                                <button class="decrease-model-btn" disabled>-</button>
-                            </div>
-                        `}
-                    </div>
-                </div>
-            `);
-            $selectedUnitsList.append($unitDiv);
-
-            $unitDiv.on("click", (e) => {
-                if (!$(e.target).is("button")) {
-                    this.toggleUnitDetails(index);
-                }
-            });
-
-            $unitDiv.find(".sub-option-1").on("click", (e) => {
-                e.stopPropagation();
-                // Dupliquer l'unité
-                const unitToDuplicate = this.selectedUnits[index];
-                const duplicatedUnit = { ...unitToDuplicate };
-                this.selectedUnits.splice(index + 1, 0, duplicatedUnit); // Ajoute l'unité juste après l'originale
-                this.displaySelectedUnits();
-                this.saveToCookie();
-                console.log(`Unit ${unitToDuplicate.name} duplicated at index ${index + 1}`);
-            });
-    
-            $unitDiv.find(".remove-unit-btn").on("click", (e) => {
-                e.stopPropagation();
-                this.removeUnit(index);
-            });
-    
-            if (hasModelVariation) {
-                $unitDiv.find(".decrease-model-btn").on("click", (e) => {
-                    e.stopPropagation();
-                    this.changeModelCount(index, -1);
-                });
-                $unitDiv.find(".increase-model-btn").on("click", (e) => {
-                    e.stopPropagation();
-                    this.changeModelCount(index, 1);
-                });
-            }
-        });
-    
-        const totalPoints = this.selectedUnits.reduce((sum, unit) => {
-            const costSteps = unit.costSteps && unit.costSteps.length > 0 
-                ? unit.costSteps 
-                : [{ models: unit.modelCount || 1, cost: parseInt(unit.cost || '0', 10) }];
-            const currentStep = costSteps.find(step => step.models === unit.modelCount) || costSteps[0];
-            return sum + currentStep.cost;
-        }, 0);
-    
-        $("#totalPoints").text(totalPoints);
-
-
-
-        // Initialiser SortableJS pour permettre le déplacement des unités
-        new Sortable($selectedUnitsList[0], {
-            animation: 150, // Animation fluide lors du déplacement
-            handle: ".selected-unit", // Permet de déplacer en cliquant n'importe où sur la div (sauf boutons)
-            filter: "button", // Ignore les clics sur les boutons pour éviter les interférences
-            onEnd: (evt) => {
-                // Mettre à jour this.selectedUnits après déplacement
-                const oldIndex = evt.oldIndex;
-                const newIndex = evt.newIndex;
-                const movedUnit = this.selectedUnits.splice(oldIndex, 1)[0];
-                this.selectedUnits.splice(newIndex, 0, movedUnit);
-                console.log("Nouvel ordre des unités :", this.selectedUnits); // Pour déboguer
-                this.saveToCookie(); // Sauvegarder le nouvel ordre dans le cookie
-            }
-        });
-    }
 
     // Nouvelle méthode pour supprimer une unité
     removeUnit(index) {
@@ -164,7 +64,7 @@ class WarhammerModels {
         // Gérer l'ouverture du popup
         $("#openUnitPopupBtn").on("click", () => {
             $("#unitPopup").show();
-            this.populateUnitSelector(); // Remplir la liste à l'ouverture
+            this.populateUnitSelector();
         });
 
         // Gérer la fermeture du popup
@@ -208,13 +108,9 @@ class WarhammerModels {
         const $unitDiv = $(`#selectedUnitsList .selected-unit[data-index="${index}"]`);
         const unit = this.selectedUnits[index];
 
-        if ($unitDiv.hasClass("expanded")) {
-            $unitDiv.removeClass("expanded");
-            $unitDiv.find(".unit-details").remove();
-        } else {
-            $unitDiv.addClass("expanded");
+        const renderUnitDetails = () => {
             const characteristics = Object.entries(unit.characteristics);
-            const $details = $(`
+            return `
                 <div class="unit-details">
                     <h4>Caractéristiques</h4>
                     <table class="stats-table">
@@ -225,138 +121,264 @@ class WarhammerModels {
                             ${characteristics.map(([, value]) => `<td>${value}</td>`).join('')}
                         </tr>
                     </table>
-                    ${unit.selectedWeapons.length > 0 ? `
-                        <h4>Armes sélectionnées</h4>
-                        ${unit.selectedWeapons.map(weapon => `
-                            <p><strong>${weapon.name}</strong></p>
-                            ${weapon.profiles.map(profile => `
-                                <table class="stats-table">
-                                    <tr>
-                                        <th>Type</th>
-                                        <th>Range</th>
-                                        <th>A</th>
-                                        <th>WS/BS</th>
-                                        <th>S</th>
-                                        <th>AP</th>
-                                        <th>D</th>
-                                        <th>Keywords</th>
-                                    </tr>
-                                    <tr>
-                                        <td>${profile.type}</td>
-                                        <td>${profile.characteristics["Range"] || "-"}</td>
-                                        <td>${profile.characteristics["A"] || "-"}</td>
-                                        <td>${profile.characteristics[profile.type === "Melee Weapons" ? "WS" : "BS"] || "-"}</td>
-                                        <td>${profile.characteristics["S"] || "-"}</td>
-                                        <td>${profile.characteristics["AP"] || "-"}</td>
-                                        <td>${profile.characteristics["D"] || "-"}</td>
-                                        <td>${profile.characteristics["Keywords"] || "-"}</td>
-                                    </tr>
-                                </table>
-                            `).join('')}
-                            ${weapon.abilities.length > 0 ? `
-                                <ul>${weapon.abilities.map(ability => `<li><strong>${ability.name}:</strong> ${ability.description}</li>`).join('')}</ul>
-                            ` : ''}
-                        `).join('')}
+
+                    <!-- Section for all abilities -->
+                    ${unit.abilities && unit.abilities.length > 0 ? `
+                        <h4>Toutes les capacités</h4>
+                        <ul>${unit.abilities.map(ability => `<li><strong>${ability.name}:</strong> ${ability.description}</li>`).join('')}</ul>
                     ` : ''}
-                    ${unit.selectedAbilities.length > 0 ? `
+
+                    <!-- Section for selected abilities -->
+                    ${unit.selectedAbilities && unit.selectedAbilities.length > 0 ? `
                         <h4>Capacités sélectionnées</h4>
                         <ul>${unit.selectedAbilities.map(ability => `<li><strong>${ability.name}:</strong> ${ability.description}</li>`).join('')}</ul>
                     ` : ''}
+
+                    <!-- Section for weapon selection -->
+                    <div class="weapon-selection">
+                        <h4>Armes possibles</h4>
+                        <form class="weapon-selection-form">
+                            ${unit.weapons && unit.weapons.length > 0 ? unit.weapons.map(weapon => `
+                                <label class="weapon-label">
+                                    <input type="checkbox" class="weapon-checkbox" value="${weapon.name}" data-index="${index}" data-weapon-name="${weapon.name}" ${unit.selectedWeapons.some(w => w.name === weapon.name) ? 'checked' : ''}>
+                                    <strong>${weapon.name}</strong>
+                                </label>
+                                <div class="weapon-stats" style="display: none;">
+                                    ${weapon.profiles.map(profile => `
+                                        <table class="stats-table">
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Range</th>
+                                                <th>A</th>
+                                                <th>WS/BS</th>
+                                                <th>S</th>
+                                                <th>AP</th>
+                                                <th>D</th>
+                                                <th>Keywords</th>
+                                            </tr>
+                                            <tr>
+                                                <td>${profile.type}</td>
+                                                <td>${profile.characteristics["Range"] || "-"}</td>
+                                                <td>${profile.characteristics["A"] || "-"}</td>
+                                                <td>${profile.characteristics[profile.type === "Melee Weapons" ? "WS" : "BS"] || "-"}</td>
+                                                <td>${profile.characteristics["S"] || "-"}</td>
+                                                <td>${profile.characteristics["AP"] || "-"}</td>
+                                                <td>${profile.characteristics["D"] || "-"}</td>
+                                                <td>${profile.characteristics["Keywords"] || "-"}</td>
+                                            </tr>
+                                        </table>
+                                    `).join('')}
+                                    ${weapon.abilities.length > 0 ? `
+                                        <ul>${weapon.abilities.map(ability => `<li><strong>${ability.name}:</strong> ${ability.description}</li>`).join('')}</ul>
+                                    ` : ''}
+                                </div>
+                            `).join('') : '<p>Aucune arme disponible.</p>'}
+                        </form>
+                    </div>
                 </div>
-            `);
+            `;
+        };
+
+        if ($unitDiv.hasClass("expanded")) {
+            // Animation de fermeture : faire glisser les détails vers le haut
+            $unitDiv.find(".unit-details").slideUp(200, () => {
+                // Une fois l'animation terminée, retirer la classe expanded et supprimer les détails
+                $unitDiv.removeClass("expanded");
+                $unitDiv.find(".unit-details").remove();
+            });
+        } else {
+            $unitDiv.addClass("expanded");
+            const $details = $(renderUnitDetails());
             $unitDiv.append($details);
+            // Animation d'ouverture : faire glisser les détails vers le bas
+            $unitDiv.find(".unit-details").hide().slideDown(200);
+
+            // Déclencher manuellement l'événement "change" pour les checkboxes cochées afin d'afficher les stats
+            $unitDiv.find(".weapon-checkbox:checked").trigger("change");
         }
     }
 
-    displayUnitDetails(unit) {
-        const $unitDetails = $("#unitDetails").empty();
+    displaySelectedUnits() {
+        const $selectedUnitsList = $("#selectedUnitsList").empty();
 
-        $unitDetails.append(`<h2>${unit.name} - ${unit.cost} pts</h2>`);
-        if (unit.imageUrl) {
-            $unitDetails.append(`<img src="${unit.imageUrl}" alt="${unit.name}">`);
-        }
+        this.selectedUnits.forEach((unit, index) => {
+            const costSteps = unit.costSteps && unit.costSteps.length > 0 
+                ? unit.costSteps 
+                : [{ models: unit.modelCount || 1, cost: parseInt(unit.cost || '0', 10) }];
+            
+            const currentStep = costSteps.find(step => step.models === unit.modelCount) || costSteps[0];
+            const totalCost = currentStep.cost;
 
-        const characteristics = Object.entries(unit.characteristics);
-        let characHtml = `
-            <h3>Caractéristiques</h3>
-            <table class="stats-table">
-                <tr>
-                    ${characteristics.map(([key]) => `<th>${key}</th>`).join('')}
-                </tr>
-                <tr>
-                    ${characteristics.map(([, value]) => `<td>${value}</td>`).join('')}
-                </tr>
-            </table>
-        `;
-        $unitDetails.append(characHtml);
+            const hasModelVariation = unit.minModels !== unit.maxModels && unit.costSteps.length > 1;
 
-        if (unit.weapons.length > 0) {
-            let weaponsHtml = "<h3>Armes</h3><form id='weaponSelection'>";
-            unit.weapons.forEach(weapon => {
-                weaponsHtml += `
-                    <label>
-                        <input type="checkbox" class="weapon-checkbox" value="${weapon.name}">
-                        <strong>${weapon.name}</strong>
-                    </label><br>`;
+            const $unitDiv = $(`
+                <div class="selected-unit" data-index="${index}" style="${unit.backgroundColor ? `background-color: ${unit.backgroundColor};` : ''}">
+                     <button class="option-button">⚙️</button>
+                    <div class="sub-options" style="display: none;">
+                        <button class="sub-option sub-option-1" data-index="${index}" title="Marquer comme mort">☠️</button>
+                        <button class="sub-option sub-option-2" data-index="${index}" title="Dupliquer l'unité">📋</button>
+                        <input type="color" class="sub-option sub-option-3" data-index="${index}" title="Changer la couleur" value="${unit.backgroundColor || '#ffffff'}">
+                    </div>
+                    <div class="selected-unit-header">
+                        <div class="flex">
+                            <img class="unit-illustration" width="100px" height="100px" src="${unit.imageUrl}" alt="Unité Nécron ${unit.name} pour Warhammer">
+                            <div class="skibidibapbap">
+                                <button class="remove-unit-btn" data-index="${index}">Supprimer</button>
+                                <h3>${unit.name} - ${totalCost} pts${hasModelVariation ? ` (${unit.modelCount} modèles)` : ''}</h3>
+                            </div>
+                        </div>
+                        ${hasModelVariation ? `
+                            <div class="button-container">
+                                <button class="increase-model-btn" data-index="${index}">+</button>
+                                <button class="decrease-model-btn" data-index="${index}">-</button>
+                            </div>
+                        ` : `
+                            <div class="button-container" style="opacity: 0;">
+                                <button class="increase-model-btn" disabled>+</button>
+                                <button class="decrease-model-btn" disabled>-</button>
+                            </div>
+                        `}
+                    </div>
+                </div>
+            `);
+            $selectedUnitsList.append($unitDiv);
 
-                // Ajouter le tableau uniquement s'il y a des profils statistiques
-                if (weapon.profiles.length > 0) {
-                    weaponsHtml += `
-                        <table class="stats-table">
-                            <tr>
-                                <th>Type</th>
-                                <th>Range</th>
-                                <th>A</th>
-                                <th>WS/BS</th>
-                                <th>S</th>
-                                <th>AP</th>
-                                <th>D</th>
-                                <th>Keywords</th>
-                            </tr>`;
-                    weapon.profiles.forEach(profile => {
-                        let charac = profile.characteristics;
-                        weaponsHtml += `
-                            <tr>
-                                <td>${profile.type}</td>
-                                <td>${charac["Range"] || "-"}</td>
-                                <td>${charac["A"] || "-"}</td>
-                                <td>${charac[profile.type === "Melee Weapons" ? "WS" : "BS"] || "-"}</td>
-                                <td>${charac["S"] || "-"}</td>
-                                <td>${charac["AP"] || "-"}</td>
-                                <td>${charac["D"] || "-"}</td>
-                                <td>${charac["Keywords"] || "-"}</td>
-                            </tr>`;
-                    });
-                    weaponsHtml += "</table>";
-                }
-
-                // Ajouter les capacités s'il y en a
-                if (weapon.abilities.length > 0) {
-                    weaponsHtml += "<ul>";
-                    weapon.abilities.forEach(ability => {
-                        weaponsHtml += `<li><strong>${ability.name}:</strong> ${ability.description}</li>`;
-                    });
-                    weaponsHtml += "</ul>";
+            // Event listener for unit details toggle (excluding clicks on buttons and .weapon-selection)
+            $unitDiv.on("click", (e) => {
+                if (!$(e.target).is("button") && !$(e.target).closest(".sub-options").length && !$(e.target).closest(".weapon-selection").length) {
+                    this.toggleUnitDetails(index);
                 }
             });
-            weaponsHtml += "</form>";
-            $unitDetails.append(weaponsHtml);
-        }
 
-        if (unit.abilities.length > 0) {
-            let abilitiesHtml = "<h3>Capacités</h3><form id='abilitySelection'>";
-            unit.abilities.forEach(ability => {
-                abilitiesHtml += `
-                    <label>
-                        <input type="checkbox" class="ability-checkbox" value="${ability.name}" checked>
-                        <strong>${ability.name}:</strong> ${ability.description}
-                    </label><br>`;
+            // Event listener for option button toggle
+            $unitDiv.find(".option-button").on("click", (e) => {
+                e.stopPropagation();
+                const $subOptions = $unitDiv.find(".sub-options");
+                console.log("Bouton d'options cliqué, sub-options visible ?", $subOptions.is(":visible"));
+                if ($subOptions.is(":visible")) {
+                    $subOptions.fadeOut(200);
+                } else {
+                    $subOptions.fadeIn(200);
+                }
             });
-            abilitiesHtml += "</form>";
-            $unitDetails.append(abilitiesHtml);
-        }
 
-        $unitDetails.append(`<button id="addToListBtn">Ajouter à ma liste</button>`);
+            // Event listener for removing a unit
+            $unitDiv.find(".remove-unit-btn").on("click", (e) => {
+                e.stopPropagation();
+                this.removeUnit(index);
+            });
+
+            // Event listeners for model count buttons (if applicable)
+            if (hasModelVariation) {
+                $unitDiv.find(".decrease-model-btn").on("click", (e) => {
+                    e.stopPropagation();
+                    this.changeModelCount(index, -1);
+                });
+                $unitDiv.find(".increase-model-btn").on("click", (e) => {
+                    e.stopPropagation();
+                    this.changeModelCount(index, 1);
+                });
+            }
+
+            // Event listener for sub-option 1: Apply opacity filter (mark as dead)
+            $unitDiv.find(".sub-option-1").on("click", (e) => {
+                e.stopPropagation();
+                const $unitCard = $(`#selectedUnitsList .selected-unit[data-index="${index}"]`);
+                const currentOpacity = parseFloat($unitCard.css("opacity")) || 1; // Valeur par défaut à 1 si non définie
+                console.log($unitCard.css("opacity"))
+                if (currentOpacity === 1) {
+                    $unitCard.css({
+                        opacity: "0.5",
+                        filter: "grayscale(80%)"
+                    });
+                } else {
+                    $unitCard.css({
+                        opacity: "1",
+                        filter: "none"
+                    });
+                }
+                console.log(`Applied dead effect to unit ${index}`);
+            });
+
+            // Event listener for sub-option 2: Duplicate unit
+            $unitDiv.find(".sub-option-2").on("click", (e) => {
+                e.stopPropagation();
+                const unitToDuplicate = this.selectedUnits[index];
+                const duplicatedUnit = { ...unitToDuplicate };
+                this.selectedUnits.splice(index + 1, 0, duplicatedUnit);
+                this.displaySelectedUnits();
+                this.saveToCookie();
+                console.log(`Unit ${unitToDuplicate.name} duplicated at index ${index + 1}`);
+            });
+
+            $unitDiv.find(".sub-option-3").on("click", (e) => {
+                e.stopPropagation(); // Empêche le clic de se propager à .selected-unit
+            });
+
+            // Event listener for sub-option 3: Apply selected color directly
+            $unitDiv.find(".sub-option-3").on("input", (e) => {
+                e.stopPropagation();
+                const selectedColor = e.target.value; // Récupère la couleur choisie (format hex, ex: #ff0000)
+                const $unitCard = $(`#selectedUnitsList .selected-unit[data-index="${index}"]`);
+                $unitCard.css("background-color", selectedColor);
+                this.selectedUnits[index].backgroundColor = selectedColor; // Sauvegarder la couleur
+                this.saveToCookie(); // Sauvegarder dans localStorage
+                console.log(`Applied color ${selectedColor} to unit ${index}`);
+            });
+        });
+
+        // Update total points
+        const totalPoints = this.selectedUnits.reduce((sum, unit) => {
+            const costSteps = unit.costSteps && unit.costSteps.length > 0 
+                ? unit.costSteps 
+                : [{ models: unit.modelCount || 1, cost: parseInt(unit.cost || '0', 10) }];
+            const currentStep = costSteps.find(step => step.models === unit.modelCount) || costSteps[0];
+            return sum + currentStep.cost;
+        }, 0);
+        $("#totalPoints").text(totalPoints);
+
+        // Initialize SortableJS for drag-and-drop reordering
+        new Sortable($selectedUnitsList[0], {
+            animation: 150,
+            handle: ".selected-unit",
+            filter: "button, input",
+            onEnd: (evt) => {
+                const oldIndex = evt.oldIndex;
+                const newIndex = evt.newIndex;
+                const movedUnit = this.selectedUnits.splice(oldIndex, 1)[0];
+                this.selectedUnits.splice(newIndex, 0, movedUnit);
+                console.log("Nouvel ordre des unités :", this.selectedUnits);
+                this.saveToCookie();
+            }
+        });
+
+        // Delegated event listener for weapon checkboxes
+        $selectedUnitsList.off("change", ".weapon-checkbox").on("change", ".weapon-checkbox", (e) => {
+            const $checkbox = $(e.target);
+            const weaponName = $checkbox.data("weapon-name");
+            const unitIndex = parseInt($checkbox.data("index"), 10);
+            const $statsDiv = $checkbox.closest(".weapon-label").next(".weapon-stats"); // Ciblage précis
+
+            // Show or hide the weapon stats in real-time
+            if ($checkbox.is(":checked")) {
+                $statsDiv.show(200); // Afficher avec une animation
+            } else {
+                $statsDiv.hide(200); // Masquer avec une animation
+            }
+
+            // Update the selected weapons for the unit
+            const unit = this.selectedUnits[unitIndex];
+            if ($checkbox.is(":checked")) {
+                const weaponToAdd = unit.weapons.find(w => w.name === weaponName);
+                if (weaponToAdd && !unit.selectedWeapons.some(w => w.name === weaponName)) {
+                    unit.selectedWeapons.push(weaponToAdd);
+                }
+            } else {
+                unit.selectedWeapons = unit.selectedWeapons.filter(w => w.name !== weaponName);
+            }
+
+            this.saveToCookie();
+        });
     }
 
     parseXML(xml) {
@@ -365,19 +387,23 @@ class WarhammerModels {
         $(xml).find('selectionEntry[type="unit"], selectionEntry[type="model"]').each(function () {
             const $entry = $(this);
             const name = $entry.attr('name');
-            
-            if (name === "Canoptek Acanthrite"  || name === "Convergence of Dominion Starstele" || name === "Triarch Praetorian" || name === "Ophydian Destroyer" || name === "Tomb Blade" || name === "Skorpekh Destroyer" || name === "Canoptek Spyder" || name === "Canoptek Scarab Swarm" || name === "Immortal" || name === "Cryptothrall" || name === "Deathmark" || name === "Flayed One" || name === "Lokhust Destroyer" || name.includes("w/")) {
+
+            // Exclusions based on name
+            if (name === "Canoptek Acanthrite" || name === "Convergence of Dominion Starstele" || name === "Triarch Praetorian" || 
+                name === "Ophydian Destroyer" || name === "Tomb Blade" || name === "Skorpekh Destroyer" || 
+                name === "Canoptek Spyder" || name === "Canoptek Scarab Swarm" || name === "Immortal" || 
+                name === "Cryptothrall" || name === "Deathmark" || name === "Flayed One" || name === "Lokhust Destroyer" || 
+                name.includes("w/")) {
                 console.log(`Unité exclue : ${name}`);
                 return;
             }
 
             if (seenNames.has(name)) {
                 console.log(`Doublon ignoré : ${name}`);
-                return; 
+                return;
             }
             seenNames.add(name);
 
-            
             const $constraints = $entry.find('constraints constraint');
             let minModels = parseInt($constraints.filter('[type="min"]').attr('value') || 1, 10);
             let maxModels = parseInt($constraints.filter('[type="max"]').attr('value') || minModels, 10);
@@ -391,31 +417,58 @@ class WarhammerModels {
                 costSteps.push({ models, cost });
             }
 
-            if ( name === 'Chronomancer') {
+            if (name === 'Chronomancer') {
                 minModels = 1;
                 maxModels = 1;
             }
 
             const weapons = WarhammerModels.extractWeapons($entry);
 
-             const model = {
-            name: name,
-            id: $entry.attr('id'),
-            characteristics: WarhammerModels.extractCharacteristics($entry),
-            weapons: weapons,
-            abilities: WarhammerModels.extractAbilities($entry),
-            imageUrl: WarhammerModels.getImageUrl(name),
-            cost: baseCost,
-            minModels: minModels,
-            maxModels: maxModels,
-            modelCount: minModels,
-            costSteps: costSteps
-        };
-            
-            console.log("Unité parsée :", model); // Pour déboguer
+            // Extract unit type from categoryLink
+            let unitType = "Other Datasheets"; // Default type
+            $entry.find('categoryLink').each(function () {
+                const categoryName = $(this).attr('name');
+                if (categoryName === "Character") {
+                    unitType = "Characters";
+                    return false; // Break the loop once we find a relevant category
+                } else if (categoryName === "Battleline") {
+                    unitType = "Battleline";
+                    return false;
+                } else if (categoryName === "Dedicated Transport") {
+                    unitType = "Dedicated Transports";
+                    return false;
+                }
+            });
+
+            const model = {
+                name: name,
+                id: $entry.attr('id'),
+                characteristics: WarhammerModels.extractCharacteristics($entry),
+                weapons: weapons,
+                abilities: WarhammerModels.extractAbilities($entry),
+                imageUrl: WarhammerModels.getImageUrl(name),
+                cost: baseCost,
+                minModels: minModels,
+                maxModels: maxModels,
+                modelCount: minModels,
+                costSteps: costSteps,
+                unitType: unitType // Store the type in the model object
+            };
+
+            console.log("Unité parsée :", model);
             models.push(model);
         });
         return models;
+    }
+
+    getUnitType(unit) {
+        // Check for Legends first
+        if (unit.name.includes("[Legends]")) {
+            return "Legends";
+        }
+
+        // Use the type extracted from XML
+        return unit.unitType || "Other Datasheets";
     }
 
     saveToCookie() {
@@ -443,22 +496,80 @@ class WarhammerModels {
     populateUnitSelector() {
         const $unitList = $("#unitList").empty();
 
+        // Define the order of types
+        const typeOrder = [
+            "Characters",
+            "Battleline",
+            "Dedicated Transports",
+            "Other Datasheets",
+            "Legends"
+        ];
+
+        // Group units by type
+        const unitsByType = {};
         this.units.forEach(unit => {
-            const baseCost = parseInt(unit.cost || '0', 10);
-            const $unitItem = $(`
-                <div class="unit-item" data-unit-id="${unit.id}">
-                    <div class="unit-item-header">
-                        <img src="${unit.imageUrl}" alt="Unité ${unit.name}" width="100" height="100">
-                        <div class="unit-info">
-                            <h3>${unit.name} - ${baseCost} pts</h3>
+            const type = this.getUnitType(unit);
+            if (!unitsByType[type]) {
+                unitsByType[type] = [];
+            }
+            unitsByType[type].push(unit);
+        });
+
+        // Sort and display units under each type
+        typeOrder.forEach(type => {
+            if (unitsByType[type] && unitsByType[type].length > 0) {
+                // Add a heading for the type with a toggle button, initially collapsed
+                const $typeHeader = $(`
+                    <h2 class="type-header collapsed" data-type="${type}" aria-expanded="false" aria-controls="type-content-${type}">
+                        ${type}
+                        <span class="toggle-icon">▶</span>
+                    </h2>
+                `);
+                $unitList.append($typeHeader);
+
+                // Create a container for the units under this type
+                const $typeContent = $(`<div class="type-section-content" id="type-content-${type}"></div>`);
+
+                // Sort units within each type alphabetically by name
+                unitsByType[type].sort((a, b) => a.name.localeCompare(b.name));
+
+                // Add units under this type
+                unitsByType[type].forEach(unit => {
+                    const baseCost = parseInt(unit.cost || '0', 10);
+                    const $unitItem = $(`
+                        <div class="unit-item" data-unit-id="${unit.id}">
+                            <div class="unit-item-header">
+                                <img src="${unit.imageUrl}" alt="Unité ${unit.name}" width="100" height="100">
+                                <div class="unit-info">
+                                    <h3>${unit.name} - ${baseCost} pts</h3>
+                                </div>
+                                <div class="button-container">
+                                    <button class="add-unit-btn" data-unit-id="${unit.id}" aria-label="Add ${unit.name} to army">+</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="button-container">
-                            <button class="add-unit-btn" data-unit-id="${unit.id}">+</button>
-                        </div>
-                    </div>
-                </div>
-            `);
-            $unitList.append($unitItem);
+                    `);
+                    $typeContent.append($unitItem);
+                });
+
+                $unitList.append($typeContent);
+
+                // Add click handler to toggle visibility
+                $typeHeader.on("click", () => {
+                    const $content = $typeHeader.next(".type-section-content");
+                    const isExpanded = $typeHeader.hasClass("expanded");
+
+                    if (isExpanded) {
+                        $content.slideUp(200);
+                        $typeHeader.removeClass("expanded").addClass("collapsed").attr("aria-expanded", "false");
+                        $typeHeader.find(".toggle-icon").text("▶");
+                    } else {
+                        $content.slideDown(200);
+                        $typeHeader.removeClass("collapsed").addClass("expanded").attr("aria-expanded", "true");
+                        $typeHeader.find(".toggle-icon").text("▼");
+                    }
+                });
+            }
         });
 
         // Afficher les détails de l'unité au clic sur l'item (sauf sur le bouton +)
@@ -806,7 +917,7 @@ class WarhammerModels {
             ["Convergence of Dominion", "https://www.adeptusars.com/wp-content/uploads/2023/08/Convergence-of-Dominion.jpg"],
             ["Canoptek Tomb Stalker [Legends]", "https://taleofpainters.com/wp-content/uploads/2013/08/NecronTombStalker.jpg"],
             ["Canoptek Tomb Sentinel [Legends]", "https://i.redd.it/do-you-think-tomb-sentinel-tomb-stalker-and-other-forge-v0-2vnb3fjiu03b1.jpg?width=920&format=pjpg&auto=webp&s=e04b9f6190965d3b3523eea6dbf2f98201756942"],
-            ["Canoptek Acanthrite", "https://skaystore.ru/images/detailed/124/7EJ1XmHkSfs_swxj-tr.jpg"],
+            ["Canoptek Acanthrites [Legends]", "https://skaystore.ru/images/detailed/124/7EJ1XmHkSfs_swxj-tr.jpg"],
             ["Tesseract Ark [Legends]", "https://miniset.net/files/set/gw-99860110011-0.jpg"],
             ["Seraptek Heavy Construct", "https://www.warhammer.com/app/resources/catalog/product/threeSixty/99860110022_NecronCeraptekConstructwithSynaptecs360/01.jpg"],
             ["Gauss Pylon [Legends]", "https://darkminiatures.com/image/cache/catalog/tovary/g-w/wr./fw-263-500x500.png"],

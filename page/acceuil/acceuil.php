@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/webp" href="/asset/favicon.webp">
+    <link rel="icon" type="image/webp" href="/asset/favicon2.webp">
+    <meta name="msapplication-TileImage" content="/asset/favicon2.webp">
+    <link rel="apple-touch-icon" href="/asset/favicon2.webp">
     <title>Soundtable - Soundboard JDR et Outils de Jeux de Société</title>
     <meta name="description" content="Soundtable propose des soundboards gratuits pour vos jeux de rôle (JDR) et des outils pour améliorer vos parties de jeux de société. Plongez dans des ambiances immersives avec nos bruitages et effets sonores adaptés à chaque univers !">
     <meta name="keywords" content="JDR, soundboard gratuit, ambiance jeux de rôle, outils jeux de société, bruitage, RPG, sons immersifs, effets sonores, Chroniques Oubliées, Star Wars, Warhammer">
@@ -146,7 +148,53 @@
             padding: 20px 0;
             scroll-snap-type: x mandatory;
             box-sizing: border-box;
-            padding-left: 40px;
+            /* Remove padding-left to avoid initial offset */
+            padding-left: 0;
+            /* Add padding-right to ensure space at the end of the scroll */
+            padding-right: 40px;
+        }
+
+        /* Centrage si pas de scroll (largeur totale des cartes < largeur du conteneur) */
+        .scroll-container:not(:has(*:nth-child(5))) {
+            justify-content: center;
+            padding-right: 0; /* Remove padding-right if centered */
+        }
+
+
+        .scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background-color: #555;
+            border-radius: 10px;
+        }
+
+        .scroll-container::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .scroll-container {
+                padding: 20px 0;
+                padding-right: 15px; /* Space at the end on mobile */
+            }
+
+            .scroll-container:not(:has(*:nth-child(5))) {
+                justify-content: center;
+                padding-right: 0; /* Centrage sur mobile si pas de scroll */
+            }
+
+            /* Adjust margin for the first card on mobile */
+            .scroll-container .tool-card:first-child {
+                margin-left: 350px; /* Reduced space before the first card on mobile */
+            }
+        }
+        @media (max-width: 500px) {
+            .scroll-container .tool-card:first-child {
+                margin-left: 500px; /* Reduced space before the first card on mobile */
+            }
         }
 
 
