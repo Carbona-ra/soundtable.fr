@@ -549,7 +549,7 @@
         <div id="container">
             <!-- Intro Section -->
             <section class="intro-section">
-                <h1>Soundtable - Soundboard and Tools for Role-Playing Games</h1>
+                <h1>Soundtable - Free Soundboard and Tools for Role-Playing Games</h1>
                 <p class="intro-text">
                     Welcome to Soundtable, your destination for free soundboards and immersive tools for role-playing games (RPGs) and board games. Dive into unique universes with our sound effects, ambiance, and practical tools to enhance your gaming sessions. Explore our sections to discover our resources!
                 </p>

@@ -234,7 +234,7 @@
 
         .article-card img, .tool-card img {
             width: 100%;
-            height: 150px;
+            height: 120px;
             object-fit: cover;
             border-top-left-radius: 13px;
             border-top-right-radius: 13px;
@@ -549,7 +549,7 @@
         <div id="container">
             <!-- Section Introduction -->
             <section class="intro-section">
-                <h1>Soundtable - Soundboard et Outils pour Jeux de Rôle</h1>
+                <h1>Soundtable - Soundboard et Outils gratuits pour Jeux de Rôle</h1>
                 <p class="intro-text">
                     Bienvenue sur Soundtable, votre destination pour des soundboards gratuits et des outils immersifs dédiés aux jeux de rôle (JDR) et jeux de société. Plongez dans des univers uniques avec nos bruitages, effets sonores, et outils pratiques pour enrichir vos parties. Explorez nos sections pour découvrir nos ressources !
                 </p>
@@ -586,62 +586,43 @@
 
             <!-- Section Articles -->
             <section id="articles" class="articles-section">
-                <h2 class="section-title">Articles à lire ou acheter (à venir)</h2>
+                <h2 class="section-title">Articles à lire</h2>
                 <div class="scroll-container">
-                    <div class="article-card">            
-                        <h3 class="card-title">Guide JDR Débutant</h3>
-                        <p class="card-description">Découvrez les bases du jeu de rôle avec ce guide complet.</p>
-                        <a href="/article1">Lire</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Ambiances Sonores</h3>
-                        <p class="card-description">Comment créer une immersion sonore pour vos parties.</p>
-                        <a href="/article2">Lire</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Livre de Règles</h3>
-                        <p class="card-description">Achetez notre livre de règles pour Chroniques Oubliées.</p>
-                        <a href="/article3">Acheter</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Livre de Règles</h3>
-                        <p class="card-description">Achetez notre livre de règles pour Chroniques Oubliées.</p>
-                        <a href="/article3">Acheter</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Livre de Règles</h3>
-                        <p class="card-description">Achetez notre livre de règles pour Chroniques Oubliées.</p>
-                        <a href="/article3">Acheter</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Livre de Règles</h3>
-                        <p class="card-description">Achetez notre livre de règles pour Chroniques Oubliées.</p>
-                        <a href="/article3">Acheter</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Livre de Règles</h3>
-                        <p class="card-description">Achetez notre livre de règles pour Chroniques Oubliées.</p>
-                        <a href="/article3">Acheter</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Livre de Règles</h3>
-                        <p class="card-description">Achetez notre livre de règles pour Chroniques Oubliées.</p>
-                        <a href="/article3">Acheter</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Livre de Règles</h3>
-                        <p class="card-description">Achetez notre livre de règles pour Chroniques Oubliées.</p>
-                        <a href="/article3">Acheter</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Stratégies Warhammer</h3>
-                        <p class="card-description">Conseils pour optimiser vos armées Warhammer.</p>
-                        <a href="/article4">Lire</a>
-                    </div>
+                    <?php
+                    ini_set('display_errors', 1);
+                    error_reporting(E_ALL);
+                    $articleDir = '/home/soundti/www/page/article/'; // Absolute path
+                    $defaultImage = '/asset/default-article.png';
+                    
+                    if (is_dir($articleDir) && is_readable($articleDir)) {
+                        $articles = glob($articleDir . '*.json');
+                        if (empty($articles)) {
+                            echo 'Aucun article trouvé.<br>';
+                        } else {
+                            foreach ($articles as $articleFile) {
+                                $content = file_get_contents($articleFile);
+                                $article = json_decode($content, true);
+                                if ($article && isset($article['titre'], $article['url'])) {
+                                    $description = isset($article['description'])
+                                        ? $article['description']
+                                        : substr(strip_tags(str_replace(['#', '**', '*'], '', $article['contenu'])), 0, 80) . '...';
+                                    $image = isset($article['image']) ? $article['image'] : $defaultImage;
+                                    echo '<div class="article-card">';
+                                    echo '<img src="' . htmlspecialchars($image) . '" alt="' . htmlspecialchars($article['titre']) . '">';
+                                    echo '<h3 class="card-title">' . htmlspecialchars($article['titre']) . '</h3>';
+                                    echo '<p class="card-description">' . htmlspecialchars($description) . '</p>';
+                                    echo '<a href="' . htmlspecialchars($article['url']) . '">Lire</a>';
+                                    echo '</div>';
+                                }
+                            }
+                        }
+                    } else {
+                        echo 'Erreur : Répertoire inaccessible.<br>';
+                    }
+                    echo '</pre>';
+                    ?>
                 </div>
             </section>
-
-            
         </div>
     </div>
 

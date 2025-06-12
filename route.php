@@ -1,6 +1,10 @@
 <?php
-
 function route($uri) {
+    // Normaliser l'URI en supprimant les slashes finaux
+    $uri = rtrim($uri, '/');
+    if ($uri === '') {
+        $uri = '/'; // Assurer que la racine est '/'
+    }
 
     $routes = [
         '/' => 'page/acceuil/acceuil.php',
@@ -11,14 +15,36 @@ function route($uri) {
         '/en/warhammeurArmise' => 'page/warhammeur/en/warhammeurEn.php',
         '/en/MTG-life-counter' => 'page/mtg-life-counter/lifeCounter.php',
         '/MTG-compteur-de-point-de-vie' => 'page/mtg-life-counter/lifeCounter.php',
-        '/api/armies',
-        '/api/ideabox',
+        '/admin/generate-sitemap' => 'generate_sitemap.php',
+        '/article/([a-zA-Z0-9-]+)' => 'page/article/$1.json',
+        '/api/armies' => 'api/armies.php',
+        '/api/ideabox' => 'api/ideabox.php',
     ];
 
+    // Vérifier les routes statiques
     if (array_key_exists($uri, $routes)) {
-        include $routes[$uri];
-    } else {
-        include 'page/404.php';
+        $file = $routes[$uri];
+        if (file_exists($file)) {
+            include $file;
+            return;
+        }
     }
+
+    // Vérifier les routes dynamiques
+    foreach ($routes as $route => $file) {
+        $pattern = '#^' . str_replace('$1', '([a-zA-Z0-9-]+)', $route) . '$#';
+        if (preg_match($pattern, $uri, $matches)) {
+            if (preg_match('/\.json$/', $file)) {
+                $jsonFile = str_replace('$1', $matches[1], $file);
+                if (file_exists($jsonFile)) {
+                    require 'handle_article.php';
+                    return;
+                }
+            }
+        }
+    }
+
+    // Si aucune route ne correspond
+    include 'page/404.php';
 }
 ?>
