@@ -37,7 +37,7 @@
 
 <div class="container">
     <!-- Login section at the top -->
-    <div id="loginSection" class="login-section">
+    <!-- <div id="loginSection" class="login-section">
         <div id="loginForm">
             <h2>Login</h2>
             <div id="connectiondiv">
@@ -55,11 +55,11 @@
         </div>
         <p>Warharmies is a <strong>free Warhammer army management tool</strong> dedicated to <strong>Necrons</strong>. Easily create, customize, and save your Necron armies, whether on mobile or desktop.</p>
         <p>Log in to save your armies or search for armies created by other users (be sure to note your password if you register by filling in the fields and clicking Register).</p>
-    </div>
+    </div> -->
 
     <!-- Army creation tool below -->
     <div id="mainInterface" class="main-interface">
-        <div class="headerArmy" id="armyHeader" style="display: none;">
+        <!-- <div class="headerArmy" id="armyHeader" style="display: none;">
             <div class="army-controls">
                 <input type="text" id="searchUsername" placeholder="Search for a user">
                 <button type="button" id="searchArmiesBtn">Search</button>
@@ -72,9 +72,21 @@
             <select id="savedArmies">
                 <option value="">Choose a saved army</option>
             </select>
-        </div>
+        </div> -->
 
         <h1>Create a Necron Army with Warharmies - Free Warhammer Tool</h1>
+
+        <!-- Bouton pour ouvrir la popup -->
+        <button id="viewDetachmentsBtn">See the detachments</button>
+
+        <!-- Popup des détachements -->
+        <div id="detachmentInfoPopup" class="popup" style="display: none;">
+            <div class="popup-content">
+                <h2>Detachments</h2>
+                <button id="closeDetachmentInfoPopupBtn" class="close-btn">×</button>
+                <div id="detachmentAccordion" class="accordion"></div>
+            </div>
+        </div>
 
         <!-- Button to open the popup -->
         <button id="openUnitPopupBtn">Add a Unit</button>
@@ -89,9 +101,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Selected unit details -->
-        <div id="unitDetails" class="unit-details"></div>
         
         <!-- Selected army -->
         <h2>Your Necron Army - <span id="totalPoints">0</span> pts</h2>

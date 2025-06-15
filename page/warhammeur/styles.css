@@ -3,14 +3,54 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #1e1e1e; /* Dark mode */
+    color: #d0d0d0; /* Texte clair */
 }
 
 .flex {
     display: flex;
     gap: 30px;
     align-items: center;
+}
+
+.up-button {
+    position: absolute;
+    z-index: inherit;
+    width: 40px;
+    height: 40px;
+    left: -40px;
+    top: -8px;
+    border-radius: 10px 0 0 10px;
+    border: 2px solid #444; /* Bordure sombre */
+    color: #d0d0d0; /* Texte clair */
+    background-color: #2a2a2a; /* Fond sombre */
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: normal;
+}
+.down-button {
+    position: absolute;
+    z-index: inherit;
+    width: 40px;
+    height: 40px;
+    left: -40px;
+    top: 53px;
+    border-radius: 10px 0 0 10px;
+    border: 2px solid #444; /* Bordure sombre */
+    color: #d0d0d0; /* Texte clair */
+    background-color: #2a2a2a; /* Fond sombre */
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: normal;
+}
+
+.selected-unit .option-button:hover, .selected-unit .down-button:hover, .selected-unit .up-button:hover {
+    color: #fff; /* Plus clair au survol */
+    background-color: #3a3a3a; /* Fond légèrement plus clair */
 }
 
 .option-button {
@@ -20,79 +60,100 @@ body {
     height: 40px;
     left: -40px;
     border-radius: 10px 0 0 10px;
-    border: 2px solid #333;
-    color: black;
-    background-color: white;
+    border: 2px solid #444; /* Bordure sombre */
+    color: #d0d0d0; /* Texte clair */
+    background-color: #2a2a2a; /* Fond sombre */
     font-size: 22px;
-    display: flex; /* Utilise Flexbox pour centrer le contenu */
-    justify-content: center; /* Centre horizontalement */
-    align-items: center; /* Centre verticalement */
-    line-height: normal; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: normal;
 }
 
 /* Conteneur des sous-options */
 .sub-options {
     position: absolute;
-    left: -40px; /* Aligné avec le bouton d'options */
+    left: -40px;
     top: 26%;
+    z-index: 10;
     transform: translateY(-50%);
     display: none;
     flex-direction: column;
     align-items: flex-start;
+    background-color: #2a2a2a; /* Fond sombre */
+    border-radius: 8px;
+    padding: 5px;
+}
+
+/* Animation temporaire pour indiquer le déplacement */
+.selected-unit.moving-up {
+    transform: translateY(-100%);
+    opacity: 0.7;
+}
+
+.selected-unit.moving-down {
+    transform: translateY(100%);
+    opacity: 0.7;
+
 }
 
 .expanded .sub-options {
     left: -40px;
     top: 45%;
-    
+}
+.expanded .down-button {
+    left: -40px;
+    top: 50%;
+}
+.expanded .up-button {
+    left: -40px;
+    top: 38%;
 }
 
 .expanded {
-    background-color: white !important;
+    background-color: #3a3a3a !important; /* Fond plus clair pour expanded */
 }
 
 /* Positionnement du sélecteur de couleur */
 .sub-options .color-picker {
     position: absolute;
-    left: 120px; /* Position à droite des sous-boutons */
-    top: 50px; /* Aligné avec .sub-option-3 */
+    left: 120px;
+    top: 50px;
     width: 35px;
     height: 35px;
-    border: 2px solid #333;
+    border: 2px solid #444; /* Bordure sombre */
     border-radius: 5px;
-    padding: 0; /* Supprime le padding par défaut */
+    padding: 0;
     cursor: pointer;
-    background-color: white; /* Fond blanc pour une meilleure visibilité */
-    z-index: 1001; /* S'assurer qu'il est au-dessus des autres éléments */
+    background-color: #2a2a2a; /* Fond sombre */
+    z-index: 1001;
 }
 
 .sub-option-3 {
-    appearance: none; /* Supprime le style par défaut du navigateur */
-    -webkit-appearance: none; /* Pour les navigateurs WebKit */
+    appearance: none;
+    -webkit-appearance: none;
     width: 35px;
     height: 35px;
-    border-radius: 50%; /* Même forme que les autres sous-boutons */
-    border: 2px solid #333; /* Même bordure */
-    padding: 0; /* Supprime le padding */
+    border-radius: 50%;
+    border: 2px solid #444; /* Bordure sombre */
+    padding: 0;
     cursor: pointer;
-    background-color: white; /* Fond blanc pour cohérence */
+    background-color: #2a2a2a; /* Fond sombre */
     position: absolute;
     left: 0;
     top: 0;
     transition: transform 0.4s ease, opacity 0.4s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Personnaliser l'apparence du sélecteur de couleur */
 .sub-option-3::-webkit-color-swatch-wrapper {
     padding: 0;
 }
 
 .sub-option-3::-webkit-color-swatch {
     border: none;
-    border-radius: 50%; /* Garde la forme ronde */
+    border-radius: 50%;
 }
 
-/* Ajouter l'emoji 🎨 comme pseudo-élément */
 .sub-option-3::before {
     content: "🎨";
     position: absolute;
@@ -100,10 +161,9 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 22px;
-    pointer-events: none; /* L'emoji ne doit pas interférer avec les clics */
+    pointer-events: none;
 }
 
-/* Assurer que les animations s'appliquent toujours */
 .sub-options.is-visible .sub-option-3 {
     transform: translate(60px, 50px) scale(1);
     transition-delay: 0.3s;
@@ -111,6 +171,7 @@ body {
 
 .sub-options.is-visible .sub-option-3:hover {
     transform: translate(60px, 50px) scale(1.1);
+    background-color: #4CAF50; /* Vert au survol */
 }
 
 /* Responsive pour petits écrans */
@@ -130,7 +191,6 @@ body {
     }
 }
 
-/* Ajuster la taille et l'apparence du sélecteur de couleur */
 .sub-options .color-picker::-webkit-color-swatch {
     border: none;
     border-radius: 3px;
@@ -140,10 +200,9 @@ body {
     padding: 0;
 }
 
-/* Responsive pour petits écrans */
 @media (max-width: 800px) {
     .sub-options .color-picker {
-        left: 110px; /* Ajustement pour les écrans plus petits */
+        left: 110px;
         top: 40px;
         width: 50px;
         height: 50px;
@@ -156,81 +215,74 @@ body {
     height: 35px;
     z-index: 1000;
     border-radius: 50%;
-    border: 2px solid #333;
-    background-color: white;
-    color: black;
+    border: 2px solid #444; /* Bordure sombre */
+    background-color: #2a2a2a; /* Fond sombre */
+    color: #d0d0d0; /* Texte clair */
     font-size: 22px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     margin: 5px 0;
-    transition: transform 0.4s ease, opacity 0.4s ease, background-color 0.2s ease, color 0.2s ease; /* Animation fluide */
+    transition: transform 0.4s ease, opacity 0.4s ease, background-color 0.2s ease, color 0.2s ease;
     position: absolute;
     left: 0;
     top: 0;
 }
 
-/* État initial des sous-boutons (superposés au centre du bouton d'options) */
 .sub-options .sub-option {
-    transform: translate(0, 0) scale(0.5); /* Position initiale : superposés et plus petits */
-    opacity: 0; /* Invisible au départ */
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
 }
 
-/* État visible des sous-options (déployées en arc de cercle) */
 .sub-options[style*="display: block"] .sub-option {
-    opacity: 1; /* Visible */
-    transform-origin: center; /* Point de référence pour les transformations */
+    opacity: 1;
+    transform-origin: center;
 }
 
-/* Positions finales des sous-boutons avec animation de déplacement */
 .sub-options[style*="display: block"] .sub-option-1 {
-    transform: translate(60px, -50px) scale(1); /* Position finale : haut à droite */
+    transform: translate(60px, -50px) scale(1);
     transition-delay: 0.1s;
 }
 
 .sub-options[style*="display: block"] .sub-option-2 {
-    transform: translate(80px, 0) scale(1); /* Position finale : droite */
+    transform: translate(80px, 0) scale(1);
     transition-delay: 0.2s;
 }
 
 .sub-options[style*="display: block"] .sub-option-3 {
-    transform: translate(60px, 50px) scale(1); /* Position finale : bas à droite */
+    transform: translate(60px, 50px) scale(1);
     transition-delay: 0.3s;
 }
 
-/* Lorsque les sous-options sont cachées, les sous-boutons reviennent à leur position initiale */
 .sub-options[style*="display: none"] .sub-option {
-    transform: translate(0, 0) scale(0.5); /* Retour à la position initiale */
+    transform: translate(0, 0) scale(0.5);
     opacity: 0;
 }
 
-/* Effet au survol des sous-boutons */
 .sub-options[style*="display: block"] .sub-option-1:hover {
-    background-color: #000;
-    color: white;
-    transform: translate(60px, -50px) scale(1.1); /* Conserver le translate et ajouter scale */
+    background-color: #4CAF50; /* Vert au survol */
+    color: #fff;
+    transform: translate(60px, -50px) scale(1.1);
 }
 
 .sub-options[style*="display: block"] .sub-option-2:hover {
-    background-color: #000;
-    color: white;
-    transform: translate(80px, 0) scale(1.1); /* Conserver le translate et ajouter scale */
+    background-color: #4CAF50; /* Vert au survol */
+    color: #fff;
+    transform: translate(80px, 0) scale(1.1);
 }
 
 .sub-options[style*="display: block"] .sub-option-3:hover {
-    background-color: #000;
-    color: white;
-    transform: translate(60px, 50px) scale(1.1); /* Conserver le translate et ajouter scale */
+    background-color: #4CAF50; /* Vert au survol */
+    color: #fff;
+    transform: translate(60px, 50px) scale(1.1);
 }
 
-/* Désactiver l'animation buttonPulse pour les sous-boutons au clic */
 .sub-option:active {
-    animation: none; /* Désactiver l'animation pulse */
-    transform: inherit; /* Conserver la transformation actuelle */
+    animation: none;
+    transform: inherit;
 }
 
-/* Responsive design pour petits écrans */
 @media (max-width: 800px) {
     .sub-option {
         width: 50px;
@@ -268,20 +320,19 @@ body {
 
 .option-button:hover {
     scale: 105%;
-    background-color: #000000;
-    color: white;
+    color: #fff;
+    background-color: #3a3a3a; /* Fond plus clair au survol */
     transition: background-color 0.2s ease, scale 0.2s ease, color 0.2s ease;
 }
 
 /* Weapon selection section */
 .weapon-selection {
     margin-top: 10px;
-    padding: 10px;
-    border-top: 1px solid #444;
+    border-top: 1px solid #444; /* Bordure sombre */
 }
 
 .weapon-selection h4 {
-    color: white;
+    color: #d0d0d0; /* Texte clair */
     font-size: 18px;
     margin-bottom: 10px;
 }
@@ -302,28 +353,6 @@ body {
     margin-right: 5px;
 }
 
-/* Style for the stats table */
-.stats-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 10px 0;
-    color: white;
-}
-
-.stats-table th, .stats-table td {
-    border: 1px solid #444;
-    padding: 5px;
-    text-align: center;
-}
-
-.stats-table th {
-    background-color: #333;
-}
-
-.stats-table td {
-    background-color: #222;
-}
-
 /* Style for abilities list */
 .unit-details ul {
     list-style-type: none;
@@ -337,22 +366,34 @@ body {
 
 /* Ensure consistency with other headings */
 .unit-details h4 {
-    color: white;
+    color: #d0d0d0; /* Texte clair */
     font-size: 18px;
     margin: 15px 0 10px;
 }
+
+
+
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: white;
+    background-color: #3b3b3b; /* Fond sombre */
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+.enhancement {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-left: 2px solid #4a7043;
+}
 
+.enhancement p {
+    margin: 5px 0;
+    font-style: italic;
+}
 h1, h2, h3, h4 {
     text-align: center;
-    color: #222;
+    color: #d0d0d0; /* Texte clair */
 }
 
 /* Popup container */
@@ -362,7 +403,7 @@ h1, h2, h3, h4 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -370,15 +411,16 @@ h1, h2, h3, h4 {
 }
 
 .popup h2 {
-    color: white;
+    color: #d0d0d0; /* Texte clair */
 }
 
 .popup-content {
-    background: #1a1a1a; /* Fond sombre, similaire à l'armée */
-    border: 1px solid #444;
+    background: #2a2a2a; /* Fond sombre */
+    border: 1px solid #444; /* Bordure sombre */
     border-radius: 8px;
     width: 80%;
     max-width: 800px;
+    overflow: auto;
     max-height: 90vh;
     position: relative;
     padding: 20px;
@@ -388,9 +430,9 @@ h1, h2, h3, h4 {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: #ff4444;
+    background: #f44336; /* Rouge */
     border: none;
-    color: white;
+    color: #fff;
     font-size: 18px;
     cursor: pointer;
     padding: 5px 10px;
@@ -398,7 +440,7 @@ h1, h2, h3, h4 {
 }
 
 .close-btn:hover {
-    background: #cc3333;
+    background: #d32f2f; /* Rouge plus foncé */
 }
 
 .unit-list {
@@ -406,7 +448,7 @@ h1, h2, h3, h4 {
     flex-direction: column;
 }
 
-/* Style for unit cards in the popup, matching .selected-unit */
+/* Style for unit cards in the popup */
 .unit-item {
     box-sizing: border-box;
     padding: 0 15px;
@@ -415,55 +457,53 @@ h1, h2, h3, h4 {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    border: 2px solid #333; /* Same border as .selected-unit */
+    border: 2px solid #444; /* Bordure sombre */
     border-radius: 8px;
     margin: 5px 0;
-    background-color: white;
+    background-color: #2a2a2a; /* Fond sombre */
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     cursor: pointer;
-    transition: opacity 0.3s ease, box-shadow 0.3s ease; /* Same transition as .selected-unit */
+    transition: opacity 0.3s ease, box-shadow 0.3s ease;
 }
 
 .unit-item:hover {
-    opacity: 0.9; /* Same hover effect as .selected-unit */
+    opacity: 0.9;
 }
 
-
 .scroll-section::-webkit-scrollbar {
-  width: 8px; /* Largeur de la scrollbar */
+    width: 8px;
 }
 
 .scroll-section::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1); /* Fond de la piste */
-  border-radius: 10px;
+    background: #2a2a2a; /* Fond sombre */
+    border-radius: 10px;
 }
 
 .scroll-section::-webkit-scrollbar-thumb {
-  background: #e1e1e1; /* Couleur de la poignée */
-  border-radius: 10px;
+    background: #4CAF50; /* Vert */
+    border-radius: 10px;
 }
 
 .scroll-section::-webkit-scrollbar-thumb:hover {
-  background: #e1e1e1; /* Couleur au survol */
+    background: #45a049; /* Vert plus foncé */
 }
-
 
 .unit-item-header {
     width: 100%;
     display: flex;
     align-items: center;
     flex-direction: row;
-    justify-content: space-between; /* Same layout as .selected-unit-header */
+    justify-content: space-between;
 }
 
 .unit-item img {
     width: 90px;
     height: 90px;
     object-fit: cover;
-    border-radius: 4px; /* Consistent with .selected-unit img */
+    border-radius: 4px;
     margin-right: 15px;
 }
 
@@ -475,75 +515,69 @@ h1, h2, h3, h4 {
 
 .unit-item h3 {
     margin: 0;
-    color: black; /* White text to match .selected-unit */
-    font-size: 20px; /* Same as h3 in .selected-unit */
+    color: #d0d0d0; /* Texte clair */
+    font-size: 20px;
 }
 
 .unit-item p {
     margin: 5px 0;
-    color: black; /* Light gray for secondary text */
+    color: #d0d0d0; /* Texte clair */
     font-size: 14px;
 }
 
 .unit-item .add-unit-btn {
-    background-color: #4CAF50; /* Green to match other buttons */
-    color: white;
+    background-color: #4CAF50; /* Vert */
+    color: #fff;
     border: none;
-     padding: 0px 12px;
+    padding: 0px 12px;
     cursor: pointer;
     border-radius: 3px;
     font-size: 24px;
-    transition: background-color 0.2s ease, transform 0.2s ease; /* Match button animations */
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .unit-item .add-unit-btn:hover {
-    background-color: #45a049; /* Same hover effect as other buttons */
+    background-color: #45a049; /* Vert plus foncé */
     transform: scale(1.05);
 }
 
 .unit-item .add-unit-btn:active {
-    animation: buttonPulse 0.3s ease; /* Same click animation */
+    animation: buttonPulse 0.3s ease;
 }
 
-/* Ensure button container aligns with .selected-unit */
 .unit-item .button-container {
     display: flex;
     flex-direction: row;
     gap: 5px;
 }
 
-/* Responsive design for .unit-item, matching .selected-unit */
 @media (max-width: 800px) {
     .unit-item {
         max-width: 100%;
-        height: 100px; /* Slightly taller for small screens */
-    }
-
-    .unit-item img {
-        width: 75px;
-        height: 75px; /* Same as .unit-illustration */
+        height: 100px;
     }
 
     .unit-item h3 {
-        font-size: 13px; /* Same as .selected-unit h3 */
+        font-size: 13px;
     }
 
     .unit-item .add-unit-btn {
-        scale: 75%; /* Same scaling as other buttons */
+        scale: 75%;
     }
 }
 
 @media (max-width: 450px) {
     .unit-item .unit-info {
         gap: 0;
-        flex-direction: column-reverse; /* Match .skibidibapbap */
+        flex-direction: column-reverse;
         width: 100%;
     }
 
     .unit-item .button-container {
-        flex-direction: column; /* Stack buttons vertically */
+        flex-direction: column;
     }
 }
+
 select, button {
     display: block;
     margin: 10px auto;
@@ -552,20 +586,22 @@ select, button {
     padding: 10px;
     font-size: 14px;
     border-radius: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #444; /* Bordure sombre */
+    background-color: #2a2a2a; /* Fond sombre */
+    color: #d0d0d0; /* Texte clair */
 }
 
 #addToListBtn {
-    background-color: #4CAF50;
-    color: white;
-    margin: 0 auto; 
+    background-color: #4CAF50; /* Vert */
+    color: #fff;
+    margin: 0 auto;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 #addToListBtn:hover {
-    background-color: #45a049;
+    background-color: #45a049; /* Vert plus foncé */
 }
 
 /* Style pour #unitDetails */
@@ -585,25 +621,26 @@ select, button {
     margin: 10px 0;
     border-collapse: separate;
     border-spacing: 0;
-    background-color: #f9f9f9;
+    background-color: #2a2a2a; /* Fond sombre */
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 #unitDetails .stats-table th {
-    background-color: #333;
-    color: white;
+    background-color: #3a3a3a; /* Fond plus clair */
+    color: #d0d0d0; /* Texte clair */
     padding: 10px;
     font-weight: bold;
     text-align: center;
-    border-bottom: 2px solid #222;
+    border-bottom: 2px solid #444; /* Bordure sombre */
 }
 
 #unitDetails .stats-table td {
     padding: 10px;
     text-align: center;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #444; /* Bordure sombre */
+    color: #d0d0d0; /* Texte clair */
 }
 
 #unitDetails .stats-table tr:last-child td {
@@ -611,7 +648,7 @@ select, button {
 }
 
 #unitDetails .stats-table tr:hover {
-    background-color: #f1f1f1;
+    background-color: #3a3a3a; /* Fond plus clair au survol */
 }
 
 /* Style pour les unités sélectionnées */
@@ -627,7 +664,7 @@ select, button {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    border: 2px solid #333;
+    border: 2px solid #444; /* Bordure sombre */
     border-radius: 8px;
     margin: 10px 0;
     display: flex;
@@ -635,23 +672,35 @@ select, button {
     justify-content: center;
     position: relative;
     cursor: pointer;
-    transition: height 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    transition: height 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
     opacity: 1;
+    background-color: #2a2a2a; /* Fond sombre */
+}
+
+.selected-unit p {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap; /* Permet aux spans de passer à la ligne */
+    gap: 5px; /* Espace entre les spans */
+    margin: 0;
 }
 
 .selected-unit span {
-    color: black;
+    color: #d0d0d0; /* Texte clair */
     padding: 8px 15px;
     border-radius: 5px;
     font-size: 16px;
     text-align: center;
-    width: 100%;
+    white-space: nowrap; /* Empêche le texte de se couper */
+    display: inline-block; /* Passe à la ligne si besoin */
+    background-color: #3a3a3a; /* Fond léger pour les spans */
 }
 
 .selected-unit.expanded {
     height: auto;
     flex-direction: column;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background-color: #575757 !important; /* Fond plus clair */
 }
 
 .selected-unit-header {
@@ -671,15 +720,16 @@ select, button {
 }
 
 .unit-details {
-    color: black;
+    color: #d0d0d0; /* Texte clair */
     padding: 15px;
     border-radius: 0 0 8px 8px;
     width: 100%;
     box-sizing: border-box;
+    background-color: #575757; /* Fond sombre */
 }
 
 .unit-details h3, .unit-details h4 {
-    color: black;
+    color: #d0d0d0; /* Texte clair */
     margin: 10px 0;
 }
 
@@ -691,29 +741,30 @@ select, button {
 
 .unit-details .stats-table {
     width: 100% !important;
-    table-layout: fixed; 
+    table-layout: fixed;
     margin: 10px 0;
     border-collapse: separate;
     border-spacing: 0;
-    background-color: #f9f9f9;
+    background-color: #2a2a2a; /* Fond sombre */
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .unit-details .stats-table th {
-    background-color: #444;
-    color: white;
-    padding: 10px;
+    background-color: #3a3a3a; /* Fond plus clair */
+    color: #d0d0d0; /* Texte clair */
+    padding: 10px 0px;
     font-weight: bold;
     text-align: center;
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid #444; /* Bordure sombre */
 }
 
 .unit-details .stats-table td {
     padding: 10px;
     text-align: center;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #444; /* Bordure sombre */
+    color: #d0d0d0; /* Texte clair */
 }
 
 .unit-details .stats-table tr:last-child td {
@@ -721,30 +772,18 @@ select, button {
 }
 
 .unit-details .stats-table tr:hover {
-    background-color: #f1f1f1;
+    background-color: #3a3a3a; /* Fond plus clair au survol */
 }
-
 
 /* Style pour #armyControls */
 #armyControls {
     margin: 20px 0;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #2a2a2a; /* Fond sombre */
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-}
-
-/* Style de base pour les boutons */
-button {
-    font-size: 14px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #4CAF50; /* Vert par défaut, ajustez selon votre thème */
-    color: white;
-    transition: transform 0.2s ease, background-color 0.2s ease; /* Transition fluide */
 }
 
 .button-container .decrease-model-btn, .button-container .increase-model-btn {
@@ -757,12 +796,13 @@ button {
 
 /* Style for type headers */
 .popup .type-header {
-    color: white;
+    color: #d0d0d0; /* Texte clair */
+    background-color: #2a2a2a !important; /* Fond sombre */
     font-size: 22px;
     margin: 20px 0 10px;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid #444; /* Bordure sombre */
     padding-bottom: 5px;
-    cursor: pointer; /* Indicate it's clickable */
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -770,22 +810,19 @@ button {
 }
 
 .popup .type-header:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+    background-color: #3a3a3a; /* Fond plus clair au survol */
 }
 
-/* Toggle icon styling */
 .popup .type-header .toggle-icon {
     font-size: 16px;
     margin-left: 10px;
     transition: transform 0.2s ease;
 }
 
-/* Content container for units under each type */
 .type-section-content {
-    display: none; /* Initially visible */
+    display: none;
 }
 
-/* Optional: Add padding to the content container */
 .type-section-content .unit-item {
     margin: 5px 0;
 }
@@ -803,33 +840,29 @@ h2 {
 h3 {
     font-size: 20px;
 }
-/* Animation au clic */
+
 button:active {
-    animation: buttonPulse 0.3s ease; /* Déclenche l'animation au clic */
+    animation: buttonPulse 0.3s ease;
 }
 
-/* Animation au survol (optionnel) */
 button:hover {
-    background-color: #45a049; /* Légère variation de couleur */
-    transform: scale(1.05); /* Agrandissement léger */
+    transform: scale(1.05);
 }
 
-/* Définition de l'animation "pulse" */
 @keyframes buttonPulse {
     0% {
         transform: scale(1);
     }
     50% {
-        transform: scale(0.95); /* Rétrécit légèrement */
+        transform: scale(0.95);
     }
     100% {
-        transform: scale(1); /* Revient à la taille normale */
+        transform: scale(1);
     }
 }
 
-/* Style spécifique pour les boutons de suppression (optionnel) */
 .deleteArmyBtn {
-    background-color: #f44336; /* Rouge pour suppression */
+    background-color: #f44336; /* Rouge */
     margin-left: 5px;
 }
 
@@ -837,7 +870,7 @@ button:hover {
     display: flex;
     justify-content: center;
 }
-#loginForm div button, #loginForm div input ,.headerArmy div input, .headerArmy div p, .headerArmy div button {
+#loginForm div button, #loginForm div input, .headerArmy div input, .headerArmy div p, .headerArmy div button {
     margin: 15px 15px;
 }
 .headerArmy p {
@@ -850,15 +883,14 @@ button:hover {
     align-items: center;
 }
 
-
 .deleteArmyBtn:hover {
-    background-color: #da190b;
+    background-color: #d32f2f; /* Rouge plus foncé */
 }
 
 #armyControls div {
     display: flex;
-    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne sur petits écrans */
-    gap: 15px; /* Espacement entre les éléments internes */
+    flex-wrap: wrap;
+    gap: 15px;
     justify-content: center;
     align-items: center;
 }
@@ -866,7 +898,7 @@ button:hover {
 #armyControls label {
     display: none;
     font-weight: bold;
-    color: #333;
+    color: #d0d0d0; /* Texte clair */
     margin-right: 10px;
     font-size: 14px;
 }
@@ -874,20 +906,22 @@ button:hover {
 #armyControls input[type="text"] {
     padding: 10px;
     font-size: 14px;
-    border: 1px solid #ddd;
+    border: 1px solid #444; /* Bordure sombre */
     border-radius: 5px;
-    width: 200px; /* Largeur fixe pour cohérence */
+    width: 200px;
+    background-color: #2a2a2a; /* Fond sombre */
+    color: #d0d0d0; /* Texte clair */
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #armyControls input[type="text"]:focus {
-    border-color: #4CAF50;
+    border-color: #4CAF50; /* Vert */
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
     outline: none;
 }
 
 #armyControls input[type="text"]::placeholder {
-    color: #999;
+    color: #888; /* Gris moyen */
     font-style: italic;
 }
 
@@ -897,10 +931,12 @@ button:hover {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    background-color: #4CAF50; /* Vert */
+    color: #fff;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.scroll-section{
+.scroll-section {
     overflow-y: auto;
     height: auto;
     max-height: 80vh;
@@ -908,46 +944,47 @@ button:hover {
 }
 
 #armyControls #saveArmyBtn {
-    color: white;
+    color: #fff;
 }
 
 #armyControls #saveArmyBtn:hover {
-    transform: translateY(-2px); /* Légère élévation au survol */
+    transform: translateY(-2px);
+    background-color: #45a049; /* Vert plus foncé */
 }
 
 #armyControls #loadArmyBtn {
-    color: white;
+    color: #fff;
 }
 
 #armyControls #loadArmyBtn:hover {
     transform: translateY(-2px);
+    background-color: #45a049; /* Vert plus foncé */
 }
-
 
 #armyControls select {
     padding: 10px;
     font-size: 14px;
-    border: 1px solid #ddd;
+    border: 1px solid #444; /* Bordure sombre */
     border-radius: 5px;
-    width: 250px; /* Plus large pour les noms d’armée */
-    background-color: white;
+    width: 250px;
+    background-color: #2a2a2a; /* Fond sombre */
+    color: #d0d0d0; /* Texte clair */
     cursor: pointer;
     transition: border-color 0.3s ease;
 }
 
 #armyControls select:focus {
-    border-color: #2196F3;
+    border-color: #2196F3; /* Bleu */
     outline: none;
 }
 
 #armyControls select:hover {
-    border-color: #bbb;
+    border-color: #888; /* Gris moyen */
 }
 
-
 .remove-unit-btn {
-    background-color: #ff4444;
-    color: white;
+    background-color: #f44336; /* Rouge */
+    color: #fff;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
@@ -955,14 +992,12 @@ button:hover {
 }
 
 .remove-unit-btn:hover {
-    background-color: #cc0000;
+    background-color: #d32f2f; /* Rouge plus foncé */
 }
-
-
 
 .login-section {
     padding: 20px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #444; /* Bordure sombre */
 }
 .main-interface {
     padding: 20px;
@@ -972,9 +1007,9 @@ button:hover {
 }
 
 .selected-unit {
-    cursor: move; /* Change le curseur pour indiquer que c'est déplaçable */
-    user-select: none; /* Empêche la sélection de texte pendant le déplacement */
-    margin: 5px; /* Ajoute un peu d'espace entre les unités */
+    cursor: move;
+    user-select: none;
+    margin: 5px;
 }
 
 .selected-unit:hover {
@@ -983,25 +1018,50 @@ button:hover {
 
 .langBtn {
     position: absolute;
-    top : 10px;
+    top: 10px;
     right: 10px;
 }
-
-.unit-illustration{
-    border: 2px solid;
+.unit-details h4 {
+    margin-top: 15px;
+    color: #d0d0d0; /* Texte clair */
+    font-size: 1.1em;
 }
 
-.langBtn a, .langBtn span{
-    color: black;
+.unit-details ul {
+    list-style-type: disc;
+    margin-left: 0px;
+    margin-bottom: 10px;
+}
+
+.unit-details li {
+    margin-bottom: 5px;
+    font-size: 0.95em;
+    color: #d0d0d0; /* Texte clair */
+}
+
+.unit-illustration {
+    scale: 1;
+}
+.unit-illustration {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border: 2px solid #444; /* Bordure sombre */
+}
+
+.langBtn a, .langBtn span {
+    color: #d0d0d0; /* Texte clair */
     font-size: 20px;
 }
 
-
 /* Responsive design */
 @media (max-width: 800px) {
+    .unit-details .stats-table td {
+        padding: 10px 0px;
+    }
 
     tr, th {
-        font-size: 12px;
+        font-size: 10px;
     }
 
     ul {
@@ -1019,19 +1079,19 @@ button:hover {
         flex-direction: column;
     }
 
-    .unit-illustration{
-        width: 75px;
-        height: 75px;
+    .unit-illustration {
+        width: 80px;
+        height: 80px;
     }
 
     h3 {
         font-size: 13px;
     }
 
-    .increase-model-btn , .decrease-model-btn , .remove-unit-btn{
+    .increase-model-btn, .decrease-model-btn, .remove-unit-btn {
         scale: 75%;
     }
-    .increase-model-btn , .decrease-model-btn {
+    .increase-model-btn, .decrease-model-btn {
         width: 40px;
         height: 40px;
         font-size: 20px;
@@ -1061,6 +1121,13 @@ button:hover {
 
 /* Responsive */
 @media (max-width: 600px) {
+    .unit-illustration {
+        width: 100px;
+        height: 80px;
+    }
+    .flex {
+        gap: 0px;
+    }
     .container {
         padding: 10px;
     }
@@ -1068,29 +1135,26 @@ button:hover {
         height: 120px;
     }
     .unit-details {
-        padding: 10px;
+        padding: 0px;
     }
-}
-
-@media (max-width: 450px) {
-
-    .unit-details .stats-table tr,.unit-details .stats-table body th {
-        font-size: 10px !important;
-    }
-
     .skibidibapbap {
         gap: 0px;
         flex-direction: column-reverse;
         width: 100%;
     }
-
     #connectiondiv {
         display: flex;
         justify-content: center;
         flex-direction: column;
     }
+}
 
-    #connectiondiv input{
+@media (max-width: 450px) {
+    .unit-details .stats-table tr, .unit-details .stats-table body th {
+        font-size: 10px !important;
+    }
+
+    #connectiondiv input {
         margin: 10px 0px !important;
     }
 }

@@ -25,7 +25,6 @@
     <link rel="icon" type="image/webp" href="/asset/favicon2.webp">
     <link rel="stylesheet" href="/page/warhammeur/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 </head>
 <body>
 
@@ -37,7 +36,7 @@
 
 <div class="container">
         <!-- Encart de connexion en haut -->
-        <div id="loginSection" class="login-section">
+        <!-- <div id="loginSection" class="login-section">
             <div id="loginForm">
                 <h2>Connexion</h1>
                 <div id="connectiondiv">
@@ -55,11 +54,11 @@
             </div>
             <p>Warharmies est un <strong>outil gratuit de gestion d'armée Warhammer</strong> dédié aux <strong>Nécrons</strong>. Créez, personnalisez et sauvegardez vos armées Nécron facilement, que vous soyez sur mobile ou desktop.</p>
             <p>Connectez-vous pour pouvoir sauvegarder vos armées ou rechercher des armées d'autres utilisateurs (pensez à bien noter votre mot de passe si vous vous inscrivez en remplissant les champs et cliquez sur s'inscrire)</p>
-        </div>
+        </div> -->
 
         <!-- Outil de création d'armée en bas -->
         <div id="mainInterface" class="main-interface">
-            <div class="headerArmy" id="armyHeader" style="display: none;">
+            <!-- <div class="headerArmy" id="armyHeader" style="display: none;">
                 <div class="army-controls">
                     <input type="text" id="searchUsername" placeholder="Rechercher un utilisateur">
                     <button type="button" id="searchArmiesBtn">Rechercher</button>
@@ -72,10 +71,22 @@
                 <select id="savedArmies">
                     <option value="">Choisissez une armée sauvegardée</option>
                 </select>
-            </div>
+            </div> -->
 
             
             <h1>Création d'une Armée Nécron avec Warharmies - Outil Gratuit pour Warhammer</h1>
+
+            <!-- Bouton pour ouvrir la popup -->
+            <button id="viewDetachmentsBtn">Voir les détachements</button>
+
+            <!-- Popup des détachements -->
+            <div id="detachmentInfoPopup" class="popup" style="display: none;">
+                <div class="popup-content">
+                    <h2>Détachements</h2>
+                    <button id="closeDetachmentInfoPopupBtn" class="close-btn">×</button>
+                    <div id="detachmentAccordion" class="accordion"></div>
+                </div>
+            </div>
 
             <!-- Bouton pour ouvrir le popup -->
             <button id="openUnitPopupBtn">Ajouter une unité</button>
@@ -90,16 +101,12 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Détails de l'unité sélectionnée -->
-            <div id="unitDetails" class="unit-details"></div>
             
             <!-- Armée sélectionnée -->
             <h2>Votre Armée Nécron - <span id="totalPoints">0</span> pts</h2>
             <div id="selectedUnitsList" style="display: flex; flex-wrap: wrap;"></div>
         </div>
     </div>
-
 
     <script src="/page/warhammeur/UniteEntity.js"></script>
     <script src="../../asset/scripts/glossaire40k.js"></script>

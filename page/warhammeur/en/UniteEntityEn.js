@@ -1,9 +1,11 @@
 class WarhammerModels {
     constructor(xmlData) {
         this.units = this.parseXML(xmlData);
+        this.detachments = this.parseDetachments(xmlData);
+        this.enhancements = this.parseEnhancements(xmlData); // New: Parse enhancements
         this.selectedUnits = this.loadFromCookie();
         if (!Array.isArray(this.selectedUnits)) {
-            console.warn("selectedUnits is not an array, initializing with default value.");
+            console.warn("selectedUnits is not an array, default initialization.");
             this.selectedUnits = [];
         }
         this.currentUser = null;
@@ -11,6 +13,288 @@ class WarhammerModels {
         this.populateUnitSelector();
         this.initEventListeners();
         this.displaySelectedUnits();
+        this.initDetachmentInfoPopup();
+    }
+
+    // Parse detachments from XML
+    parseDetachments(xml) {
+        let detachments = [];
+        $(xml).find('selectionEntryGroup[name="Detachment"] selectionEntry').each(function () {
+            const $entry = $(this);
+            const detachment = {
+                id: $entry.attr('id'),
+                name: $entry.attr('name'),
+                rules: []
+            };
+
+            // Extract associated rules via infoLinks
+            $entry.find('infoLink[type="rule"]').each(function () {
+                const ruleId = $(this).attr('targetId');
+                const $rule = $(xml).find(`rule[id="${ruleId}"]`);
+                if ($rule.length) {
+                    detachment.rules.push({
+                        name: $rule.attr('name'),
+                        description: $rule.find('description').text()
+                    });
+                }
+            });
+
+            detachments.push(detachment);
+            console.log("Parsed detachment:", detachment);
+        });
+        return detachments;
+    }
+
+    // Initialize detachment info popup
+    initDetachmentInfoPopup() {
+        // Button to open the popup
+        $("#viewDetachmentsBtn").on("click", () => {
+            this.populateDetachmentInfoPopup();
+            $("#detachmentInfoPopup").show();
+        });
+
+        // Button to close the popup
+        $("#closeDetachmentInfoPopupBtn").on("click", () => {
+            $("#detachmentInfoPopup").hide();
+        });
+
+        // Handle accordion toggle
+        $("#detachmentAccordion").on("click", ".accordion-header", function () {
+            const $header = $(this);
+            const $content = $header.next(".accordion-content");
+            const isOpen = $content.is(":visible");
+
+            // Close all other accordion items
+            $("#detachmentAccordion .accordion-content").slideUp();
+            $("#detachmentAccordion .accordion-header").removeClass("active");
+
+            // Toggle the clicked item
+            if (!isOpen) {
+                $content.slideDown();
+                $header.addClass("active");
+            }
+        });
+    }
+
+    // Populate the detachment info popup
+    populateDetachmentInfoPopup() {
+        const $accordion = $("#detachmentAccordion").empty();
+
+        // Populate detachments in accordion
+        this.detachments.forEach(detachment => {
+            // Filter enhancements for this detachment
+            const availableEnhancements = this.enhancements.filter(enh => {
+                // Show enhancement if it has no detachment restrictions or is linked to this detachment
+                return enh.linkedDetachmentIds.length === 0 || enh.linkedDetachmentIds.includes(detachment.id);
+            });
+
+            const $detachmentItem = $(`
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="type-header collapsed" aria-expanded="false">
+                        ${detachment.name}
+                        <span class="toggle-icon">▶</span>
+                        </h3>
+                    </div>
+                    <div class="accordion-content" style="display: none;">
+                        <h4>Rules</h4>
+                        ${detachment.rules.length > 0 ? detachment.rules.map(rule => `
+                            <div class="rule">
+                                <strong>${rule.name}:</strong> ${rule.description}
+                            </div>
+                        `).join('') : '<p>No rules available.</p>'}
+                        <h4>Enhancements</h4>
+                        ${availableEnhancements.length > 0 ? availableEnhancements.map(enh => `
+                            <div class="enhancement">
+                                <strong>${enh.name} (${enh.cost} pts):</strong> ${enh.description}
+                                ${enh.restrictions.length > 0 ? `
+                                    <p><em>Restrictions: ${enh.restrictions.join(', ')}</em></p>
+                                ` : ''}
+                            </div>
+                        `).join('') : '<p>No enhancements available.</p>'}
+                    </div>
+                </div>
+            `);
+            $accordion.append($detachmentItem);
+        });
+    }
+
+    // Parse enhancements from XML
+    parseEnhancements(xml) {
+        let enhancements = [];
+        $(xml).find('selectionEntryGroup[name="Enhancements"] selectionEntry').each(function () {
+            const $entry = $(this);
+            const enhancement = {
+                id: $entry.attr('id'),
+                name: $entry.attr('name'),
+                cost: parseInt($entry.find('cost[name="pts"]').attr('value') || '0', 10),
+                description: $entry.find('profile[typeName="Abilities"] characteristic[name="Description"]').text() || 'No description',
+                restrictions: [], // Store model restrictions (e.g., NECRONS, CRYPTEK)
+                linkedDetachmentIds: [] // Store detachment IDs that allow this enhancement
+            };
+
+            // Extract restrictions from description
+            const desc = enhancement.description.toLowerCase();
+            if (desc.includes('necrons model only')) enhancement.restrictions.push('NECRONS');
+            if (desc.includes('cryptek model only')) enhancement.restrictions.push('CRYPTEK');
+            if (desc.includes('overlord model only')) enhancement.restrictions.push('OVERLORD');
+            if (desc.includes('destroyer cult model only')) enhancement.restrictions.push('DESTROYER CULT');
+
+            // Extract linked detachment IDs from modifier conditions
+            $entry.find('modifier[field="hidden"] condition').each(function () {
+                const childId = $(this).attr('childId');
+                if (childId) {
+                    enhancement.linkedDetachmentIds.push(childId);
+                }
+            });
+
+            enhancements.push(enhancement);
+            console.log("Parsed enhancement:", enhancement);
+            return enhancements;
+        });
+        return enhancements;
+    }
+
+    // Initialize detachment and enhancement popup
+    initDetachmentPopup() {
+        // Button to open the popup
+        $("#openDetachmentPopupBtn").on("click", () => {
+            this.populateDetachmentPopup();
+            $("#detachmentPopup").show();
+        });
+
+        // Button to close the popup
+        $("#closeDetachmentPopupBtn").on("click", () => {
+            $("#detachmentPopup").hide();
+        });
+
+        // Button to apply selections
+        $("#applyDetachmentBtn").on("click", () => {
+            this.applyDetachmentAndEnhancements();
+            $("#detachmentPopup").hide();
+        });
+
+        // Handle detachment radio button change
+        $("#detachmentList").on("change", ".detachment-radio", (e) => {
+            const detachmentId = $(e.target).val();
+            this.populateEnhancementsList(detachmentId);
+        });
+
+        // Handle enhancement checkbox changes
+        $("#enhancementList").on("change", ".enhancement-checkbox", (e) => {
+            const $checkbox = $(e.target);
+            const enhancementId = $checkbox.val();
+            const isChecked = $checkbox.is(":checked");
+
+            if (isChecked) {
+                const enhancement = this.enhancements.find(e => e.id === enhancementId);
+                if (this.selectedEnhancements.length >= 3) {
+                    alert("You can select a maximum of 3 enhancements per army.");
+                    $checkbox.prop("checked", false);
+                    return;
+                }
+                if (this.selectedEnhancements.some(e => e.id === enhancementId)) {
+                    alert("This enhancement is already selected.");
+                    $checkbox.prop("checked", false);
+                    return;
+                }
+                this.selectedEnhancements.push(enhancement);
+            } else {
+                this.selectedEnhancements = this.selectedEnhancements.filter(e => e.id !== enhancementId);
+            }
+
+            console.log("Selected enhancements:", this.selectedEnhancements);
+        });
+    }
+
+    // Populate the detachment and enhancement popup
+    populateDetachmentPopup() {
+        const $detachmentList = $("#detachmentList").empty();
+        const $enhancementList = $("#enhancementList").empty();
+
+        // Populate detachments
+        this.detachments.forEach(detachment => {
+            const isChecked = this.selectedDetachment && this.selectedDetachment.id === detachment.id;
+            const $detachmentItem = $(`
+                <div class="detachment-item">
+                    <label>
+                        <input type="radio" class="detachment-radio" name="detachment" value="${detachment.id}" ${isChecked ? 'checked' : ''}>
+                        <strong>${detachment.name}</strong>
+                    </label>
+                    <div class="detachment-rules">
+                        <h4>Rules</h4>
+                        ${detachment.rules.length > 0 ? detachment.rules.map(rule => `
+                            <div class="rule">
+                                <strong>${rule.name}:</strong> ${rule.description}
+                            </div>
+                        `).join('') : '<p>No rules available.</p>'}
+                    </div>
+                </div>
+            `);
+            $detachmentList.append($detachmentItem);
+        });
+
+        // Populate enhancements for the selected detachment (if any)
+        if (this.selectedDetachment) {
+            this.populateEnhancementsList(this.selectedDetachment.id);
+        } else if (this.detachments.length > 0) {
+            // Default to first detachment
+            $(`input.detachment-radio[value="${this.detachments[0].id}"]`).prop("checked", true);
+            this.populateEnhancementsList(this.detachments[0].id);
+        }
+    }
+
+    // Populate enhancements list based on detachment
+    populateEnhancementsList(detachmentId) {
+        const $enhancementList = $("#enhancementList").empty();
+        const detachment = this.detachments.find(d => d.id === detachmentId);
+        if (!detachment) return;
+
+        // Filter enhancements based on detachment-specific constraints
+        const availableEnhancements = this.enhancements.filter(enh => {
+            const $xmlEnh = $(`selectionEntry[id="${enh.id}"]`);
+            const $modifier = $xmlEnh.find('modifier[field="hidden"] condition');
+            if ($modifier.length === 0) return true;
+            const childId = $modifier.attr('childId');
+            return childId === detachmentId || !$modifier.attr('childId'); // Show if no restriction or matches detachment
+        });
+
+        if (availableEnhancements.length === 0) {
+            $enhancementList.append('<p>No enhancements available for this detachment.</p>');
+            return;
+        }
+
+        availableEnhancements.forEach(enh => {
+            const isChecked = this.selectedEnhancements.some(e => e.id === enh.id);
+            const $enhancementItem = $(`
+                <div class="enhancement-item">
+                    <label>
+                        <input type="checkbox" class="enhancement-checkbox" value="${enh.id}" ${isChecked ? 'checked' : ''}>
+                        <strong>${enh.name} (${enh.cost} pts)</strong>
+                    </label>
+                    <p>${enh.description}</p>
+                    ${enh.restrictions.length > 0 ? `
+                        <p><strong>Restrictions:</strong> ${enh.restrictions.join(', ')}</p>
+                    ` : ''}
+                </div>
+            `);
+            $enhancementList.append($enhancementItem);
+        });
+    }
+
+    // Apply selected detachment and enhancements
+    applyDetachmentAndEnhancements() {
+        const selectedDetachmentId = $("input.detachment-radio:checked").val();
+        if (selectedDetachmentId) {
+            this.selectedDetachment = this.detachments.find(d => d.id === selectedDetachmentId);
+            console.log("Selected detachment:", this.selectedDetachment);
+        } else {
+            this.selectedDetachment = null;
+            console.log("No detachment selected.");
+        }
+
+        this.displaySelectedUnits(); // Refresh to show detachment/enhancements
+        this.saveToCookie();
     }
 
     addToSelectedUnits(unit, selectedWeapons, selectedAbilities) {
@@ -21,7 +305,8 @@ class WarhammerModels {
         const newUnit = {
             ...unit,
             selectedWeapons: selectedWeapons || [],
-            selectedAbilities: selectedAbilities || unit.abilities, // Default to all abilities if none are provided
+            selectedAbilities: selectedAbilities || unit.abilities,
+            infoLinks: unit.infoLinks || [], // Preserve infoLinks
             modelCount: unit.minModels || 1,
             costSteps: defaultCostSteps
         };
@@ -42,7 +327,7 @@ class WarhammerModels {
         if (newStepIndex >= 0 && newStepIndex < unit.costSteps.length) {
             unit.modelCount = unit.costSteps[newStepIndex].models;
             this.displaySelectedUnits();
-            this.saveToCookie();
+            this.saveToCookie(); 
         } else {
             const stepsText = unit.costSteps.map(step => `${step.models} models (${step.cost} pts)`).join(', ');
             alert(`The number of models must be one of: ${stepsText}`);
@@ -52,7 +337,7 @@ class WarhammerModels {
     // New method to remove a unit
     removeUnit(index) {
         this.selectedUnits.splice(index, 1); // Remove the unit at the specified index
-        this.displaySelectedUnits(); // Refresh the display
+        this.displaySelectedUnits(); // Refresh display
         this.saveToCookie();
     }
 
@@ -83,7 +368,7 @@ class WarhammerModels {
             }
         });
 
-        // Handle adding a unit from details (Add to my list button)
+        // Handle adding a unit from details ("Add to my list" button)
         $("#unitDetails").on("click", "#addToListBtn", () => {
             const selectedUnit = this.units.find(unit => unit.id === $("#unitSelector").val() || $(`.unit-item[data-unit-id]`).data("unit-id"));
             if (selectedUnit) {
@@ -116,11 +401,23 @@ class WarhammerModels {
                         </tr>
                     </table>
 
+                    <!-- Section for categories -->
+                    ${unit.categories && unit.categories.length > 0 ? `
+                        <h4>Categories</h4>
+                        <p>${unit.categories.map(category => `<span>${category}</span>`).join('/')}<p>
+                    ` : '<p>No categories available.</p>'}
+
+                    <!-- Section for rules (infoLinks) -->
+                    ${unit.infoLinks && unit.infoLinks.length > 0 ? `
+                        <h4>Rules</h4>
+                        ${unit.infoLinks.map(rule => `<span>${rule}</span>`).join('/')}
+                    ` : '<p>No rules available.</p>'}
+
                     <!-- Section for all abilities -->
                     ${unit.abilities && unit.abilities.length > 0 ? `
-                        <h4>All Abilities</h4>
+                        <h4>Abilities</h4>
                         <ul>${unit.abilities.map(ability => `<li><strong>${ability.name}:</strong> ${ability.description}</li>`).join('')}</ul>
-                    ` : ''}
+                    ` : '<p>No abilities available.</p>'}
 
                     <!-- Section for selected abilities -->
                     ${unit.selectedAbilities && unit.selectedAbilities.length > 0 ? `
@@ -174,7 +471,6 @@ class WarhammerModels {
         };
 
         if ($unitDiv.hasClass("expanded")) {
-            // Close animation: slide up details
             $unitDiv.find(".unit-details").slideUp(200, () => {
                 $unitDiv.removeClass("expanded");
                 $unitDiv.find(".unit-details").remove();
@@ -183,10 +479,7 @@ class WarhammerModels {
             $unitDiv.addClass("expanded");
             const $details = $(renderUnitDetails());
             $unitDiv.append($details);
-            // Open animation: slide down details
             $unitDiv.find(".unit-details").hide().slideDown(200);
-
-            // Trigger change event for checked checkboxes to show stats
             $unitDiv.find(".weapon-checkbox:checked").trigger("change");
         }
     }
@@ -206,6 +499,8 @@ class WarhammerModels {
 
             const $unitDiv = $(`
                 <div class="selected-unit" data-index="${index}" style="${unit.backgroundColor ? `background-color: ${unit.backgroundColor};` : ''}">
+                    <button class="down-button" ${index === this.selectedUnits.length - 1 ? 'disabled' : ''}>↓</button>
+                    <button class="up-button" ${index === 0 ? 'disabled' : ''}>↑</button>
                     <button class="option-button">⚙️</button>
                     <div class="sub-options" style="display: none;">
                         <button class="sub-option sub-option-1" data-index="${index}" title="Mark as dead">☠️</button>
@@ -273,6 +568,46 @@ class WarhammerModels {
                 });
             }
 
+            // Event listener for moving unit up
+            $unitDiv.find(".up-button").on("click", (e) => {
+                e.stopPropagation();
+                if (index > 0) {
+                    // Add animation class
+                    $unitDiv.addClass("moving-up");
+                    $(`#selectedUnitsList .selected-unit[data-index="${index - 1}"]`).addClass("moving-down");
+
+                    // Wait for animation to complete before reordering
+                    setTimeout(() => {
+                        // Swap units
+                        [this.selectedUnits[index], this.selectedUnits[index - 1]] = 
+                            [this.selectedUnits[index - 1], this.selectedUnits[index]];
+                        this.displaySelectedUnits(); // Refresh display
+                        this.saveToCookie(); // Save order
+                        console.log(`Unit ${unit.name} moved up (index ${index} -> ${index - 1})`);
+                    }, 300); // Matches transition duration (0.3s)
+                }
+            });
+
+            // Event listener for moving unit down
+            $unitDiv.find(".down-button").on("click", (e) => {
+                e.stopPropagation();
+                if (index < this.selectedUnits.length - 1) {
+                    // Add animation class
+                    $unitDiv.addClass("moving-down");
+                    $(`#selectedUnitsList .selected-unit[data-index="${index + 1}"]`).addClass("moving-up");
+
+                    // Wait for animation to complete before reordering
+                    setTimeout(() => {
+                        // Swap units
+                        [this.selectedUnits[index], this.selectedUnits[index + 1]] = 
+                            [this.selectedUnits[index + 1], this.selectedUnits[index]];
+                        this.displaySelectedUnits(); // Refresh display
+                        this.saveToCookie(); // Save order
+                        console.log(`Unit ${unit.name} moved down (index ${index} -> ${index + 1})`);
+                    }, 300); // Matches transition duration (0.3s)
+                }
+            });
+
             // Event listener for sub-option 1: Apply opacity filter (mark as dead)
             $unitDiv.find(".sub-option-1").on("click", (e) => {
                 e.stopPropagation();
@@ -329,21 +664,6 @@ class WarhammerModels {
         }, 0);
         $("#totalPoints").text(totalPoints);
 
-        // Initialize SortableJS for drag-and-drop reordering
-        new Sortable($selectedUnitsList[0], {
-            animation: 150,
-            handle: ".selected-unit",
-            filter: "button, input",
-            onEnd: (evt) => {
-                const oldIndex = evt.oldIndex;
-                const newIndex = evt.newIndex;
-                const movedUnit = this.selectedUnits.splice(oldIndex, 1)[0];
-                this.selectedUnits.splice(newIndex, 0, movedUnit);
-                console.log("New unit order:", this.selectedUnits);
-                this.saveToCookie();
-            }
-        });
-
         // Delegated event listener for weapon checkboxes
         $selectedUnitsList.off("change", ".weapon-checkbox").on("change", ".weapon-checkbox", (e) => {
             const $checkbox = $(e.target);
@@ -351,14 +671,12 @@ class WarhammerModels {
             const unitIndex = parseInt($checkbox.data("index"), 10);
             const $statsDiv = $checkbox.closest(".weapon-label").next(".weapon-stats");
 
-            // Show or hide the weapon stats in real-time
             if ($checkbox.is(":checked")) {
                 $statsDiv.show(200);
             } else {
                 $statsDiv.hide(200);
             }
 
-            // Update the selected weapons for the unit
             const unit = this.selectedUnits[unitIndex];
             if ($checkbox.is(":checked")) {
                 const weaponToAdd = unit.weapons.find(w => w.name === weaponName);
@@ -386,7 +704,7 @@ class WarhammerModels {
                 name === "Canoptek Spyder" || name === "Canoptek Scarab Swarm" || name === "Immortal" || 
                 name === "Cryptothrall" || name === "Deathmark" || name === "Flayed One" || name === "Lokhust Destroyer" || 
                 name.includes("w/")) {
-                console.log(`Excluded unit: ${name}`);
+                console.log(`Unit excluded: ${name}`);
                 return;
             }
 
@@ -416,13 +734,27 @@ class WarhammerModels {
 
             const weapons = WarhammerModels.extractWeapons($entry);
 
+            // Extract all categories
+            const categories = [];
+            $entry.find('categoryLink').each(function () {
+                const categoryName = $(this).attr('name');
+                categories.push(categoryName);
+            });
+
+            // Extract all infoLinks (rules like Stealth, Infiltrators)
+            const infoLinks = [];
+            $entry.find('infoLink[type="rule"]').each(function () {
+                const infoLinkName = $(this).attr('name');
+                infoLinks.push(infoLinkName);
+            });
+
             // Extract unit type from categoryLink
-            let unitType = "Other Datasheets"; // Default type
+            let unitType = "Other Datasheets";
             $entry.find('categoryLink').each(function () {
                 const categoryName = $(this).attr('name');
                 if (categoryName === "Character") {
                     unitType = "Characters";
-                    return false; // Break the loop once we find a relevant category
+                    return false;
                 } else if (categoryName === "Battleline") {
                     unitType = "Battleline";
                     return false;
@@ -438,13 +770,15 @@ class WarhammerModels {
                 characteristics: WarhammerModels.extractCharacteristics($entry),
                 weapons: weapons,
                 abilities: WarhammerModels.extractAbilities($entry),
+                categories: categories,
+                infoLinks: infoLinks, // New property to store infoLinks
                 imageUrl: WarhammerModels.getImageUrl(name),
                 cost: baseCost,
                 minModels: minModels,
                 maxModels: maxModels,
                 modelCount: minModels,
                 costSteps: costSteps,
-                unitType: unitType // Store the type in the model object
+                unitType: unitType
             };
 
             console.log("Parsed unit:", model);
@@ -464,8 +798,12 @@ class WarhammerModels {
     }
 
     saveToCookie() {
-        const armyData = JSON.stringify(this.selectedUnits);
-        console.log("Saving to localStorage:", this.selectedUnits);
+        const armyData = JSON.stringify({
+            units: this.selectedUnits,
+            detachment: this.selectedDetachment,
+            enhancements: this.selectedEnhancements
+        });
+        console.log("Saving to localStorage:", armyData);
         localStorage.setItem("currentArmy", armyData);
     }
 
@@ -475,7 +813,10 @@ class WarhammerModels {
             if (armyData) {
                 const parsedData = JSON.parse(armyData);
                 console.log("Loading from localStorage:", parsedData);
-                return parsedData;
+                this.selectedUnits = parsedData.units || [];
+                this.selectedDetachment = parsedData.detachment || null;
+                this.selectedEnhancements = parsedData.enhancements || [];
+                return this.selectedUnits;
             }
             console.warn("No data found in localStorage 'currentArmy'");
             return [];
@@ -512,10 +853,10 @@ class WarhammerModels {
             if (unitsByType[type] && unitsByType[type].length > 0) {
                 // Add a heading for the type with a toggle button, initially collapsed
                 const $typeHeader = $(`
-                    <h2 class="type-header collapsed" data-type="${type}" aria-expanded="false" aria-controls="type-content-${type}">
+                    <h3 class="type-header collapsed" data-type="${type}" aria-expanded="false" aria-controls="type-content-${type}">
                         ${type}
                         <span class="toggle-icon">▶</span>
-                    </h2>
+                    </h3>
                 `);
                 $unitList.append($typeHeader);
 
@@ -924,7 +1265,7 @@ class WarhammerModels {
         $("#registerBtn").on("click", () => this.register());
         $("#logoutBtn").on("click", () => this.logout());
         $("#searchArmiesBtn").on("click", () => this.searchArmiesByUser());
-        this.checkLoginStatus();
+        this.checkLoginStatus(); 
     }
 
     // Check if a user is already logged in (via localStorage)
@@ -938,16 +1279,16 @@ class WarhammerModels {
         }
     }
 
-    // Show the login interface
+    // Show login interface
     showLoginInterface() {
         $("#loginSection").show();
         $("#loginForm").show();
         $("#userInfo").hide();
-        $("#mainInterface").show();
+        $("#mainInterface").show(); 
         $("#armyHeader").hide();
     }
 
-    // Show the main interface
+    // Show main interface
     showMainInterface() {
         $("#loginForm").hide();
         $("#userInfo").show();
@@ -974,7 +1315,7 @@ class WarhammerModels {
             contentType: "application/json",
             data: JSON.stringify({ username, password, action: "login" }), // Add action field if needed
             success: (response) => {
-                this.currentUser = { username, password };
+                this.currentUser = { username, password }; 
                 localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
                 this.showMainInterface();
             },
@@ -1005,7 +1346,7 @@ class WarhammerModels {
             },
             error: (err) => {
                 console.error("Error during registration:", err);
-                alert("Error during account creation.");
+                alert("Error creating account.");
             }
         });
     }
@@ -1024,16 +1365,15 @@ class WarhammerModels {
     initArmyControls() {
         $("#saveArmyBtn").on("click", () => this.saveArmy());
         $("#loadArmyBtn").on("click", () => this.loadArmyList());
-        $("#updateArmyBtn").on("click", () => this.updateArmy()); // New button for updating
+        $("#updateArmyBtn").on("click", () => this.updateArmy()); // New button for update
         $("#savedArmies").on("change", (event) => {
             const armyId = event.target.value;
-            this.currentArmy = armyId;
+            this.currentArmy = armyId
             if (armyId) this.loadSelectedArmy(armyId);
         });
         this.loadArmyList();
     }
 
-    // Save an army
     saveArmy() {
         if (!this.currentUser) {
             alert("You must be logged in to save an army.");
@@ -1041,37 +1381,71 @@ class WarhammerModels {
         }
 
         const armyName = $("#armyName").val().trim();
-        const password = $("#password").val().trim();
+        const password = this.currentUser.password;
 
         if (!armyName || !password) {
             alert("Please enter an army name and your password.");
             return;
         }
 
-        if (this.selectedUnits.length === 0) {
-            alert("No units selected to save.");
+        if (this.selectedUnits.length === 0 && !this.selectedDetachment && this.selectedEnhancements.length === 0) {
+            alert("No units, detachment, or enhancements selected to save.");
             return;
         }
 
+        // Validate units
+        const validatedUnits = this.selectedUnits.map(unit => {
+            if (!unit.id || !unit.name || !unit.modelCount || !unit.costSteps) {
+                console.error("Invalid unit:", unit);
+                throw new Error(`Invalid unit: ${unit.name || 'unknown'}`);
+            }
+            return {
+                unit_id: unit.id, // Match API-expected field name
+                unit_name: unit.name,
+                characteristics: unit.characteristics || {},
+                selected_weapons: unit.selectedWeapons || [], // Match API-expected field name
+                selected_abilities: unit.selectedAbilities || [], // Match API-expected field name
+                image_url: unit.imageUrl || '',
+                model_count: unit.modelCount,
+                min_models: unit.minModels || 1,
+                max_models: unit.maxModels || unit.minModels || 1,
+                cost_steps: unit.costSteps || [{ models: unit.modelCount, cost: unit.cost || 0 }]
+            };
+        });
+
+        // Validate detachment
+        const validatedDetachment = this.selectedDetachment ? {
+            id: this.selectedDetachment.id,
+            name: this.selectedDetachment.name,
+            rules: this.selectedDetachment.rules || []
+        } : null;
+
+        // Validate enhancements
+        const validatedEnhancements = this.selectedEnhancements.map(enh => {
+            if (!enh.id || !enh.name) {
+                console.error("Invalid enhancement:", enh);
+                throw new Error(`Invalid enhancement: ${enh.name || 'unknown'}`);
+            }
+            return {
+                id: enh.id,
+                name: enh.name,
+                cost: enh.cost || 0,
+                description: enh.description || '',
+                restrictions: enh.restrictions || []
+            };
+        });
+
         const armyData = {
+            action: "save_army", // Add action field
             username: this.currentUser.username,
             password,
-            armyName,
-            units: this.selectedUnits.map(unit => ({
-                name: unit.name,
-                id: unit.id,
-                characteristics: unit.characteristics,
-                selectedWeapons: unit.selectedWeapons,
-                selectedAbilities: unit.selectedAbilities,
-                imageUrl: unit.imageUrl,
-                modelCount: unit.modelCount,
-                minModels: unit.minModels,
-                maxModels: unit.maxModels,
-                costSteps: unit.costSteps
-            }))
+            army_name: armyName, // Match API-expected field name
+            units: validatedUnits,
+            detachment: validatedDetachment,
+            enhancements: validatedEnhancements
         };
 
-        console.log("Saving army data:", armyData);
+        console.log("Sending data to API:", armyData);
 
         $.ajax({
             url: "https://soundtable.fr/api/armies.php",
@@ -1079,17 +1453,31 @@ class WarhammerModels {
             contentType: "application/json",
             data: JSON.stringify(armyData),
             success: (response) => {
-                alert("Army saved successfully!");
-                this.loadArmyList();
+                console.log("API response:", response);
+                if (response.success) {
+                    alert("Army saved successfully!");
+                    this.loadArmyList();
+                } else {
+                    alert(`Error saving army: ${response.message || 'Unknown error'}`);
+                }
             },
-            error: (err) => {
-                console.error("Error during saving:", err);
-                alert("Error saving the army.");
+            error: (xhr) => {
+                console.error("Error during save:", xhr);
+                let errorMessage = "Error saving the army.";
+                try {
+                    const errorData = xhr.responseJSON;
+                    if (errorData && errorData.message) {
+                        errorMessage += ` Details: ${errorData.message}`;
+                    }
+                } catch (e) {
+                    console.warn("Could not extract API error details.");
+                }
+                alert(errorMessage);
             }
         });
     }
 
-    // Load the list of armies
+    // Load army list
     loadArmyList() {
         if (!this.currentUser) return;
 
@@ -1103,7 +1491,7 @@ class WarhammerModels {
             method: "GET",
             success: (armies) => {
                 const $savedArmies = $("#savedArmies").empty();
-                $savedArmies.append('<option value="">Choose a saved army</option>');
+                $savedArmies.append('<option value="">Select a saved army</option>');
                 if (Array.isArray(armies) && armies.length > 0) {
                     armies.forEach(army => {
                         $savedArmies.append(`<option value="${army.id}">${army.army_name}</option>`);
@@ -1129,7 +1517,7 @@ class WarhammerModels {
         });
     }
 
-    // Search armies by a specific user
+    // Search armies by user
     searchArmiesByUser() {
         const searchUsername = $("#searchUsername").val().trim();
         if (!searchUsername) {
@@ -1142,7 +1530,7 @@ class WarhammerModels {
             method: "GET",
             success: (armies) => {
                 const $savedArmies = $("#savedArmies").empty();
-                $savedArmies.append('<option value="">Choose a saved army</option>');
+                $savedArmies.append('<option value="">Select a saved army</option>');
                 if (Array.isArray(armies) && armies.length > 0) {
                     armies.forEach(army => {
                         $savedArmies.append(`<option value="${army.id}">${army.army_name} (${army.username})</option>`);
@@ -1187,7 +1575,6 @@ class WarhammerModels {
 
                 this.selectedUnits = army.units.map(unit => {
                     const originalUnit = this.units.find(u => u.id === unit.unit_id) || {};
-
                     const modelCount = unit.model_count !== undefined ? unit.model_count : (originalUnit.minModels || 1);
                     const costSteps = unit.cost_steps && unit.cost_steps.length > 0 
                         ? unit.cost_steps 
@@ -1207,13 +1594,28 @@ class WarhammerModels {
                         cost: costSteps.find(step => step.models === modelCount)?.cost || originalUnit.cost || '0'
                     };
                 });
-                console.log("Loaded units:", this.selectedUnits);
+
+                this.selectedDetachment = army.detachment ? {
+                    id: army.detachment.id,
+                    name: army.detachment.name,
+                    rules: army.detachment.rules
+                } : null;
+
+                this.selectedEnhancements = army.enhancements ? army.enhancements.map(enh => ({
+                    id: enh.id,
+                    name: enh.name,
+                    cost: enh.cost,
+                    description: enh.description,
+                    restrictions: enh.restrictions
+                })) : [];
+
+                console.log("Loaded army:", { units: this.selectedUnits, detachment: this.selectedDetachment, enhancements: this.selectedEnhancements });
                 this.displaySelectedUnits();
                 this.saveToCookie();
             },
             error: (err) => {
                 console.error("Error loading army:", err);
-                alert("Error loading the army.");
+                alert("Error loading army.");
             }
         });
     }
@@ -1284,8 +1686,8 @@ class WarhammerModels {
                         name: unit.name,
                         id: unit.id,
                         characteristics: unit.characteristics,
-                        selectedWeapons: unit.selectedWeapons,
-                        selectedAbilities: unit.selectedAbilities,
+                        selectedWeapons: unit.selectedWeapons,  // Maps to selected_weapons
+                        selectedAbilities: unit.selectedAbilities,  // Maps to selected_abilities
                         imageUrl: unit.imageUrl,
                         modelCount: unit.modelCount,
                         minModels: unit.minModels,
@@ -1294,7 +1696,7 @@ class WarhammerModels {
                     }))
                 };
 
-                // Delete and recreate for update
+                // Delete then recreate for update
                 $.ajax({
                     url: "https://soundtable.fr/api/armies.php",
                     method: "DELETE",
@@ -1328,7 +1730,7 @@ class WarhammerModels {
             },
             error: (err) => {
                 console.error("Error checking army:", err);
-                alert("Error checking the army.");
+                alert("Error checking army.");
             }
         });
     }
@@ -1351,7 +1753,7 @@ function initWarhammerModels() {
 // Function to track a page view
 function trackPageView(pageName) {
     $.ajax({
-        url: 'https://soundtable.fr/api/armies.php',
+        url: 'https://soundtable.fr/api/armies.php', // Replace with your API URL
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -1366,11 +1768,10 @@ function trackPageView(pageName) {
         }
     });
 }
-
 // Get the current URL path
 var currentPage = window.location.pathname || 'unknown';
-// Clean the path (remove leading "/" and .html/.php extension if present)
-currentPage = currentPage.replace(/^\/|(\.html|\.php)$/g, '') || 'index';
+// Clean the path (remove leading "/" and .html or .php extension if present)
+currentPage = currentPage.replace(/^\/|(\.html|\.php)$/g, '') || 'index'; // Use "index" if empty
 
 $(document).ready(function () {
     initWarhammerModels();
