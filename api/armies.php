@@ -21,8 +21,48 @@ switch ($method) {
         $data = json_decode(file_get_contents('php://input'), true);
 
         // Handle page view tracking
+        // Nouvel endpoint pour suivre les vues de page
         if (isset($data['action']) && $data['action'] === 'track-page-view') {
-            // ... (keep existing code for page view tracking)
+            if (!isset($data['pageName'])) {
+                http_response_code(400);
+                echo json_encode(['error' => 'Nom de la page requis']);
+                exit;
+            }
+
+            $pageName = $data['pageName'];
+            $currentDate = date('Y-m-d');
+            $cookieName = 'visited_pages';
+            $cookieDuration = 24 * 60 * 60; // 24 heures en secondes
+
+            // Récupérer ou initialiser le cookie
+            $visitedPages = isset($_COOKIE[$cookieName]) ? json_decode($_COOKIE[$cookieName], true) : [];
+
+            try {
+                // Vérifier si la page a déjà été visitée aujourd'hui par cet utilisateur
+                if (!in_array($pageName, $visitedPages)) {
+                    // Mettre à jour ou insérer le nombre de vues uniques
+                    $stmt = $pdo->prepare("
+                        INSERT INTO page_views (page_name, view_date, unique_views)
+                        VALUES (:page_name, :view_date, 1)
+                        ON DUPLICATE KEY UPDATE unique_views = unique_views + 1
+                    ");
+                    $stmt->execute([
+                        'page_name' => $pageName,
+                        'view_date' => $currentDate
+                    ]);
+
+                    // Ajouter la page au cookie
+                    $visitedPages[] = $pageName;
+                    setcookie($cookieName, json_encode($visitedPages), time() + $cookieDuration, '/');
+                }
+
+                http_response_code(200);
+                echo json_encode(['message' => 'Vue enregistrée']);
+            } catch (PDOException $e) {
+                http_response_code(500);
+                echo json_encode(['error' => 'Erreur lors de l\'enregistrement : ' . $e->getMessage()]);
+            }
+            exit;
         }
 
         if (!isset($data['username']) || !isset($data['password'])) {

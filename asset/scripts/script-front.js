@@ -411,11 +411,6 @@ $(document).ready(function () {
     });
 
     
-    $(".sound-button").click(function () {
-        let soundUrl = $(this).data("sound");
-        let audio = new Audio(soundUrl);
-        audio.play();
-    });
 
     // Récupérer le chemin de l'URL actuelle
     var currentPage = window.location.pathname || 'unknown';
@@ -424,5 +419,35 @@ $(document).ready(function () {
     
     // Suivre la page actuelle au chargement
     trackPageView(currentPage);
+
+    let playingAudios = [];
+
+    $(".sound-button, .play-sound").click(function () {
+        let soundUrl = $(this).hasClass("sound-button")
+            ? $(this).data("sound")
+            : "/page/chronique/Audio_avec_leur_image/" + $(this).attr("id") + ".mp3";
+
+        let audio = new Audio(soundUrl);
+        audio.play();
+
+        // Ajouter à la liste des sons en cours
+        playingAudios.push(audio);
+
+        // Nettoyage automatique quand le son se termine
+        audio.addEventListener('ended', function () {
+            playingAudios = playingAudios.filter(a => a !== audio);
+        });
+    });
+
+
+    // Fonction pour tout arrêter
+    $("#stop-sounds-btn").click(function () {
+        playingAudios.forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+        playingAudios = [];
+    });
+
 
 });

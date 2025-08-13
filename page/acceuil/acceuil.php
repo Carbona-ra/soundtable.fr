@@ -124,6 +124,18 @@
             background-color: #a0724e;
         }
 
+        .card-categorie {
+            font-size: 1em;
+            color: #f5e0b7;
+            margin: 5px 10px;
+            text-shadow: 1px 1px 2px #000;
+            font-weight: normal;
+            text-transform: capitalize; /* Met la première lettre de chaque mot en majuscule */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap; /* Empêche le retour à la ligne */
+        }
+
         /* Section Articles et Outils */
         .articles-section, .tools-section {
             margin-bottom: 60px;
@@ -152,6 +164,7 @@
             padding-left: 0;
             /* Add padding-right to ensure space at the end of the scroll */
             padding-right: 40px;
+            justify-content: center;
         }
 
         /* Centrage si pas de scroll (largeur totale des cartes < largeur du conteneur) */
@@ -591,7 +604,7 @@
                     <?php
                     ini_set('display_errors', 1);
                     error_reporting(E_ALL);
-                    $articleDir = '/home/soundti/www/page/article/'; // Absolute path
+                    $articleDir = '/home/soundti/www/page/article/'; 
                     $defaultImage = '/asset/default-article.png';
                     
                     if (is_dir($articleDir) && is_readable($articleDir)) {
@@ -610,6 +623,13 @@
                                     echo '<div class="article-card">';
                                     echo '<img src="' . htmlspecialchars($image) . '" alt="' . htmlspecialchars($article['titre']) . '">';
                                     echo '<h3 class="card-title">' . htmlspecialchars($article['titre']) . '</h3>';
+                                    
+                                    
+                                    $categories = isset($article['categorie']) && is_array($article['categorie'])
+                                        ? implode(', ', array_map('htmlspecialchars', $article['categorie']))
+                                        : 'Aucune catégorie';
+                                    echo '<h4 class="card-categorie">' . $categories . '</h4>';
+
                                     echo '<p class="card-description">' . htmlspecialchars($description) . '</p>';
                                     echo '<a href="' . htmlspecialchars($article['url']) . '">Lire</a>';
                                     echo '</div>';

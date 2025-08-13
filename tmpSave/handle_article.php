@@ -2,6 +2,88 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+function simpleMarkdownToHtml($text) {
+    // Protéger les caractères HTML
+    $text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+
+    // Diviser le texte en lignes pour un traitement ligne par ligne
+    $lines = preg_split('/\r\n|\r|\n/', $text);
+
+    $output = '';
+    $inList = false;
+    $paragraphBuffer = [];
+
+    foreach ($lines as $line) {
+        $line = trim($line);
+
+        if (empty($line)) {
+            // Fin d'un paragraphe ou d'une liste
+            if (!empty($paragraphBuffer)) {
+                $output .= '<p>' . implode("\n", $paragraphBuffer) . '</p>';
+                $paragraphBuffer = [];
+            }
+            continue;
+        }
+
+        // Traiter les titres
+        if (preg_match('/^#{1,3}\s(.+)/', $line, $matches)) {
+            $level = strlen(substr($line, 0, strpos($line, ' ')));
+            $content = trim($matches[1]);
+            if (!empty($paragraphBuffer)) {
+                $output .= '<p>' . implode("\n", $paragraphBuffer) . '</p>';
+                $paragraphBuffer = [];
+            }
+            $output .= "<h$level>$content</h$level>";
+            continue;
+        }
+
+        // Traiter les listes
+        if (preg_match('/^- (.+)/', $line, $matches)) {
+            if (!$inList) {
+                if (!empty($paragraphBuffer)) {
+                    $output .= '<p>' . implode("\n", $paragraphBuffer) . '</p>';
+                    $paragraphBuffer = [];
+                }
+                $output .= '<ul>';
+                $inList = true;
+            }
+            $content = trim($matches[1]);
+            $output .= '<li>' . $content . '</li>';
+            continue;
+        } elseif ($inList) {
+            $output .= '</ul>';
+            $inList = false;
+        }
+
+        // Traiter le gras et l'italique
+        $line = preg_replace('/\*\*(.+?)\*\*/', '<strong>$1</strong>', $line);
+        $line = preg_replace('/\*(.+?)\*/', '<em>$1</em>', $line);
+
+        // Traiter les images
+        $line = preg_replace('/!\[(.*?)\]\((.*?)\)/', '<img src="$2" alt="$1" class="illustration-picture">', $line);
+
+        // Traiter les liens
+        $line = preg_replace('/\[(.+?)\]\((https?:\/\/[^\s]+)\)/', '<a href="$2">$1</a>', $line);
+
+        // Ajouter la ligne au buffer du paragraphe
+        $paragraphBuffer[] = $line;
+    }
+
+    // Fermer la liste si elle est encore ouverte
+    if ($inList) {
+        $output .= '</ul>';
+    }
+
+    // Ajouter le dernier paragraphe si le buffer n'est pas vide
+    if (!empty($paragraphBuffer)) {
+        $output .= '<p>' . implode("\n", $paragraphBuffer) . '</p>';
+    }
+
+    // Nettoyer les paragraphes vides
+    $output = preg_replace('/<p>\s*<\/p>/', '', $output);
+
+    return $output;
+}
 
 // Vérifier si $jsonFile est défini
 if (!isset($jsonFile)) {
@@ -175,7 +257,7 @@ if (json_last_error() === JSON_ERROR_NONE) {
     // Vérifier si les clés existent
     if (isset($article['titre'], $article['date'], $article['contenu'])) {
         // Convertir le contenu Markdown en HTML
-        $articleContentHtml = $article['contenu'];
+        $articleContentHtml = simpleMarkdownToHtml($article['contenu']);
 
         // Générer la section des commentaires
         $commentSection = '<div class="comments-section" id="commentaires"><h2 class="section-title">Commentaires</h2>';

@@ -282,6 +282,7 @@
     <div class="bloc-central">
         <div class="header-central-bloc">
             <h1>Soundboard</h1> 
+            <button id="stop-sounds-btn" class="align-top">🔇 Couper les bruitages</button>
             <button  id="openmenuD" class="align-top">Générateur de dée</button>
             <div id="MenuDée">
                     <div id="LancerDeDée">

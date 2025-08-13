@@ -142,6 +142,8 @@
             font-size: 1.8em;
             color: #4a3c3c;
             margin-top: 1.5em;
+            
+            text-align: center;
         }
         h3 {
             font-size: 1.4em;
@@ -279,8 +281,106 @@
         .comment-form button:hover, .reply-form button:hover {
             background: #6b4f2f;
         }
+
+        /* Centrer les images dans .content (pour les articles) */
+        .illustration-image {
+            display: block; /* Permet le centrage avec margin auto */
+            margin: 10px auto; /* Centre horizontalement avec un espacement vertical */
+            max-width: 100%; /* Assure que l'image ne dépasse pas son conteneur */
+            height: auto; /* Maintient les proportions */
+            max-height: 600px;
+        }
+
+        .follow-section {
+            padding: 20px;
+            border: 2px solid #8b6f47;
+            background: #f4e8d1;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            border-radius: 5px;
+            justify-content: center;
+            margin: 40px auto;
+            width: 90%; /* Ajout pour uniformiser la largeur */
+            max-width: 800px; /* Ajout pour limiter la largeur */
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 30000px;
+            border: 2px solid #8b6f47;
+            object-fit: cover;
+            flex-shrink: 0; 
+        }
+
+        /* Newsletter section */
+        .newsletter-section {
+            width: 90%;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(255,253,245,0.9);
+            border: 1px solid #8b6f47;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .newsletter-section h3 {
+            font-family: 'Cinzel', serif;
+            color: #4a3c3c;
+            margin-bottom: 10px;
+        }
+        .newsletter-section p {
+            font-size: 1em;
+            color: #6b5b5b;
+        }
+
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+        .newsletter-form input {
+            width: 97.5%;
+            padding: 8px;
+            border: 1px solid #8b6f47;
+            border-radius: 3px;
+            font-family: 'Georgia', serif;
+            background: #f4e8d1;
+            color: #2c2c2c;
+        }
+        .newsletter-form button {
+            background: #8b6f47;
+            color: #fffdf5;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            transition: background 0.3s;
+        }
+        .newsletter-form button:hover {
+            background: #6b4f2f;
+        }
+        #newsletter-message.success {
+            color: #4a3c3c;
+            font-weight: bold;
+        }
+        #newsletter-message.error {
+            color: #a94442;
+            font-weight: bold;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
+
+            .follow-section {
+                flex-direction: column;
+            }
+
             .navbar-menu {
                 display: none;
                 flex-direction: column;
@@ -338,6 +438,22 @@
             <p class="publication-date">Publié le : {DATE_PUBLICATION}</p>
             <div>{CONTENU_ARTICLE}</div>
         </div>
+
+        <div class="follow-section">
+            <img width="150px" height="150px" class="profile-picture" src="/asset/photo-de-profile.jpg" alt="Photo de profil">
+            <div class="flex">
+                <h3>Suit moi sur <a href="https://x.com/CarbonaraZBK" style="text-decoration-line: none;">Twitter</a> !</h3>
+                <h3>Les ZBK sur <a href="https://www.youtube.com/channel/UC8eACdDS7RN17vxo5HUPX-A" style="text-decoration-line: none;">Youtube</a> .</h3>
+                <h3>Ou reste informé des prochains contenus sur la newsletter !</h3>
+                <form id="newsletter-form" class="newsletter-form">
+                    <input type="email" id="newsletter-email" name="email" placeholder="Entrez votre email" required>
+                    <button type="submit">S'inscrire</button>
+                </form>
+                <p id="newsletter-message" style="display: none;"></p>
+            </div>
+        </div>
+
+
         {COMMENTAIRES}
     </div>
     <script>
@@ -409,6 +525,59 @@
                 } else {
                     replies.style.display = 'none';
                     this.textContent = '[+] Voire les réponses';
+                }
+            });
+        });
+
+        // Gérer la soumission du formulaire de newsletter
+        $('#newsletter-form').on('submit', function (e) {
+            e.preventDefault(); // Empêcher le rechargement de la page
+
+            const email = $('#newsletter-email').val().trim();
+            const messageElement = $('#newsletter-message');
+
+            // Validation simple côté client
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                messageElement
+                    .text('Veuillez entrer une adresse email valide.')
+                    .addClass('error')
+                    .removeClass('success')
+                    .show();
+                return;
+            }
+
+            // Envoi de la requête AJAX
+            $.ajax({
+                url: 'https://soundtable.fr/api/newsletter.php', // Remplacez par l'URL de votre API
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    action: 'subscribe',
+                    email: email
+                }),
+                success: function (response) {
+                    if (response.success) {
+                        messageElement
+                            .text('Inscription réussie ! Merci de vous être abonné(e).')
+                            .addClass('success')
+                            .removeClass('error')
+                            .show();
+                        $('#newsletter-form')[0].reset(); // Réinitialiser le formulaire
+                    } else {
+                        messageElement
+                            .text(response.error || 'Une erreur est survenue. Veuillez réessayer.')
+                            .addClass('error')
+                            .removeClass('success')
+                            .show();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    messageElement
+                        .text('Erreur réseau. Veuillez réessayer plus tard.')
+                        .addClass('error')
+                        .removeClass('success')
+                        .show();
+                    console.error('AJAX error:', status, error);
                 }
             });
         });

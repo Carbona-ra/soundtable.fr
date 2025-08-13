@@ -584,62 +584,7 @@
                 </div>
             </section>
 
-            <!-- Articles Section -->
-            <section id="articles" class="articles-section">
-                <h2 class="section-title">Articles to Read or Buy (Coming Soon)</h2>
-                <div class="scroll-container">
-                    <div class="article-card">            
-                        <h3 class="card-title">Beginner’s RPG Guide</h3>
-                        <p class="card-description">Learn the basics of role-playing games with this comprehensive guide.</p>
-                        <a href="/article1">Read</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Sound Ambiance</h3>
-                        <p class="card-description">How to create immersive soundscapes for your gaming sessions.</p>
-                        <a href="/article2">Read</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Rulebook</h3>
-                        <p class="card-description">Purchase our rulebook for Chronicles Forgotten.</p>
-                        <a href="/article3">Buy</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Rulebook</h3>
-                        <p class="card-features">Purchase our rulebook for Chronicles Forgotten.</p>
-                        <a href="/article3">Buy</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Rulebook</h3>
-                        <p class="card-description">Purchase our rulebook for Chronicles Forgotten.</p>
-                        <a href="/article3">Buy</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Rulebook</h3>
-                        <p class="card-description">Purchase our rulebook for Chronicles Forgotten.</p>
-                        <a href="/article3">Buy</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Rulebook</h3>
-                        <p class="card-description">Purchase our rulebook for Chronicles Forgotten.</p>
-                        <a href="/article3">Buy</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Rulebook</h3>
-                        <p class="card-description">Purchase our rulebook for Chronicles Forgotten.</p>
-                        <a href="/article3">Buy</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Rulebook</h3>
-                        <p class="card-description">Purchase our rulebook for Chronicles Forgotten.</p>
-                        <a href="/article3">Buy</a>
-                    </div>
-                    <div class="article-card">
-                        <h3 class="card-title">Warhammer Strategies</h3>
-                        <p class="card-description">Tips to optimize your Warhammer armies.</p>
-                        <a href="/article4">Read</a>
-                    </div>
-                </div>
-            </section>
+            
         </div>
     </div>
 </body>
